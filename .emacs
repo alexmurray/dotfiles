@@ -65,14 +65,6 @@
 ;; set load-path
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
 
-;; devhelp
-(require 'devhelp
-	 ;; Bind F6 to enable the automatic assistant.
-	 (global-set-key [f6] 'devhelp-toggle-automatic-assistant)
-	 ;; Bind F7 to search with the assistant window.
-	 (global-set-key [f7] 'devhelp-assistant-word-at-point)
-	 )
-
 ;; color theme - requires emacs-goodies-el to be installed on ubuntu
 (autoload 'color-theme-blackboard "color-theme-blackboard" "blackboard color theme." t)
 (color-theme-blackboard)
@@ -153,6 +145,14 @@
 	    ;; use semantic as a source for auto complete
 	    (setq ac-sources (append ac-sources '(ac-source-semantic)))
 	    (auto-fill-mode 1)
+	    ;; devhelp
+	    (require 'devhelp
+		     ;; Bind F6 to enable the automatic assistant.
+		     (global-set-key [f6] 'devhelp-toggle-automatic-assistant)
+		     ;; Bind F7 to search with the assistant window.
+		     (global-set-key [f7] 'devhelp-assistant-word-at-point)
+		     )
+
 	    )
 	  )
 
