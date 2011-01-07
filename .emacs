@@ -9,7 +9,6 @@
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 (show-paren-mode 1)
-(auto-fill-mode 1)
 (display-time)
 
 ;; default to utf-8
@@ -153,6 +152,7 @@
 	    (load "gtk-doc")
 	    ;; use semantic as a source for auto complete
 	    (setq ac-sources (append ac-sources '(ac-source-semantic)))
+	    (auto-fill-mode 1)
 	    )
 	  )
 
