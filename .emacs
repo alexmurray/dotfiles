@@ -166,7 +166,7 @@
 (setq android-mode-sdk-dir "~/android-sdk-linux_x86/")
 (add-hook 'gud-mode-hook
 	  (lambda ()
-            (add-to-list 'gud-jdb-classpath "/home/alex/android-sdk-linux_86/platforms/android-8/android.jar")
+            (add-to-list 'gud-jdb-classpath "/home/alex/android-sdk-linux_x86/platforms/android-8/android.jar")
             ))
 
 (custom-set-variables
