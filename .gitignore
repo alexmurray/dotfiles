@@ -1,2 +1,5 @@
 *~
+*.elc
+.emacs.d/semanticdb
+.emacs.d/srecode-map.el
 ac-comphist.dat
