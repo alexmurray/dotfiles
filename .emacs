@@ -161,9 +161,15 @@
  'c-mode
  '(("\\<\\(TODO\\|todo\\|FIXME\\|fixme\\)" 1 font-lock-warning-face t)))
 
+;; ajc-java-complete
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/ajc-java-complete/"))
+(require 'ajc-java-complete-config)
+
 ;; android-mode
 (require 'android-mode)
 (setq android-mode-sdk-dir "~/android-sdk-linux_x86/")
+;; change prefix so doesn't conflict with comment-region
+(setq android-mode-key-prefix "\C-c \C-m")
 (add-hook 'gud-mode-hook
 	  (lambda ()
             (add-to-list 'gud-jdb-classpath "/home/alex/android-sdk-linux_x86/platforms/android-8/android.jar")
