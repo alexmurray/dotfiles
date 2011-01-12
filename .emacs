@@ -75,8 +75,7 @@
 (ac-config-default)
 
 ;; rainbow mode - for colouring strings that represent colors
-(autoload 'rainbow-mode "rainbow-mode" "rainbow-mode." t)
-(rainbow-mode 1)
+(require 'rainbow-mode)
 
 ;; code snippet support
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/yasnippet-0.6.1c"))
@@ -90,6 +89,10 @@
 
 ;; scratch.el - from http://github.com/ieure/scratch-el
 (autoload 'scratch "scratch" nil t)
+
+;; magit - installed as a system package
+(require 'magit)
+(global-set-key "\C-x\C-z" 'magit-status)
 
 ;;;; Support for specific languages ;;;;
 
