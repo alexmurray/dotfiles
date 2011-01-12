@@ -19,6 +19,13 @@
 (global-set-key "\C-x\C-m" 'compile)
 (global-set-key "\C-xe" 'shell)
 
+;; make f11 fullscreen full screen
+(defun fullscreen ()
+  (interactive)
+  (set-frame-parameter nil 'fullscreen
+                       (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
+(global-set-key [f11] 'fullscreen)
+
 ;; Show line column numbers in mode line
 (line-number-mode t)
 (column-number-mode t)
