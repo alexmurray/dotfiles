@@ -185,6 +185,11 @@
             (add-to-list 'gud-jdb-classpath "/home/alex/android-sdk-linux_x86/platforms/android-8/android.jar")
             ))
 
+;; nxhtml
+(load "~/.emacs.d/nxhtml/autostart.el")
+;; nxhtml and yasnippet integration
+(yas/define-snippets 'nxhtml-mode nil 'html-mode)
+
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
