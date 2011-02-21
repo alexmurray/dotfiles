@@ -72,6 +72,9 @@
 ;; set load-path
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
 
+;; zeitgeist integration
+(load-library "zeitgeist.elc")
+
 ;; color theme - requires emacs-goodies-el to be installed on ubuntu
 (autoload 'color-theme-blackboard "color-theme-blackboard" "blackboard color theme." t)
 (color-theme-blackboard)
