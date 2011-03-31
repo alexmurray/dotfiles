@@ -76,8 +76,12 @@
 (load-library "zeitgeist.elc")
 
 ;; color theme - requires emacs-goodies-el to be installed on ubuntu
-(autoload 'color-theme-blackboard "color-theme-blackboard" "blackboard color theme." t)
-(color-theme-blackboard)
+(require 'color-theme)
+(color-theme-initialize)
+;;(autoload 'color-theme-blackboard "color-theme-blackboard" "blackboard color theme." t)
+;;(color-theme-blackboard)
+(autoload 'color-theme-zen-and-art "color-theme-zen-and-art" "zen-and-art color theme." t)
+(color-theme-zen-and-art)
 
 ;; auto-complete mode
 (require 'auto-complete-config)
@@ -154,17 +158,17 @@
 	    ;; insert gtk-doc style comment declarations using C-x 4 h
 	    ;; (gtk-doc-insert) or C-x 4 s (gtk-doc-insert-section) to
 	    ;; comment current function or section respectively
-	    (load "gtk-doc")
+	    ;;(load "gtk-doc")
 	    ;; use semantic as a source for auto complete
 	    (setq ac-sources (append ac-sources '(ac-source-semantic)))
 	    (auto-fill-mode 1)
 	    ;; devhelp
-	    (require 'devhelp
-		     ;; Bind F6 to enable the automatic assistant.
-		     (global-set-key [f6] 'devhelp-toggle-automatic-assistant)
-		     ;; Bind F7 to search with the assistant window.
-		     (global-set-key [f7] 'devhelp-assistant-word-at-point)
-		     )
+	    ;; (require 'devhelp
+	    ;; 	     ;; Bind F6 to enable the automatic assistant.
+	    ;; 	     (global-set-key [f6] 'devhelp-toggle-automatic-assistant)
+	    ;; 	     ;; Bind F7 to search with the assistant window.
+	    ;; 	     (global-set-key [f7] 'devhelp-assistant-word-at-point)
+	    ;; 	     )
 
 	    )
 	  )
