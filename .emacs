@@ -122,9 +122,7 @@
 	    ;; Enable flyspell
 	    (flyspell-mode 1)
 	    ;; workaround bug in autocomplete and flyspell
-	    (ac-flyspell-workaround)
-	    )
-	  )
+	    (ac-flyspell-workaround)))
 
 ;; C coding etc
 (add-hook 'c-mode-common-hook
@@ -163,15 +161,13 @@
 	    (setq ac-sources (append ac-sources '(ac-source-semantic)))
 	    (auto-fill-mode 1)
 	    ;; devhelp
-	    ;; (require 'devhelp
-	    ;; 	     ;; Bind F6 to enable the automatic assistant.
-	    ;; 	     (global-set-key [f6] 'devhelp-toggle-automatic-assistant)
-	    ;; 	     ;; Bind F7 to search with the assistant window.
-	    ;; 	     (global-set-key [f7] 'devhelp-assistant-word-at-point)
-	    ;; 	     )
-
-	    )
-	  )
+	    (require 'devhelp
+	    	     ;; Bind F6 to enable the automatic assistant.
+	    	     (global-set-key [f6] 'devhelp-toggle-automatic-assistant)
+	    	     ;; Bind F7 to search with the assistant window.
+	    	     (global-set-key [f7] 'devhelp-assistant-word-at-point))
+	    ;; enable gobject helper
+	    (require 'gobject-class)))
 
 ;; for C code highlight TODO and fixme so it looks scary
 (font-lock-add-keywords
@@ -189,10 +185,10 @@
 (setq android-mode-key-prefix "\C-c \C-m")
 (add-hook 'gud-mode-hook
 	  (lambda ()
-            (add-to-list 'gud-jdb-classpath "/home/alex/android-sdk-linux_x86/platforms/android-8/android.jar")
-            ))
+            (add-to-list 'gud-jdb-classpath "/home/alex/android-sdk-linux_x86/platforms/android-8/android.jar")))
 
-;; nxhtml
+
+;; nxhtml - TODO: need to make this only load on php / html etc since slows down emacs startup
 (load "~/.emacs.d/nxhtml/autostart.el")
 ;; nxhtml and yasnippet integration
 (yas/define-snippets 'nxhtml-mode nil 'html-mode)
@@ -202,7 +198,6 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(ecb-options-version "2.32")
  '(user-full-name "Alex Murray")
  '(user-mail-address "murray.alex@gmail.com")
  '(x-select-enable-clipboard t))
