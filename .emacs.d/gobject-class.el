@@ -99,10 +99,10 @@ It takes 2 parameters:
       "\n"
       "typedef struct _" ClassName "      " ClassName ";\n"
       "typedef struct _" ClassName "Class " ClassName "Class;\n"
-      (if (string= "y" private) 
+      (if (string= "y" private)
 	  (concat "typedef struct _" ClassName "Private " ClassName "Private;\n")
 	"")
-	  
+
       "\n"
       "struct _" ClassName "Class\n"
       "{\n"
@@ -112,7 +112,7 @@ It takes 2 parameters:
       "struct _" ClassName "\n"
       "{\n"
       "    " ParentClassName " parent;\n"
-      (if (string= "y" private) 
+      (if (string= "y" private)
 	  (concat "    " ClassName "Private *priv;\n")
 	  "")
       "};\n"
@@ -176,14 +176,14 @@ It takes 2 parameters:
       "static void " class_name "_constructed (GObject *object);\n"
       "static void " class_name "_dispose (GObject *object);\n"
       "static void " class_name "_finalize (GObject *object);\n"
-      (if (string= "y" properties) 
+      (if (string= "y" properties)
 	  (concat "static void " class_name "_get_property (GObject *object,\n"
 		  "   guint property_id, GValue *value, GParamSpec *pspec);\n"
 		  "static void " class_name "_set_property (GObject *object,\n"
 		  "   guint property_id, const GValue *value, GParamSpec *pspec);\n")
 	"")
       "\n"
-      (if (string= "y" signals) 
+      (if (string= "y" signals)
 	  (concat   "/* signal enum */\n"
 		    "enum {\n"
 		    "    SIGNAL_DUMMY,\n"
@@ -194,7 +194,7 @@ It takes 2 parameters:
 		    "\n")
 	"")
 
-      (if (string= "y" properties) 
+      (if (string= "y" properties)
 	  (concat      "/* properties */\n"
 		       "enum {\n"
 		       "  PROP_DUMMY = 1,\n"
@@ -202,7 +202,7 @@ It takes 2 parameters:
 		       "};\n")
 	"")
       "\n"
-      (if (string= "y" private) 
+      (if (string= "y" private)
 	  (concat    "struct _" ClassName "Private\n"
 		     "{\n"
 		     "  gboolean dispose_has_run;\n"
@@ -214,11 +214,11 @@ It takes 2 parameters:
       "{\n"
       "    GObjectClass *gobject_class = G_OBJECT_CLASS (klass);\n"
       "\n"
-      (if (string= "y" private) 
+      (if (string= "y" private)
 	  (concat  "    g_type_class_add_private (klass, sizeof (" ClassName "Private));\n"
 		   "\n")
 	"")
-      (if (string= "y" properties) 
+      (if (string= "y" properties)
 	  (concat       "    gobject_class->get_property = " class_name "_get_property;\n"
 			"    gobject_class->set_property = " class_name "_set_property;\n")
 	"")
@@ -226,7 +226,7 @@ It takes 2 parameters:
       "    gobject_class->dispose = " class_name "_dispose;\n"
       "    gobject_class->finalize = " class_name "_finalize;\n"
       "\n"
-      (if (string= "y" properties) 
+      (if (string= "y" properties)
 	  (concat   "    g_object_class_install_property (gobject_class, PROP_DUMMY,\n"
 		    "        g_param_spec_uint (\"dummy\", \"dummy property\",\n"
 		    "            \"dummy property blurp.\",\n"
@@ -235,7 +235,7 @@ It takes 2 parameters:
 		    "            G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));\n"
 		    "\n")
 	"")
-      (if (string= "y" properties) 
+      (if (string= "y" properties)
 	  (concat  "    signals[SIGNAL_DUMMY] = g_signal_new (\"dummy\",\n"
 		   "        G_OBJECT_CLASS_TYPE (klass),\n"
 		   "        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,\n"
@@ -250,7 +250,7 @@ It takes 2 parameters:
       "static void\n"
       class_name "_init (" ClassName " *self)\n"
       "{\n"
-      (if (string= "y" private) 
+      (if (string= "y" private)
 	  (concat  "    " ClassName "Private *priv =\n"
 		   "        G_TYPE_INSTANCE_GET_PRIVATE (self, " NAMESPACE "_TYPE_" NAME ",\n"
 		   "            " ClassName "Private);\n"
@@ -260,13 +260,13 @@ It takes 2 parameters:
 	"")
       "}\n"
       "\n"
-      (if (string= "y" properties) 
+      (if (string= "y" properties)
 	  (concat     "static void\n"
 		      class_name "_get_property (GObject *object,\n"
 		      "  guint property_id, GValue *value, GParamSpec *pspec)\n"
 		      "{\n"
 		      "    " ClassName" *self = " NAMESPACE "_" NAME " (object);\n"
-		      (if (string= "y" private) 
+		      (if (string= "y" private)
 			  (concat   "    " ClassName "Private *priv = self->priv;\n"
 				    "\n"
 				    "    /* Make compiler happy */\n"
@@ -288,7 +288,7 @@ It takes 2 parameters:
 		      "  guint property_id, const GValue *value, GParamSpec *pspec)\n"
 		      "{\n"
 		      "    " ClassName" *self = " NAMESPACE "_" NAME " (object);\n"
-		      (if (string= "y" private) 
+		      (if (string= "y" private)
 			  (concat   "    " ClassName "Private *priv = self->priv;\n"
 				    "\n"
 				    "    /* Make compiler happy */\n"
@@ -312,7 +312,7 @@ It takes 2 parameters:
       "    void (*chain_up) (GObject *) =\n"
       "      G_OBJECT_CLASS (" class_name "_parent_class)->constructed;\n"
       "    " ClassName " *self = " NAMESPACE "_" NAME " (object);\n"
-      (if (string= "y" private) 
+      (if (string= "y" private)
 	  (concat   "    " ClassName "Private *priv = self->priv;\n"
 		    "\n"
 		    "    /* Make compiler happy */\n"
@@ -328,11 +328,11 @@ It takes 2 parameters:
       class_name "_dispose (GObject *object)\n"
       "{\n"
       "    " ClassName " *self = (" ClassName " *)object;\n"
-      (if (string= "y" private) 
+      (if (string= "y" private)
 	  (concat   "    " ClassName "Private *priv = self->priv;\n")
 	"")
       "\n"
-      (if (string= "y" private) 
+      (if (string= "y" private)
 	  (concat  "    if (priv->dispose_has_run)\n"
 		   "        return;\n"
 		   "\n"
@@ -384,7 +384,7 @@ It takes 2 parameters:
 	 (signals (if (string= "n" signals) "n" "y"))
 	 (copyright_line (if (string= "" copyright)
 			     ""
-			   (concat " * Copyright (C) 2010 " copyright "\n\n")))
+			   (concat " * Copyright (C) " (number-to-string (nth 5 (decode-time (current-time)))) " " copyright "\n\n")))
 	 (pieces-class_name  (split-string (downcase class_name) "_"))
 	 (pieces-parent_class_name (split-string parent_class_name "_"))
 	 (namespace       (car-safe pieces-class_name))
@@ -412,22 +412,21 @@ It takes 2 parameters:
     (insert
      (concat
       "/*\n"
-      "* " file_header " - Header for " ClassName "\n"
-      " *\n"
       copyright_line
-      " * This library is free software; you can redistribute it and/or\n"
-      " * modify it under the terms of the GNU Lesser General Public\n"
-      " * License as published by the Free Software Foundation; either\n"
-      " * version 2.1 of the License, or (at your option) any later version.\n"
+      " * This file is part of Foobar.\n"
       " *\n"
-      " * This library is distributed in the hope that it will be useful,\n"
+      " * Foobar is free software: you can redistribute it and/or modify\n"
+      " * it under the terms of the GNU General Public License as published by\n"
+      " * the Free Software Foundation, either version 3 of the License, or\n"
+      " * (at your option) any later version.\n"
+      " *\n"
+      " * Foobar is distributed in the hope that it will be useful,\n"
       " * but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-      " * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n"
-      " * Lesser General Public License for more details.\n"
+      " * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+      " * GNU General Public License for more details.\n"
       " *\n"
-      " * You should have received a copy of the GNU Lesser General Public\n"
-      " * License along with this library; if not, write to the Free Software\n"
-      " * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA\n"
+      " * You should have received a copy of the GNU General Public License\n"
+      " * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.\n"
       " */\n"
       "\n"
       "#ifndef __" DEFINE_NAME "__\n"
@@ -449,19 +448,20 @@ It takes 2 parameters:
       "* " file_code " - Source for " ClassName "\n"
       " *\n"
       copyright_line
-      " * This library is free software; you can redistribute it and/or\n"
-      " * modify it under the terms of the GNU Lesser General Public\n"
-      " * License as published by the Free Software Foundation; either\n"
-      " * version 2.1 of the License, or (at your option) any later version.\n"
+      " * This file is part of Foobar.\n"
       " *\n"
-      " * This library is distributed in the hope that it will be useful,\n"
+      " * Foobar is free software: you can redistribute it and/or modify\n"
+      " * it under the terms of the GNU General Public License as published by\n"
+      " * the Free Software Foundation, either version 3 of the License, or\n"
+      " * (at your option) any later version.\n"
+      " *\n"
+      " * Foobar is distributed in the hope that it will be useful,\n"
       " * but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-      " * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n"
-      " * Lesser General Public License for more details.\n"
+      " * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+      " * GNU General Public License for more details.\n"
       " *\n"
-      " * You should have received a copy of the GNU Lesser General Public\n"
-      " * License along with this library; if not, write to the Free Software\n"
-      " * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA\n"
+      " * You should have received a copy of the GNU General Public License\n"
+      " * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.\n"
       " */\n"
       "\n"
       "#include \"" file_header "\"\n"
