@@ -79,23 +79,23 @@ It takes 2 parameters:
       (macro-line-cnt "#define " NAMESPACE "_TYPE_" NAME)
       (macro-line-end "   (" namespace "_" name "_get_type())")
       (macro-line-cnt "#define " NAMESPACE "_" NAME "(obj)")
-      (macro-line-cnt "   (G_TYPE_CHECK_INSTANCE_CAST ((obj),")
-      (macro-line-cnt "                                " NAMESPACE "_TYPE_" NAME ",")
-      (macro-line-end "                                " ClassName "))")
-      (macro-line-cnt "#define " NAMESPACE "_" NAME "_CLASS(klass)")
-      (macro-line-cnt "   (G_TYPE_CHECK_CLASS_CAST ((klass),")
-      (macro-line-cnt "                             " NAMESPACE "_TYPE_" NAME ",")
-      (macro-line-end "                             " ClassName "Class))")
-      (macro-line-cnt "#define IS_" NAMESPACE "_" NAME "(obj)")
-      (macro-line-cnt "   (G_TYPE_CHECK_INSTANCE_TYPE ((obj),")
-      (macro-line-end "                                " NAMESPACE "_TYPE_" NAME "))")
-      (macro-line-cnt "#define IS_" NAMESPACE "_" NAME "_CLASS(klass)")
-      (macro-line-cnt "   (G_TYPE_CHECK_CLASS_TYPE ((klass),")
-      (macro-line-end "                             " NAMESPACE "_TYPE_" NAME "))")
-      (macro-line-cnt "#define " NAMESPACE "_" NAME "_GET_CLASS(obj)")
-      (macro-line-cnt "   (G_TYPE_INSTANCE_GET_CLASS ((obj),")
+      (macro-line-cnt "   (G_TYPE_CHECK_INSTANCE_CAST((obj),")
       (macro-line-cnt "                               " NAMESPACE "_TYPE_" NAME ",")
-      (macro-line-end "                               " ClassName "Class))")
+      (macro-line-end "                               " ClassName "))")
+      (macro-line-cnt "#define " NAMESPACE "_" NAME "_CLASS(klass)")
+      (macro-line-cnt "   (G_TYPE_CHECK_CLASS_CAST((klass),")
+      (macro-line-cnt "                            " NAMESPACE "_TYPE_" NAME ",")
+      (macro-line-end "                            " ClassName "Class))")
+      (macro-line-cnt "#define " NAMESPACE "_IS_" NAME "(obj)")
+      (macro-line-cnt "   (G_TYPE_CHECK_INSTANCE_TYPE((obj),")
+      (macro-line-end "                              " NAMESPACE "_TYPE_" NAME "))")
+      (macro-line-cnt "#define " NAMESPACE "_IS_" NAME "_CLASS(klass)")
+      (macro-line-cnt "   (G_TYPE_CHECK_CLASS_TYPE((klass),")
+      (macro-line-end "                            " NAMESPACE "_TYPE_" NAME "))")
+      (macro-line-cnt "#define " NAMESPACE "_" NAME "_GET_CLASS(obj)")
+      (macro-line-cnt "   (G_TYPE_INSTANCE_GET_CLASS((obj),")
+      (macro-line-cnt "                              " NAMESPACE "_TYPE_" NAME ",")
+      (macro-line-end "                              " ClassName "Class))")
       "\n"
       "typedef struct _" ClassName "      " ClassName ";\n"
       "typedef struct _" ClassName "Class " ClassName "Class;\n"
@@ -117,7 +117,7 @@ It takes 2 parameters:
 	  "")
       "};\n"
       "\n"
-      "GType " namespace "_" name "_get_type (void) G_GNUC_CONST;\n"
+      "GType " namespace "_" name "_get_type(void) G_GNUC_CONST;\n"
       "\n"
       "G_END_DECLS\n"
       "\n"
@@ -173,13 +173,12 @@ It takes 2 parameters:
       "\n"
       "G_DEFINE_TYPE (" ClassName ", " class_name ", " PARENT_NAMESPACE "_TYPE_" PARENT_NAME ");\n"
       "\n"
-      "static void " class_name "_constructed (GObject *object);\n"
-      "static void " class_name "_dispose (GObject *object);\n"
-      "static void " class_name "_finalize (GObject *object);\n"
+      "static void " class_name "_dispose(GObject *object);\n"
+      "static void " class_name "_finalize(GObject *object);\n"
       (if (string= "y" properties)
-	  (concat "static void " class_name "_get_property (GObject *object,\n"
+	  (concat "static void " class_name "_get_property(GObject *object,\n"
 		  "   guint property_id, GValue *value, GParamSpec *pspec);\n"
-		  "static void " class_name "_set_property (GObject *object,\n"
+		  "static void " class_name "_set_property(GObject *object,\n"
 		  "   guint property_id, const GValue *value, GParamSpec *pspec);\n")
 	"")
       "\n"
@@ -205,30 +204,29 @@ It takes 2 parameters:
       (if (string= "y" private)
 	  (concat    "struct _" ClassName "Private\n"
 		     "{\n"
-		     "  gboolean dispose_has_run;\n"
+		     "  guint dummy;\n"
 		     "};\n"
 		     "\n")
 	"")
       "static void\n"
-      class_name "_class_init (" ClassName "Class *klass)\n"
+      class_name "_class_init(" ClassName "Class *klass)\n"
       "{\n"
-      "    GObjectClass *gobject_class = G_OBJECT_CLASS (klass);\n"
+      "    GObjectClass *gobject_class = G_OBJECT_CLASS(klass);\n"
       "\n"
       (if (string= "y" private)
-	  (concat  "    g_type_class_add_private (klass, sizeof (" ClassName "Private));\n"
+	  (concat  "    g_type_class_add_private(klass, sizeof(" ClassName "Private));\n"
 		   "\n")
 	"")
       (if (string= "y" properties)
 	  (concat       "    gobject_class->get_property = " class_name "_get_property;\n"
 			"    gobject_class->set_property = " class_name "_set_property;\n")
 	"")
-      "    gobject_class->constructed = " class_name "_constructed;\n"
       "    gobject_class->dispose = " class_name "_dispose;\n"
       "    gobject_class->finalize = " class_name "_finalize;\n"
       "\n"
       (if (string= "y" properties)
-	  (concat   "    g_object_class_install_property (gobject_class, PROP_DUMMY,\n"
-		    "        g_param_spec_uint (\"dummy\", \"dummy property\",\n"
+	  (concat   "    g_object_class_install_property(gobject_class, PROP_DUMMY,\n"
+		    "        g_param_spec_uint(\"dummy\", \"dummy property\",\n"
 		    "            \"dummy property blurp.\",\n"
 		    "            0, G_MAXUINT,\n"
 		    "            0,\n"
@@ -236,8 +234,8 @@ It takes 2 parameters:
 		    "\n")
 	"")
       (if (string= "y" properties)
-	  (concat  "    signals[SIGNAL_DUMMY] = g_signal_new (\"dummy\",\n"
-		   "        G_OBJECT_CLASS_TYPE (klass),\n"
+	  (concat  "    signals[SIGNAL_DUMMY] = g_signal_new(\"dummy\",\n"
+		   "        G_OBJECT_CLASS_TYPE(klass),\n"
 		   "        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,\n"
 		   "        0,\n"
 		   "        NULL, NULL,\n"
@@ -252,20 +250,19 @@ It takes 2 parameters:
       "{\n"
       (if (string= "y" private)
 	  (concat  "    " ClassName "Private *priv =\n"
-		   "        G_TYPE_INSTANCE_GET_PRIVATE (self, " NAMESPACE "_TYPE_" NAME ",\n"
+		   "        G_TYPE_INSTANCE_GET_PRIVATE(self, " NAMESPACE "_TYPE_" NAME ",\n"
 		   "            " ClassName "Private);\n"
 		   "\n"
-		   "    self->priv = priv;\n"
-		   "    priv->dispose_has_run = FALSE;\n")
+		   "    self->priv = priv;\n")
 	"")
       "}\n"
       "\n"
       (if (string= "y" properties)
 	  (concat     "static void\n"
-		      class_name "_get_property (GObject *object,\n"
+		      class_name "_get_property(GObject *object,\n"
 		      "  guint property_id, GValue *value, GParamSpec *pspec)\n"
 		      "{\n"
-		      "    " ClassName" *self = " NAMESPACE "_" NAME " (object);\n"
+		      "    " ClassName" *self = " NAMESPACE "_" NAME "(object);\n"
 		      (if (string= "y" private)
 			  (concat   "    " ClassName "Private *priv = self->priv;\n"
 				    "\n"
@@ -275,19 +272,19 @@ It takes 2 parameters:
 		      "\n"
 		      "    switch (property_id) {\n"
 		      "      case PROP_DUMMY:\n"
-		      "        g_value_set_uint (value, 0);\n"
+		      "        g_value_set_uint(value, 0);\n"
 		      "        break;\n"
 		      "      default:\n"
-		      "        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);\n"
+		      "        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, property_id, pspec);\n"
 		      "        break;\n"
 		      "    }\n"
 		      "}\n"
 		      "\n"
 		      "static void\n"
-		      class_name "_set_property (GObject *object,\n"
+		      class_name "_set_property(GObject *object,\n"
 		      "  guint property_id, const GValue *value, GParamSpec *pspec)\n"
 		      "{\n"
-		      "    " ClassName" *self = " NAMESPACE "_" NAME " (object);\n"
+		      "    " ClassName" *self = " NAMESPACE "_" NAME "(object);\n"
 		      (if (string= "y" private)
 			  (concat   "    " ClassName "Private *priv = self->priv;\n"
 				    "\n"
@@ -297,32 +294,15 @@ It takes 2 parameters:
 		      "\n"
 		      "    switch (property_id) {\n"
 		      "      case PROP_DUMMY:\n"
-		      "        g_value_get_uint (value);\n"
+		      "        g_value_get_uint(value);\n"
 		      "        break;\n"
 		      "      default:\n"
-		      "        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);\n"
+		      "        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, property_id, pspec);\n"
 		      "        break;\n"
 		      "    }\n"
 		      "}\n")
 	"")
       "\n"
-      "static void\n"
-      class_name "_constructed (GObject *object)\n"
-      "{\n"
-      "    void (*chain_up) (GObject *) =\n"
-      "      G_OBJECT_CLASS (" class_name "_parent_class)->constructed;\n"
-      "    " ClassName " *self = " NAMESPACE "_" NAME " (object);\n"
-      (if (string= "y" private)
-	  (concat   "    " ClassName "Private *priv = self->priv;\n"
-		    "\n"
-		    "    /* Make compiler happy */\n"
-		    "    (void)priv;\n")
-	"")
-      "\n"
-      "  if (chain_up != NULL)\n"
-      "    chain_up (object);\n"
-      "\n"
-      "}"
       "\n"
       "static void\n"
       class_name "_dispose (GObject *object)\n"
@@ -332,14 +312,7 @@ It takes 2 parameters:
 	  (concat   "    " ClassName "Private *priv = self->priv;\n")
 	"")
       "\n"
-      (if (string= "y" private)
-	  (concat  "    if (priv->dispose_has_run)\n"
-		   "        return;\n"
-		   "\n"
-		   "    priv->dispose_has_run = TRUE;\n"
-		   "\n")
-	"")
-      "    G_OBJECT_CLASS (" class_name "_parent_class)->dispose (object);\n"
+      "    G_OBJECT_CLASS(" class_name "_parent_class)->dispose(object);\n"
       "}\n"
       "\n"
       "static void\n"
@@ -350,7 +323,7 @@ It takes 2 parameters:
       "    /* Make compiler happy */\n"
       "    (void)self;\n"
       "\n"
-      "    G_OBJECT_CLASS (" class_name "_parent_class)->finalize (object);\n"
+      "    G_OBJECT_CLASS(" class_name "_parent_class)->finalize(object);\n"
       "}\n"
       "\n"
       )
@@ -358,7 +331,7 @@ It takes 2 parameters:
     )
   )
 
-(defun gobject-class-generate (class_name parent_class_name copyright private properties signals)
+(defun gobject-class-generate (package class_name parent_class_name copyright private properties signals)
   "Generate header (.h) and code (.c) files for a GObject derived class.
 
 It takes 2 parameters:
@@ -370,7 +343,7 @@ It takes 2 parameters:
       before the underscore character (_) will be used as name space.
       Example: 'g_object' is the 'object' class in 'g' namespace.
 "
-  (interactive "sClass name (ie: gtk_tree_view): \nsParent class name (default: g_object): \nsCopyright information : \nsAdd Private structure ([y]/n)?\nsAdd properties ([y]/n)?\nsAdd signals ([y]/n)?\n")
+  (interactive "sPackage name: \nsClass name (ie: gtk_tree_view): \nsParent class name (default: g_object): \nsCopyright information : \nsAdd Private structure ([y]/n)?\nsAdd properties ([y]/n)?\nsAdd signals ([y]/n)?\n")
 
   (let* ((parent_class_name (if (string= "" parent_class_name)
 				"g_object"
@@ -413,20 +386,19 @@ It takes 2 parameters:
      (concat
       "/*\n"
       copyright_line
-      " * This file is part of Foobar.\n"
       " *\n"
-      " * Foobar is free software: you can redistribute it and/or modify\n"
+      " * " package " is free software: you can redistribute it and/or modify\n"
       " * it under the terms of the GNU General Public License as published by\n"
       " * the Free Software Foundation, either version 3 of the License, or\n"
       " * (at your option) any later version.\n"
       " *\n"
-      " * Foobar is distributed in the hope that it will be useful,\n"
+      " * " package " is distributed in the hope that it will be useful,\n"
       " * but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
       " * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
       " * GNU General Public License for more details.\n"
       " *\n"
       " * You should have received a copy of the GNU General Public License\n"
-      " * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.\n"
+      " * along with " package ".  If not, see <http://www.gnu.org/licenses/>.\n"
       " */\n"
       "\n"
       "#ifndef __" DEFINE_NAME "__\n"
@@ -445,23 +417,20 @@ It takes 2 parameters:
     (insert
      (concat
       "/*\n"
-      "* " file_code " - Source for " ClassName "\n"
-      " *\n"
       copyright_line
-      " * This file is part of Foobar.\n"
       " *\n"
-      " * Foobar is free software: you can redistribute it and/or modify\n"
+      " * " package " is free software: you can redistribute it and/or modify\n"
       " * it under the terms of the GNU General Public License as published by\n"
       " * the Free Software Foundation, either version 3 of the License, or\n"
       " * (at your option) any later version.\n"
       " *\n"
-      " * Foobar is distributed in the hope that it will be useful,\n"
+      " * " package " is distributed in the hope that it will be useful,\n"
       " * but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
       " * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
       " * GNU General Public License for more details.\n"
       " *\n"
       " * You should have received a copy of the GNU General Public License\n"
-      " * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.\n"
+      " * along with " package ".  If not, see <http://www.gnu.org/licenses/>.\n"
       " */\n"
       "\n"
       "#include \"" file_header "\"\n"
