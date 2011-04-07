@@ -171,7 +171,7 @@ It takes 2 parameters:
     (insert
      (concat
       "\n"
-      "G_DEFINE_TYPE (" ClassName ", " class_name ", " PARENT_NAMESPACE "_TYPE_" PARENT_NAME ");\n"
+      "G_DEFINE_TYPE(" ClassName ", " class_name ", " PARENT_NAMESPACE "_TYPE_" PARENT_NAME ");\n"
       "\n"
       "static void " class_name "_dispose(GObject *object);\n"
       "static void " class_name "_finalize(GObject *object);\n"
@@ -246,7 +246,7 @@ It takes 2 parameters:
       "}\n"
       "\n"
       "static void\n"
-      class_name "_init (" ClassName " *self)\n"
+      class_name "_init(" ClassName " *self)\n"
       "{\n"
       (if (string= "y" private)
 	  (concat  "    " ClassName "Private *priv =\n"
@@ -305,7 +305,7 @@ It takes 2 parameters:
       "\n"
       "\n"
       "static void\n"
-      class_name "_dispose (GObject *object)\n"
+      class_name "_dispose(GObject *object)\n"
       "{\n"
       "    " ClassName " *self = (" ClassName " *)object;\n"
       (if (string= "y" private)
@@ -316,7 +316,7 @@ It takes 2 parameters:
       "}\n"
       "\n"
       "static void\n"
-      class_name "_finalize (GObject *object)\n"
+      class_name "_finalize(GObject *object)\n"
       "{\n"
       "    " ClassName " *self = (" ClassName " *)object;\n"
       "\n"
