@@ -36,9 +36,6 @@
 ;; delete trailing whitespace on save
 (add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
 
-;; always end a file with a newline
-(setq require-final-newline 'query)
-
 ;; use proper english
 (setq ispell-dictionary "british")
 
