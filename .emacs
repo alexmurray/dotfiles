@@ -121,25 +121,14 @@
 	    ;; workaround bug in autocomplete and flyspell
 	    (ac-flyspell-workaround)))
 
-;; C coding etc
+;; c-mode and other derived modes (c++, java etc) etc
 (add-hook 'c-mode-common-hook
           (lambda ()
-	    ;; use linux kernel style
-	    (c-set-style "linux")
 	    ;; use tabs not spaces to indent
 	    (setq indent-tabs-mode t)
-	    ;; options for c-eldoc mode - could also add other libs too like OpenGL if
-	    ;; needed
-	    (setq c-eldoc-includes "`pkg-config gtk+-2.0 --cflags` -I./ -I../ ")
-	    (load "c-eldoc")
-	    ;; turn on auto-newline and hungry-delete
-	    (c-toggle-auto-hungry-state t)
-	    ;; show trailing whitespace
-	    (setq show-trailing-whitespace t)
-	    ;; set auto newline
-	    (setq c-auto-newline 1)
+	    ;; set a reasonable fill and comment column
 	    (setq fill-column 80)
-	    (setq comment-column 60)
+	    (setq comment-column 70)
 	    ;; turn on spell checking for strings and comments
 	    (flyspell-prog-mode)
 	    ;; workaround bug in autocomplete and flyspell
@@ -147,6 +136,27 @@
 	    ;; make CamelCase words separate subwords (ie. Camel and Case can
 	    ;; be operated on separately as separate words
 	    (subword-mode 1)
+	    (auto-fill-mode 1)
+	    ;; show trailing whitespace
+	    (setq show-trailing-whitespace t)
+	    ;; turn on auto-newline and hungry-delete
+	    (c-toggle-auto-hungry-state t)
+	    ;; set auto newline
+	    (setq c-auto-newline 1)
+	    ;; use semantic as a source for auto complete
+	    (setq ac-sources (append ac-sources '(ac-source-semantic)))
+	    ;; highlight TODO and fixme so it looks scary
+	    (font-lock-add-keywords nil
+				    '(("\\<\\(TODO\\|todo\\|FIXME\\|fixme\\)" 1 font-lock-warning-face t)))))
+
+(add-hook 'c-mode-hook
+	  (lambda ()
+	    ;; use linux kernel style
+	    (c-set-style "linux")
+	    ;; options for c-eldoc mode - could also add other libs
+	    ;; too like OpenGL if needed
+	    (setq c-eldoc-includes "`pkg-config gtk+-2.0 --cflags` -I./ -I../ ")
+	    (load "c-eldoc")
 	    ;; turn on c-eldoc
 	    (c-turn-on-eldoc-mode)
 	    ;; enable gtk-doc helpers from gtk-doc-tools to easily
@@ -154,9 +164,6 @@
 	    ;; (gtk-doc-insert) or C-x 4 s (gtk-doc-insert-section) to
 	    ;; comment current function or section respectively
 	    ;;(load "gtk-doc")
-	    ;; use semantic as a source for auto complete
-	    (setq ac-sources (append ac-sources '(ac-source-semantic)))
-	    (auto-fill-mode 1)
 	    ;; devhelp
 	    (require 'devhelp
 	    	     ;; Bind F6 to enable the automatic assistant.
@@ -165,11 +172,6 @@
 	    	     (global-set-key [f7] 'devhelp-assistant-word-at-point))
 	    ;; enable gobject helper
 	    (require 'gobject-class)))
-
-;; for C code highlight TODO and fixme so it looks scary
-(font-lock-add-keywords
- 'c-mode
- '(("\\<\\(TODO\\|todo\\|FIXME\\|fixme\\)" 1 font-lock-warning-face t)))
 
 ;; ajc-java-complete
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/ajc-java-complete/"))
