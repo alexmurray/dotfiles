@@ -80,6 +80,8 @@
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 (ac-config-default)
+;; make autostart after entering a single character
+(setq ac-auto-start 1)
 
 ;; rainbow mode - for colouring strings that represent colors
 (require 'rainbow-mode)
@@ -189,6 +191,23 @@
 ;;(load "~/.emacs.d/nxhtml/autostart.el")
 ;; nxhtml and yasnippet integration
 ;;(yas/define-snippets 'nxhtml-mode nil 'html-mode)
+
+; autoload slime when you open a .lisp file
+(require 'slime)
+(add-hook 'slime-mode-hook
+ (lambda ()
+   (unless (slime-connected-p)
+     (save-excursion (slime)))))
+; autoclose emacs even if lisp processes are running
+(setq slime-kill-without-query-p t)
+
+;; slime autocomplete
+(require 'ac-slime)
+(add-hook 'slime-mode-hook 'set-up-slime-ac)
+(add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+;; set ac-modes to include slime
+(add-to-list 'ac-modes 'lisp-mode)
+(add-to-list 'ac-modes 'slime-repl-mode)
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
