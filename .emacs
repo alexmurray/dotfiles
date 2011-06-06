@@ -3,7 +3,6 @@
 ;; set visual properties early to reduce frame flickering
 ;; set default font properties
 (set-face-attribute 'default nil :font "DejaVu Sans Mono")
-(set-face-attribute 'default nil :height 90)
 ;; disable tool-bar and scroll-bar, show matching parenthesis and time
 (menu-bar-mode 0)
 (tool-bar-mode 0)
@@ -108,6 +107,11 @@
 ;; for auctex and reftex integration
 (add-hook 'LaTeX-mode-hook
 	  (lambda ()
+	    ;; Use PDF by default
+	    (TeX-PDF-mode 1)
+	    (setq TeX-view-program-selection
+		  '((output-pdf "Evince")
+		    (output-dvi "Evince")))
 	    ;; Enable source-specials for Control-click forward/reverse search.
 	    (TeX-source-specials-mode 1)
 	    (setq TeX-source-specials-view-start-server t)
