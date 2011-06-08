@@ -1,5 +1,6 @@
 ;;; The Zeitgeist Emacs Script -- integrates Emacs with Zeitgeist.
 ;;; Copyright (C) 2010, Patrick M. Niedzielski <PatrickNiedzielski@gmail.com>
+;;; Copyright (C) 2011, Tassilo Horn <tassilo@member.fsf.org>
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -17,173 +18,236 @@
 ;;; For more information about the Zeitgeist Project, see
 ;;; <http://zeitgeist-project.com/>.
 
+;;* Code
+
 (require 'dbus)
 
+;;** General Functions
 
 (defun zeitgeist-call (method &rest args)
   "Call the zeitgeist method METHOD with ARGS over dbus"
-  (apply 'dbus-call-method 
-    :session                            ; use the session (not system) bus
-    "org.gnome.zeitgeist.Engine"        ; service name
-    "/org/gnome/zeitgeist/log/activity" ; path name
-    "org.gnome.zeitgeist.Log"           ; interface name
-    method args))
+  (condition-case err
+	  (apply 'dbus-call-method
+		 :session                            ; use the session (not system) bus
+		 "org.gnome.zeitgeist.Engine"        ; service name
+		 "/org/gnome/zeitgeist/log/activity" ; path name
+		 "org.gnome.zeitgeist.Log"           ; interface name
+		 method args)
+  (dbus-error (message(format "zeitgeist-call %s failed due to D-Bus error %s" method err)))))
 
 (defun zeitgeist-event-timestamp ()
   "Get the timestamp in zeitgeist format."
   (let* ((now-time (current-time))
          (hi       (car now-time))
          (lo       (car (cdr now-time)))
-         (msecs    (car (cdr (cdr now-time))))) ; This is *micro*seconds. 
+         (msecs    (car (cdr (cdr now-time))))) ; This is *micro*seconds.
 
-  (substring (number-to-string (+ (/ msecs 1000)
-             (* (+ lo (* hi 65536.0))     1000))) 0 -2))) ; Convert system time to milliseconds.
+    (substring (number-to-string
+		(+ (/ msecs 1000)
+		   (* (+ lo (* hi 65536.0))
+		      1000)))
+	       0 -2)))			   ; Convert system time to milliseconds.
 
 (defun zeitgeist-get-mime-type ()
   "Get the mime type from the extension."
-  (let ((ext (file-name-extension (buffer-file-name))))
-   ; Maybe use file mode later...
-   (cond ((eq "el" ext)      "text/x-script.elisp")
+  (let ((ext (file-name-extension buffer-file-name)))
+    ;; Maybe use file mode later...
+    (cond ((string= "el" ext)      "text/x-script.elisp")
 
-         ((eq "cpp" ext)     "text/x-c++src")
-         ((eq "C" ext)       "text/x-c++src")
-         ((eq "c++" ext)     "text/x-c++src")
-         ((eq "cxx" ext)     "text/x-c++src")
-         ((eq "cc" ext)      "text/x-c++src")
+	  ((string= "cpp" ext)     "text/x-c++src")
+	  ((string= "C" ext)       "text/x-c++src")
+	  ((string= "c++" ext)     "text/x-c++src")
+	  ((string= "cxx" ext)     "text/x-c++src")
+	  ((string= "cc" ext)      "text/x-c++src")
 
-         ((eq "hpp" ext)     "text/x-c++hdr")
-         ((eq "h++" ext)     "text/x-c++hdr")
-         ((eq "hxx" ext)     "text/x-c++hdr")
-         ((eq "hh" ext)      "text/x-c++hdr")
+	  ((string= "hpp" ext)     "text/x-c++hdr")
+	  ((string= "h++" ext)     "text/x-c++hdr")
+	  ((string= "hxx" ext)     "text/x-c++hdr")
+	  ((string= "hh" ext)      "text/x-c++hdr")
 
-         ((eq "csv" ext)     "text/comma-separated-values")
+	  ((string= "csv" ext)     "text/comma-separated-values")
 
-         ((eq "h" ext)       "text/x-chdr")
+	  ((string= "h" ext)       "text/x-chdr")
 
-         ((eq "c" ext)       "text/x-csrc")
+	  ((string= "c" ext)       "text/x-csrc")
 
-         ((eq "java" ext)    "text/x-java")
+	  ((string= "java" ext)    "text/x-java")
 
-         ((eq "p" ext)       "text/x-pascal")
-         ((eq "pas" ext)     "text/x-pascal")
+	  ((string= "p" ext)       "text/x-pascal")
+	  ((string= "pas" ext)     "text/x-pascal")
 
-         ((eq "tcl" ext)     "text/x-tcl")
-         ((eq "tk" ext)      "text/x-tcl")
+	  ((string= "tcl" ext)     "text/x-tcl")
+	  ((string= "tk" ext)      "text/x-tcl")
 
-         ((eq "tex" ext)     "text/x-tex")
-         ((eq "sty" ext)     "text/x-tex")
-         ((eq "cls" ext)     "text/x-tex")
+	  ((string= "tex" ext)     "text/x-tex")
+	  ((string= "sty" ext)     "text/x-tex")
+	  ((string= "cls" ext)     "text/x-tex")
 
-         ((eq "html" ext)    "text/html")
-         ((eq "htm" ext)     "text/html")
+	  ((string= "html" ext)    "text/html")
+	  ((string= "htm" ext)     "text/html")
 
-         ((eq "latex" ext)   "application/x-latex")
-         ((eq "ltx" ext)     "application/x-latex")
+	  ((string= "latex" ext)   "application/x-latex")
+	  ((string= "ltx" ext)     "application/x-latex")
 
-         ((eq "sh" ext)      "application/x-sh")
+	  ((string= "sh" ext)      "application/x-sh")
 
-         ((eq "pl" ext)      "application/x-perl")
-         ((eq "pm" ext)      "application/x-perl")
+	  ((string= "pl" ext)      "application/x-perl")
+	  ((string= "pm" ext)      "application/x-perl")
 
-         ((eq "texinfo" ext) "application/x-texinfo")
-         ((eq "texi" ext)    "application/x-texinfo")
+	  ((string= "texinfo" ext) "application/x-texinfo")
+	  ((string= "texi" ext)    "application/x-texinfo")
 
-         ((eq "t" ext)       "application/x-troff")
-         ((eq "tr" ext)      "application/x-troff")
-         ((eq "roff" ext)    "application/x-troff")
+	  ((string= "t" ext)       "application/x-troff")
+	  ((string= "tr" ext)      "application/x-troff")
+	  ((string= "roff" ext)    "application/x-troff")
 
-         ((eq "xml" ext)     "text/xml")
-         ((eq "xsd" ext)     "text/xml")
+	  ((string= "xml" ext)     "text/xml")
+	  ((string= "xsd" ext)     "text/xml")
 
-         ((eq "xslt" ext)    "application/xslt+xml")
-         ((eq "xsl"  ext)    "application/xslt+xml")
+	  ((string= "xslt" ext)    "application/xslt+xml")
+	  ((string= "xsl"  ext)    "application/xslt+xml")
 
-         ((eq "txt" ext)   "text/plain")
-         (t                "text/plain"))))
+	  ((string= "txt" ext)     "text/plain")
+	  (t                       "text/plain"))))
 
 (defun zeitgeist-event-interpretation (event)
   "Get the Event Interpretation of EVENT."
-  (cond
-    ((eq event 'zeitgeist-open-event)
-       "http://www.zeitgeist-project.com/ontologies/2010/01/27/zg#AccessEvent")
-    ((eq event 'zeitgeist-close-event)
-       "http://www.zeitgeist-project.com/ontologies/2010/01/27/zg#LeaveEvent")
-    ((eq event 'zeitgeist-create-event)
-       "http://www.zeitgeist-project.com/ontologies/2010/01/27/zg#CreateEvent")
-    ((eq event 'zeitgeist-modify-event)
-       "http://www.zeitgeist-project.com/ontologies/2010/01/27/zg#ModifyEvent")
-    (t nil)))
+  (case event
+    (zeitgeist-open-file-event
+     "http://www.zeitgeist-project.com/ontologies/2010/01/27/zg#AccessEvent")
+    (zeitgeist-close-file-event
+     "http://www.zeitgeist-project.com/ontologies/2010/01/27/zg#LeaveEvent")
+    (zeitgeist-create-file-event
+     "http://www.zeitgeist-project.com/ontologies/2010/01/27/zg#CreateEvent")
+    (zeitgeist-modify-file-event
+     "http://www.zeitgeist-project.com/ontologies/2010/01/27/zg#ModifyEvent")
+    (t (error "Unknown event %s" event))))
 
-(defun zeitgeist-send (event fileurl filemime)
-  "Send zeitgeist an event EVENT using the list FILEINFO."
+(defun zeitgeist-create-event (event-interpr uri subject-interpr subject-manifest
+					     origin mimetype text storage
+					     &optional payload)
+  "Create an event according to the InsertEvents signature."
+  (list
+   ;; Signature: asaasay
+   (list :struct
+	 ;; Event metadata (as = array of strings)
+	 (list
+	  ""                          ;; ID, must not be set by clients!
+	  (zeitgeist-event-timestamp) ;; Timpstamp
+	  event-interpr               ;; Event Interpretation (what happened?)
+	  ;; Manifestation
+	  "http://www.zeitgeist-project.com/ontologies/2010/01/27/zg#UserActivity"
+	  ;; Actor (the application, aka emacs)
+	  "application://emacs23.desktop")
+	 ;; List of subjects (aas)
+	 (list
+	  (list
+     	   uri		   ;; The URI of the subject
+	   subject-interpr ;; Interpretation (Is the subject a file, a mail, a video?)
+	   subject-manifest ;; Manifestiation (Is the subject a local file, a web page?)
+	   origin           ;; Origin
+	   mimetype         ;; Mimetype
+	   text             ;; Subject text
+	   storage          ;; Storage
+	   ))
+	 ;; The payload (ay = array of bytes)
+	 (or payload '(:array :byte 0)))))
+
+(defun zeitgeist-send (event &rest props)
+  "Send zeitgeist the EVENT with PROPS."
   (let ((event-interpretation (zeitgeist-event-interpretation event)))
-    (if (eq nil event-interpretation)
-      (message "YOU FAIL")
-      (zeitgeist-call "InsertEvents"
-        (list (list :struct (list ""
-              (zeitgeist-event-timestamp)
-              event-interpretation
-              "http://www.zeitgeist-project.com/ontologies/2010/01/27/zg#UserActivity"
-              "application://emacs23.desktop")
-        (list (list (concat "file://" fileurl)
-           "http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Document"
-           "http://www.semanticdesktop.org/ontologies/nfo#FileDataObject"
-           (concat "file://" (file-name-directory fileurl))
-           filemime
-           (file-name-nondirectory (file-name-sans-versions fileurl))
-           "")) ; Some black magic later?
-        '(:array :byte 0)))))))
+    (condition-case err
+	(case event
+	  ;; File handling events
+	  ((zeitgeist-open-file-event
+	    zeitgeist-close-file-event
+	    zeitgeist-create-file-event
+	    zeitgeist-modify-file-event)
+	   (zeitgeist-call
+	    "InsertEvents"
+	    (zeitgeist-create-event
+	     event-interpretation
+	     (concat "file://" (plist-get props :file))
+	     "http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Document"
+	     "http://www.semanticdesktop.org/ontologies/nfo#FileDataObject"
+	     (concat "file://" (file-name-directory (plist-get props :file)))
+	     (zeitgeist-get-mime-type)
+	     (file-name-nondirectory
+	      (file-name-sans-versions (plist-get props :file)))
+	     "")))
+	  ;; Email events
+	  ((zeitgeist-mail-read-event
+	    zeitgeist-mail-sent-event)
+	   ;; TODO: Implement me!
+	   ))
+      ;; Ouch, something failed when trying to communicate with zeitgeist!
+      (error (message "ERROR (ZEITGEIST): %s" (cadr err))))))
+
+;;** Usual File Reading/Editing
 
 (defun zeitgeist-open-file ()
   "Tell zeitgeist we opened a file!"
   (if (eq nil (buffer-file-name))
       (message "You are not on a file.")
-    (zeitgeist-send 'zeitgeist-open-event
-                    buffer-file-name
-                    (zeitgeist-get-mime-type))))
+    (zeitgeist-send 'zeitgeist-open-file-event
+                    :file buffer-file-name)))
+
 (defun zeitgeist-close-file ()
   "Tell zeitgeist we closed a file!"
-  (if (eq nil (buffer-file-name))
-      (message "You are not on a file.")
-    (zeitgeist-send 'zeitgeist-close-event
-                    buffer-file-name
-                    (zeitgeist-get-mime-type))))
+  (when buffer-file-name
+    (zeitgeist-send 'zeitgeist-close-file-event
+                    :file buffer-file-name)))
+
 (defun zeitgeist-create-file ()
   "Tell zeitgeist we created a file!"
-    (zeitgeist-send 'zeitgeist-create-event
-                    buffer-file-name
-                    (zeitgeist-get-mime-type)))
+  (zeitgeist-send 'zeitgeist-create-file-event
+		  :file buffer-file-name))
+
 (defun zeitgeist-modify-file ()
   "Tell zeitgeist we modified a file!"
-    (zeitgeist-send 'zeitgeist-modify-event
-                     buffer-file-name
-                     (zeitgeist-get-mime-type)))
+  (zeitgeist-send 'zeitgeist-modify-file-event
+		  :file buffer-file-name))
 
 (defun zeitgeist-find-file-hook ()
   "Call zeitgeist-open-file if the file exists."
-  (if (file-exists-p (buffer-file-name))
-      (zeitgeist-open-file)))
+  (when (file-exists-p buffer-file-name)
+    (zeitgeist-open-file)))
+
 (defun zeitgeist-kill-buffer-hook ()
   "Call zeitgeist-close-file if the file exists."
   (if (and (not (eq nil (buffer-file-name)))
-            (file-exists-p (buffer-file-name)))
+	   (file-exists-p (buffer-file-name)))
       (zeitgeist-close-file)))
+
 (defun zeitgeist-kill-emacs-hook ()
   "Call zeitgeist-close-file on all files that exist."
   (mapc '(lambda (buffer)
 	   (set-buffer buffer)
 	   (zeitgeist-close-file))
-	  (buffer-list)))
+	(buffer-list)))
+
 (defun zeitgeist-before-save-hook ()
   "Call zeitgeist-modify-file or zeitgeist-create-file."
   (if (and (not (eq nil (buffer-file-name)))
-            (file-exists-p (buffer-file-name)))
+	   (file-exists-p (buffer-file-name)))
       (zeitgeist-modify-file)
-      (zeitgeist-create-file)))
+    (zeitgeist-create-file)))
 
 (add-hook 'find-file-hook   'zeitgeist-find-file-hook)
 (add-hook 'kill-buffer-hook 'zeitgeist-kill-buffer-hook)
 (add-hook 'kill-emacs-hook  'zeitgeist-kill-emacs-hook)
 (add-hook 'before-save-hook 'zeitgeist-before-save-hook)
+
+;;** Record Reading/Writing Mail With Gnus
+
+;; Hook run when mail is marked read: gnus-mark-article-hook
+
+;(defun zeitgeist-gnus-message-read ())
+
+;; Hook run when a message is sent off: message-sent-hook
+
+;;* The End
+
+(provide 'zeitgeist)
 
 ;;; zeitgeist.el ends here

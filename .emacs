@@ -48,10 +48,6 @@
 ;; since we store .emacs in a symlinked git repo, always follow symlinks for vc
 (setq vc-follow-symlinks t)
 
-;; remember recently used files
-(require 'recentf)
-(recentf-mode 1)
-
 ;; ido mode for opening files and switching buffers
 (ido-mode 1)
 
@@ -70,7 +66,7 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
 
 ;; zeitgeist integration
-(load-library "zeitgeist.elc")
+(require 'zeitgeist)
 
 ;; color theme - requires emacs-goodies-el to be installed on ubuntu
 (require 'color-theme)
@@ -149,6 +145,7 @@
 	    (font-lock-add-keywords nil
 				    '(("\\<\\(TODO\\|todo\\|FIXME\\|fixme\\)" 1 font-lock-warning-face t)))))
 
+;; c-only modes
 (add-hook 'c-mode-hook
 	  (lambda ()
 	    ;; use linux kernel style
@@ -187,10 +184,11 @@
             (add-to-list 'gud-jdb-classpath "/home/alex/android-sdk-linux_x86/platforms/android-8/android.jar")))
 
 
-;; nxhtml - TODO: need to make this only load on php / html etc since slows down emacs startup
-(load "~/.emacs.d/nxhtml/autostart.el")
+;; nxhtml - TODO: need to make this only load on php / html etc since
+;; slows down emacs startup
+;;(load "~/.emacs.d/nxhtml/autostart.el")
 ;; nxhtml and yasnippet integration
-(yas/define-snippets 'nxhtml-mode nil 'html-mode)
+;;(yas/define-snippets 'nxhtml-mode nil 'html-mode)
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
