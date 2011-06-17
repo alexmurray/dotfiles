@@ -85,12 +85,6 @@
 ;; rainbow mode - for colouring strings that represent colors
 (require 'rainbow-mode)
 
-;; code snippet support
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/yasnippet-0.6.1c"))
-(require 'yasnippet)
-(yas/initialize)
-(yas/load-directory "~/.emacs.d/yasnippet-0.6.1c/snippets")
-
 ;; undo-tree.el - from http://www.dr-qubit.org/undo-tree/undo-tree.el
 (require 'undo-tree)
 (global-undo-tree-mode 1)
@@ -177,24 +171,23 @@
 	    (require 'gobject-class)))
 
 ;; ajc-java-complete
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/ajc-java-complete/"))
-(require 'ajc-java-complete-config)
-
-;; android-mode
-(require 'android-mode)
-(setq android-mode-sdk-dir "~/android-sdk-linux_x86/")
-;; change prefix so doesn't conflict with comment-region
-(setq android-mode-key-prefix "\C-c \C-m")
-(add-hook 'gud-mode-hook
+(add-hook 'java-mode-hook
 	  (lambda ()
-            (add-to-list 'gud-jdb-classpath "/home/alex/android-sdk-linux_x86/platforms/android-8/android.jar")))
+	    (add-to-list 'load-path (expand-file-name "~/.emacs.d/ajc-java-complete/"))
+	    (require 'ajc-java-complete-config)
+
+	    ;; android-mode
+	    (require 'android-mode)
+	    (setq android-mode-sdk-dir "~/android-sdk-linux_x86/")
+	    ;; change prefix so doesn't conflict with comment-region
+	    (setq android-mode-key-prefix "\C-c \C-m")
+	    (add-hook 'gud-mode-hook
+		      (lambda ()
+			(add-to-list 'gud-jdb-classpath "/home/alex/android-sdk-linux_x86/platforms/android-8/android.jar")))))
 
 
-;; nxhtml - TODO: need to make this only load on php / html etc since
-;; slows down emacs startup
-;;(load "~/.emacs.d/nxhtml/autostart.el")
-;; nxhtml and yasnippet integration
-;;(yas/define-snippets 'nxhtml-mode nil 'html-mode)
+;; ;; nxhtml
+;; (load "~/.emacs.d/nxhtml/autostart.el")
 
 ; autoload slime when you open a .lisp file
 (require 'slime)
