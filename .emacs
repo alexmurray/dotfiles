@@ -18,12 +18,16 @@
 (global-set-key "\C-x\C-m" 'compile)
 (global-set-key "\C-xe" 'shell)
 
-;; make f11 fullscreen full screen
-(defun fullscreen ()
+;; make f11 full-screen - from http://www.emacswiki.org/emacs/FullScreen
+(defun toggle-fullscreen (&optional f)
   (interactive)
-  (set-frame-parameter nil 'fullscreen
-                       (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
-(global-set-key [f11] 'fullscreen)
+  (let ((current-value (frame-parameter nil 'fullscreen)))
+    (set-frame-parameter nil 'fullscreen
+			 (if (equal 'fullboth current-value)
+			     (if (boundp 'old-fullscreen) old-fullscreen nil)
+			   (progn (setq old-fullscreen current-value)
+				  'fullboth)))))
+(global-set-key [f11] 'toggle-fullscreen)
 
 ;; Show line column numbers in mode line
 (line-number-mode t)
