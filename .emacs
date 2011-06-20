@@ -192,6 +192,11 @@
 		      (lambda ()
 			(add-to-list 'gud-jdb-classpath "/home/alex/android-sdk-linux_x86/platforms/android-8/android.jar")))))
 
+;; python ropemacs autocomplete
+(ac-ropemacs-initialize)
+(add-hook 'python-mode-hook
+	  (lambda ()
+	    (add-to-list 'ac-sources 'ac-source-ropemacs)))
 
 ;; ;; nxhtml
 ;; (load "~/.emacs.d/nxhtml/autostart.el")
