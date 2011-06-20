@@ -143,8 +143,10 @@
 	    (c-toggle-auto-hungry-state t)
 	    ;; set auto newline
 	    (setq c-auto-newline 1)
-	    ;; use semantic as a source for auto complete
-	    (setq ac-sources (append ac-sources '(ac-source-semantic)))
+	    ;; use semantic as source for auto complete - this
+	    ;; provides the most relevant options plus we still retain
+	    ;; yasnippet and gtags sources as well
+	    (setq ac-sources '(ac-source-semantic))
 	    ;; highlight TODO and fixme so it looks scary
 	    (font-lock-add-keywords nil
 				    '(("\\<\\(TODO\\|todo\\|FIXME\\|fixme\\)" 1 font-lock-warning-face t)))))
@@ -179,7 +181,8 @@
 	  (lambda ()
 	    (add-to-list 'load-path (expand-file-name "~/.emacs.d/ajc-java-complete/"))
 	    (require 'ajc-java-complete-config)
-
+	    ;; manually call hook since we are already in java hook
+	    (ajc-java-complete-hook)
 	    ;; android-mode
 	    (require 'android-mode)
 	    (setq android-mode-sdk-dir "~/android-sdk-linux_x86/")
