@@ -2,7 +2,8 @@
 
 ;; set visual properties early to reduce frame flickering
 ;; set default font properties
-(set-face-attribute 'default nil :font "DejaVu Sans Mono")
+(set-frame-font "Monospace-10")
+
 ;; disable tool-bar and scroll-bar, show matching parenthesis and time
 (menu-bar-mode 0)
 (tool-bar-mode 0)
@@ -37,7 +38,8 @@
 (column-number-mode t)
 
 ;; show colours correctly in shell
-(ansi-color-for-comint-mode-on)
+(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;; delete trailing whitespace on save
 (add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
