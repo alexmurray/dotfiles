@@ -204,6 +204,14 @@
 ;; ;; nxhtml
 ;; (load "~/.emacs.d/nxhtml/autostart.el")
 
+; paredit -http://www.emacswiki.org/emacs/ParEdit
+(autoload 'enable-paredit-mode "paredit"
+  "Turn on pseudo-structural editing of Lisp code."
+  t)
+(add-hook 'emacs-lisp-mode-hook       'enable-paredit-mode)
+(add-hook 'lisp-mode-hook             'enable-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
+
 ; autoload slime when you open a .lisp file
 (require 'slime)
 (add-hook 'slime-mode-hook
