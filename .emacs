@@ -13,6 +13,9 @@
 ;; default to utf-8
 (set-language-environment "UTF-8")
 
+;; automatically reload buffer when file on disk changes
+(global-auto-revert-mode t)
+
 ;; some nice keybindings
 (global-set-key "\C-x\C-h" 'hexl-mode)
 (global-set-key "\C-x\C-m" 'compile)
