@@ -251,7 +251,7 @@
       (read-kbd-macro (car l)) (funcall f (cdr l)))))
 (define-minor-mode no-easy-keys-minor-mode
   "A minor mode that disables the arrow-keys, pg-up/down, delete
-  and backspace."  t " no-easy-keys"
+  and backspace."  t " !E"
   'no-easy-keys-minor-mode-map :global t)
 (no-easy-keys-minor-mode 1)
 
