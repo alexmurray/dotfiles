@@ -105,6 +105,9 @@
 (require 'magit)
 (global-set-key "\C-x\C-z" 'magit-status)
 
+(require 'autopair)
+(autopair-global-mode) ;; enable autopair in all buffers
+
 ;;;; Support for specific languages ;;;;
 
 ;; for auctex and reftex integration
@@ -205,14 +208,6 @@
 
 ;; ;; nxhtml
 ;; (load "~/.emacs.d/nxhtml/autostart.el")
-
-; paredit -http://www.emacswiki.org/emacs/ParEdit
-(autoload 'enable-paredit-mode "paredit"
-  "Turn on pseudo-structural editing of Lisp code."
-  t)
-(add-hook 'emacs-lisp-mode-hook       'enable-paredit-mode)
-(add-hook 'lisp-mode-hook             'enable-paredit-mode)
-(add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
 
 ; autoload slime when you open a .lisp file
 (require 'slime)
