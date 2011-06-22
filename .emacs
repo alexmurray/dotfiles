@@ -76,6 +76,9 @@
 ;; set load-path
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
 
+;; smooth scrolling
+(require 'smooth-scrolling)
+
 ;; zeitgeist integration
 (require 'zeitgeist)
 
