@@ -1,5 +1,8 @@
 ;;;; Standard Emacs options and inbuilt packages ;;;;
 
+;; start emacs server
+(server-start)
+
 ;; set visual properties early to reduce frame flickering
 ;; set default font properties
 (set-frame-font "Monospace-10")
