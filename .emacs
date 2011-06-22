@@ -101,12 +101,13 @@
 ;; scratch.el - from http://github.com/ieure/scratch-el
 (autoload 'scratch "scratch" nil t)
 
-;; magit - installed as a system package
-(require 'magit)
-(global-set-key "\C-x\C-z" 'magit-status)
-
 (require 'autopair)
 (autopair-global-mode) ;; enable autopair in all buffers
+
+;; magit - installed as a system package
+(when (locate-library "magit")
+  (require 'magit)
+  (global-set-key "\C-x\C-z" 'magit-status))
 
 ;;;; Support for specific languages ;;;;
 
@@ -172,19 +173,19 @@
 	    (load "c-eldoc")
 	    ;; turn on c-eldoc
 	    (c-turn-on-eldoc-mode)
+	    ;; enable gobject helper
+	    (require 'gobject-class)
 	    ;; enable gtk-doc helpers from gtk-doc-tools to easily
 	    ;; insert gtk-doc style comment declarations using C-x 4 h
 	    ;; (gtk-doc-insert) or C-x 4 s (gtk-doc-insert-section) to
 	    ;; comment current function or section respectively
 	    ;;(load "gtk-doc")
 	    ;; devhelp
-	    (require 'devhelp
-	    	     ;; Bind F6 to enable the automatic assistant.
-	    	     (global-set-key [f6] 'devhelp-toggle-automatic-assistant)
-	    	     ;; Bind F7 to search with the assistant window.
-	    	     (global-set-key [f7] 'devhelp-assistant-word-at-point))
-	    ;; enable gobject helper
-	    (require 'gobject-class)))
+	    (require 'devhelp)
+	    ;; Bind F6 to enable the automatic assistant.
+	    (global-set-key [f6] 'devhelp-toggle-automatic-assistant)
+	    ;; Bind F7 to search with the assistant window.
+	    (global-set-key [f7] 'devhelp-assistant-word-at-point)))
 
 ;; ajc-java-complete
 (add-hook 'java-mode-hook
@@ -212,21 +213,22 @@
 ;; (load "~/.emacs.d/nxhtml/autostart.el")
 
 ; autoload slime when you open a .lisp file
-(require 'slime)
-(add-hook 'slime-mode-hook
- (lambda ()
-   (unless (slime-connected-p)
-     (save-excursion (slime)))))
-; autoclose emacs even if lisp processes are running
-(setq slime-kill-without-query-p t)
+(when (locate-library "slime")
+  (require 'slime)
+  (add-hook 'slime-mode-hook
+	    (lambda ()
+	      (unless (slime-connected-p)
+		(save-excursion (slime)))))
+					; autoclose emacs even if lisp processes are running
+  (setq slime-kill-without-query-p t)
 
-;; slime autocomplete
-(require 'ac-slime)
-(add-hook 'slime-mode-hook 'set-up-slime-ac)
-(add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
-;; set ac-modes to include slime
-(add-to-list 'ac-modes 'lisp-mode)
-(add-to-list 'ac-modes 'slime-repl-mode)
+  ;; slime autocomplete
+  (require 'ac-slime)
+  (add-hook 'slime-mode-hook 'set-up-slime-ac)
+  (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+  ;; set ac-modes to include slime
+  (add-to-list 'ac-modes 'lisp-mode)
+  (add-to-list 'ac-modes 'slime-repl-mode))
 
 ;; disable easy navigation keys to learn emacs shortcuts properly -
 ;; from http://danamlund.dk/emacs/no-easy-keys.html
