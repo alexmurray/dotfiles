@@ -17,6 +17,9 @@
 ;; automatically reload buffer when file on disk changes
 (global-auto-revert-mode t)
 
+;; use CUA mode for rectangle selections etc but not copy/paste etc
+(cua-selection-mode t)
+
 ;; some nice keybindings
 (global-set-key "\C-x\C-h" 'hexl-mode)
 (global-set-key "\C-x\C-m" 'compile)
@@ -113,6 +116,8 @@
 ;; for auctex and reftex integration
 (add-hook 'LaTeX-mode-hook
 	  (lambda ()
+	    ;; use visual line mode to do soft word wrapping
+	    (visual-line-mode 1)
 	    ;; Use PDF by default
 	    (TeX-PDF-mode 1)
 	    (setq TeX-view-program-selection
