@@ -3,6 +3,8 @@
 ;; set visual properties early to reduce frame flickering
 ;; set default font properties
 (set-frame-font "Monospace-10")
+;; only in emacs 24
+(load-theme 'wombat)
 
 ;; disable tool-bar and scroll-bar, show matching parenthesis and time
 (menu-bar-mode 0)
@@ -81,14 +83,6 @@
 
 ;; zeitgeist integration
 (require 'zeitgeist)
-
-;; color theme - requires emacs-goodies-el to be installed on ubuntu
-(require 'color-theme)
-(color-theme-initialize)
-;;(autoload 'color-theme-blackboard "color-theme-blackboard" "blackboard color theme." t)
-;;(color-theme-blackboard)
-(autoload 'color-theme-zen-and-art "color-theme-zen-and-art" "zen-and-art color theme." t)
-(color-theme-zen-and-art)
 
 ;; auto-complete mode
 (require 'auto-complete-config)
