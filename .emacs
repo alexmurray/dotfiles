@@ -1,8 +1,5 @@
 ;;;; Standard Emacs options and inbuilt packages ;;;;
 
-;; start emacs server
-(server-start)
-
 ;; inhibit startup message and splash screen
 (setq inhibit-startup-message t)
 
