@@ -298,6 +298,12 @@
   'no-easy-keys-minor-mode-map :global t)
 (no-easy-keys-minor-mode 1)
 
+(when (locate-library "prolog")
+  ;; set our prolog system
+  (setq prolog-system 'swi)
+  ;; associate .pl files with prolog mode rather than perl mode
+  (setq auto-mode-alist (append '(("\\.pl$" . prolog-mode)) auto-mode-alist)))
+
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
