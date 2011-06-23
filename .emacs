@@ -153,6 +153,17 @@
 (require 'autopair)
 (autopair-global-mode) ;; enable autopair in all buffers
 
+;; notify when compilation finishes
+(require 'notify)
+(defun compilation-finished (buffer string)
+  (let ((title "Compilation finished") (body "Success") (icon "gtk-yes"))
+    (unless (string-match "finished" string)
+      (setq title "Compilation error"
+	    body string
+	    icon "gtk-no"))
+    (notify title body :timeout 2000 :icon icon :urgency "normal")))
+(setq compilation-finish-functions 'compilation-finished)
+
 ;; magit - installed as a system package
 (when (locate-library "magit")
   (require 'magit)
