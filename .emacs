@@ -3,6 +3,9 @@
 ;; start emacs server
 (server-start)
 
+;; inhibit startup message and splash screen
+(setq inhibit-startup-message t)
+
 ;; set visual properties early to reduce frame flickering
 ;; set default font properties
 (set-frame-font "Monospace-10")
@@ -15,9 +18,20 @@
 (scroll-bar-mode 0)
 (show-paren-mode 1)
 (display-time)
+;; Show line column numbers in mode line
+(line-number-mode t)
+(column-number-mode t)
+
+(when window-system
+  (setq frame-title-format '(buffer-file-name "%f" ("%b")))
+  (tooltip-mode -1)
+  (mouse-wheel-mode t)
+  (blink-cursor-mode -1))
+
+(add-hook 'before-make-frame-hook 'turn-off-tool-bar)
 
 ;; default to utf-8
-(set-language-environment "UTF-8")
+(prefer-coding-system 'utf-8)
 
 ;; automatically reload buffer when file on disk changes
 (global-auto-revert-mode t)
@@ -25,10 +39,43 @@
 ;; use CUA mode for rectangle selections etc but not copy/paste etc
 (cua-selection-mode t)
 
+;; just use y or n not yes or no
+(defalias 'yes-or-no-p 'y-or-n-p)
+
 ;; some nice keybindings
-(global-set-key "\C-x\C-h" 'hexl-mode)
-(global-set-key "\C-x\C-m" 'compile)
-(global-set-key "\C-xe" 'shell)
+(global-set-key (kbd "C-x C-h") 'hexl-mode)
+(global-set-key (kbd "C-x C-m") 'compile)
+(global-set-key (kbd "C-x e") 'eshell)
+
+(global-set-key (kbd "C-M-h") 'backward-kill-word) ;; like readline
+(global-set-key (kbd "C-c r") 'revert-buffer)
+
+;; Help should search more than just commands
+(global-set-key (kbd "C-h a") 'apropos)
+
+;; Use regex searches by default.
+(global-set-key (kbd "C-s") 'isearch-forward-regexp)
+(global-set-key (kbd "\C-r") 'isearch-backward-regexp)
+(global-set-key (kbd "C-M-s") 'isearch-forward)
+(global-set-key (kbd "C-M-r") 'isearch-backward)
+
+;; a couple nice definitions taken from emacs-starter-kit
+(defun sudo-edit (&optional arg)
+  (interactive "p")
+  (if (or arg (not buffer-file-name))
+      (find-file (concat "/sudo:root@localhost:" (ido-read-file-name "File: ")))
+    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+
+(defun lorem ()
+  "Insert a lorem ipsum."
+  (interactive)
+  (insert "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do "
+          "eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim"
+          "ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut "
+          "aliquip ex ea commodo consequat. Duis aute irure dolor in "
+          "reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla "
+          "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in "
+          "culpa qui officia deserunt mollit anim id est laborum."))
 
 ;; make f11 full-screen - from http://www.emacswiki.org/emacs/FullScreen
 (defun toggle-fullscreen (&optional f)
@@ -39,15 +86,10 @@
 			     (if (boundp 'old-fullscreen) old-fullscreen nil)
 			   (progn (setq old-fullscreen current-value)
 				  'fullboth)))))
-(global-set-key [f11] 'toggle-fullscreen)
-
-;; Show line column numbers in mode line
-(line-number-mode t)
-(column-number-mode t)
+(global-set-key (kbd "<f11>") 'toggle-fullscreen)
 
 ;; show colours correctly in shell
-(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+(ansi-color-for-comint-mode-on)
 
 ;; delete trailing whitespace on save
 (add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
@@ -55,8 +97,8 @@
 ;; use proper english
 (setq ispell-dictionary "british")
 
-;; inhibit startup message and splash screen
-(setq inhibit-startup-message t)
+;; make emacs use the clipboard
+(setq x-select-enable-clipboard t)
 
 ;; default to unified diff
 (setq diff-switches "-u")
@@ -68,9 +110,9 @@
 (ido-mode 1)
 
 ;; for org-mode
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
+(global-set-key (kbd "C-c l") 'org-store-link)
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c b") 'org-iswitchb)
 
 ;; semantic in emacs 23.2 - useful for auto-complete mode
 (require 'semantic)
@@ -110,7 +152,7 @@
 ;; magit - installed as a system package
 (when (locate-library "magit")
   (require 'magit)
-  (global-set-key "\C-x\C-z" 'magit-status))
+  (global-set-key (kbd "C-x C-z") 'magit-status))
 
 ;;;; Support for specific languages ;;;;
 
@@ -186,9 +228,9 @@
 	    ;; devhelp
 	    (require 'devhelp)
 	    ;; Bind F6 to enable the automatic assistant.
-	    (global-set-key [f6] 'devhelp-toggle-automatic-assistant)
+	    (global-set-key (kbd "<f6>") 'devhelp-toggle-automatic-assistant)
 	    ;; Bind F7 to search with the assistant window.
-	    (global-set-key [f7] 'devhelp-assistant-word-at-point)))
+	    (global-set-key (kbd "<f7>") 'devhelp-assistant-word-at-point)))
 
 ;; ajc-java-complete
 (add-hook 'java-mode-hook
