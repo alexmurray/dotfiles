@@ -33,11 +33,18 @@
 ;; automatically reload buffer when file on disk changes
 (global-auto-revert-mode t)
 
+;; built-in tab completion
+(setq tab-always-indent 'complete)
+(add-to-list 'completion-styles 'initials t)
+
 ;; use CUA mode for rectangle selections etc but not copy/paste etc
 (cua-selection-mode t)
 
 ;; just use y or n not yes or no
 (defalias 'yes-or-no-p 'y-or-n-p)
+
+;; show empty lines in left fringe
+(setq default-indicate-empty-lines t)
 
 ;; some nice keybindings
 (global-set-key (kbd "C-x C-h") 'hexl-mode)
