@@ -3,12 +3,6 @@
 ;; inhibit startup message and splash screen
 (setq inhibit-startup-message t)
 
-;; set visual properties early to reduce frame flickering
-;; set default font properties
-(set-frame-font "Monospace-10")
-;; only in emacs 24
-(load-theme 'wombat)
-
 ;; disable tool-bar and scroll-bar, show matching parenthesis and time
 (menu-bar-mode 0)
 (tool-bar-mode 0)
@@ -26,6 +20,9 @@
   (blink-cursor-mode -1))
 
 (add-hook 'before-make-frame-hook 'turn-off-tool-bar)
+
+;; only in emacs 24
+(load-theme 'wombat)
 
 ;; default to utf-8
 (prefer-coding-system 'utf-8)
@@ -154,19 +151,38 @@
 (autopair-global-mode) ;; enable autopair in all buffers
 
 ;; notify when compilation finishes
-(require 'notify)
+(require 'dbus)
+(defun send-desktop-notification (title body &optional icon)
+  "Call the notification daemon over dbus to display a
+  notification with the title body and icon"
+  (if (equal icon nil) (setq icon "emacs-snapshot"))
+  (dbus-call-method
+    :session                        ; use the session (not system) bus
+    "org.freedesktop.Notifications" ; service name
+    "/org/freedesktop/Notifications"   ; path name
+    "org.freedesktop.Notifications" "Notify" ; Method
+    "emacs"
+    0
+    icon
+    title
+    body
+    '(:array)
+    '(:array (:dict-entry "x-canonical-append" (:variant "")))
+    ':int32 -1))
+
 (defun compilation-finished (buffer string)
   (let ((title "Compilation finished") (body "Success") (icon "gtk-yes"))
     (unless (string-match "finished" string)
       (setq title "Compilation error"
 	    body string
 	    icon "gtk-no"))
-    (notify title body :timeout 2000 :icon icon :urgency "normal")))
+    (send-desktop-notification title body icon)))
 (setq compilation-finish-functions 'compilation-finished)
 
 ;; also notify when reverting a buffer if we auto-revert
 (defun notify-buffer-reverted ()
-  (notify "Emacs buffer reverted" (buffer-name (current-buffer))))
+  (send-desktop-notification "Emacs buffer reverted"
+			     (buffer-name (current-buffer))))
 (add-hook 'after-revert-hook 'notify-buffer-reverted)
 
 ;; magit - installed as a system package
