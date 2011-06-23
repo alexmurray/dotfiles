@@ -164,6 +164,11 @@
     (notify title body :timeout 2000 :icon icon :urgency "normal")))
 (setq compilation-finish-functions 'compilation-finished)
 
+;; also notify when reverting a buffer if we auto-revert
+(defun notify-buffer-reverted ()
+  (notify "Emacs buffer reverted" (buffer-name (current-buffer))))
+(add-hook 'after-revert-hook 'notify-buffer-reverted)
+
 ;; magit - installed as a system package
 (when (locate-library "magit")
   (require 'magit)
