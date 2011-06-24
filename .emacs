@@ -157,7 +157,7 @@
 (require 'autopair)
 (autopair-global-mode) ;; enable autopair in all buffers
 
-;; notify when compilation finishes
+;; use dbus to notify and append messages automatically
 (require 'dbus)
 (defun send-desktop-notification (title body &optional icon)
   "Call the notification daemon over dbus to display a
@@ -175,15 +175,23 @@
     body
     '(:array)
     '(:array (:dict-entry "x-canonical-append" (:variant "")))
-    ':int32 -1))
+    ':int32 2000))
 
-(defun compilation-finished (buffer string)
-  (let ((title "Compilation finished") (body "Success") (icon "gtk-yes"))
-    (unless (string-match "finished" string)
-      (setq title "Compilation error"
-	    body string
-	    icon "gtk-no"))
-    (send-desktop-notification title body icon)))
+;; notify on compilation finished
+(defun compilation-finished (buffer result)
+  ;; ignore non-compilation buffers (such as grep etc)
+  (when (string-match "compilation" (buffer-name buffer))
+    (let ((title "Emacs compilation finished")
+	  (body "Success")
+	  (icon nil))
+      ;; remove any newlines in result message
+      (while (string-match "\n" result)
+	(setq result (replace-match "" t nil result)))
+      ;; if looks like an error message show it with error icon
+      (unless (string-match "finished" result)
+	(setq body result
+	      icon "gtk-dialog-error"))
+      (send-desktop-notification title body icon))))
 (setq compilation-finish-functions 'compilation-finished)
 
 ;; also notify when reverting a buffer if we auto-revert
