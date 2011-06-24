@@ -261,6 +261,9 @@ Symbols matching the text at point are put first in the completion list."
 
 ;;;; Support for specific languages ;;;;
 
+;; use eldoc-mode for emacs-lisp
+(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+
 ;; for auctex and reftex integration
 (add-hook 'LaTeX-mode-hook
 	  (lambda ()
