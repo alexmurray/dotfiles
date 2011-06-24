@@ -21,9 +21,6 @@
 
 (add-hook 'before-make-frame-hook 'turn-off-tool-bar)
 
-;; only in emacs 24
-(load-theme 'wombat)
-
 ;; default to utf-8
 (prefer-coding-system 'utf-8)
 
@@ -123,6 +120,12 @@
 
 ;; set load-path
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
+
+;; color-theme
+(require 'color-theme)
+(color-theme-initialize)
+(color-theme-zen-and-art)
+;;(color-theme-blackboard)
 
 ;; smooth scrolling
 (require 'smooth-scrolling)
