@@ -155,8 +155,53 @@
 ;; scratch.el - from http://github.com/ieure/scratch-el
 (autoload 'scratch "scratch" nil t)
 
+;; pretty lambda (see also slime) ->  "λ"
+;;  'greek small letter lambda' / utf8 cebb / unicode 03bb -> \u03BB / mule?!
+;; in greek-iso8859-7 -> 107  >  86 ec
+(defun pretty-lambdas ()
+  (font-lock-add-keywords
+   nil `(("(\\(lambda\\>\\)"
+          (0 (progn (compose-region (match-beginning 1) (match-end 1)
+                                    ,(make-char 'greek-iso8859-7 107))
+                    'font-lock-keyword-face))))))
+
+;; use autopair by default but not if using paredit
 (require 'autopair)
 (autopair-global-mode) ;; enable autopair in all buffers
+
+(autoload 'paredit-mode "paredit"
+  "Minor mode for pseudo-structurally editing Lisp code." t)
+(autoload 'enable-paredit-mode "paredit" "Turn on paredit mode" t)
+
+(defadvice enable-paredit-mode (before disable-autopair activate)
+  (setq autopair-dont-activate t)
+  (autopair-mode -1))
+
+(dolist (hook '(emacs-lisp-mode-hook lisp-mode-hook))
+  (add-hook hook 'pretty-lambdas)
+  (add-hook hook 'enable-paredit-mode))
+
+(defun conditionally-enable-paredit-mode ()
+  "Enable paredit-mode during eval-expression"
+  (if (eq this-command 'eval-expression)
+      (paredit-mode 1)))
+(add-hook 'minibuffer-setup-hook 'conditionally-enable-paredit-mode)
+
+(defun suspend-mode-during-cua-rect-selection (mode-name)
+  (let ((flagvar (intern (format "%s-was-active-before-cua-rectangle" mode-name)))
+        (advice-name (intern (format "suspend-%s" mode-name))))
+    (eval-after-load "cua-rect"
+      `(progn
+         (defvar ,flagvar nil)
+         (make-variable-buffer-local ',flagvar)
+         (defadvice cua--activate-rectangle (after ,advice-name activate)
+           (setq ,flagvar (and (boundp ',mode-name) ,mode-name))
+           (when ,flagvar
+             (,mode-name -1)))
+         (defadvice cua--deactivate-rectangle (after ,advice-name activate)
+           (when ,flagvar
+             (,mode-name 1)))))))
+(suspend-mode-during-cua-rect-selection 'paredit-mode)
 
 ;; use dbus to notify and append messages automatically
 (require 'dbus)
@@ -366,23 +411,25 @@ Symbols matching the text at point are put first in the completion list."
 (load "~/.emacs.d/nxhtml/autostart.el")
 (setq mumamo-chunk-coloring 2)
 
-; autoload slime when you open a .lisp file
 (when (locate-library "slime")
   (require 'slime)
+  ;; autoload slime when you open a .lisp file
   (add-hook 'slime-mode-hook
 	    (lambda ()
 	      (unless (slime-connected-p)
 		(save-excursion (slime)))))
-					; autoclose emacs even if lisp processes are running
+  ;; autoclose emacs even if lisp processes are running
   (setq slime-kill-without-query-p t)
 
+  ;; enable paredit for slime modes
+  (dolist (hook '(slime-mode-hook slime-repl-mode-hook))
+    (add-hook hook 'enable-paredit-mode))
   ;; slime autocomplete
   (require 'ac-slime)
-  (add-hook 'slime-mode-hook 'set-up-slime-ac)
-  (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
-  ;; set ac-modes to include slime
-  (add-to-list 'ac-modes 'lisp-mode)
-  (add-to-list 'ac-modes 'slime-repl-mode))
+  ;; set load slime-ac on slime modes and set ac-modes to include slime
+  (dolist (mode '(slime-mode slime-repl-mode))
+    (add-hook (intern (concat (symbol-name mode) "-hook")) 'set-up-slime-ac)
+    (add-to-list 'ac-modes mode)))
 
 ;; disable easy navigation keys to learn emacs shortcuts properly -
 ;; from http://danamlund.dk/emacs/no-easy-keys.html
