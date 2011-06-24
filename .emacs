@@ -210,18 +210,18 @@
   notification with the title body and icon"
   (if (equal icon nil) (setq icon "emacs-snapshot"))
   (dbus-call-method
-    :session                        ; use the session (not system) bus
-    "org.freedesktop.Notifications" ; service name
-    "/org/freedesktop/Notifications"   ; path name
-    "org.freedesktop.Notifications" "Notify" ; Method
-    "emacs"
-    0
-    icon
-    title
-    body
-    '(:array)
-    '(:array (:dict-entry "x-canonical-append" (:variant "")))
-    ':int32 2000))
+   :session                        ; use the session (not system) bus
+   "org.freedesktop.Notifications" ; service name
+   "/org/freedesktop/Notifications"   ; path name
+   "org.freedesktop.Notifications" "Notify" ; Method
+   "emacs"
+   0
+   icon
+   title
+   body
+   '(:array)
+   '(:array (:dict-entry "x-canonical-append" (:variant "")))
+   ':int32 2000))
 
 ;; notify on compilation finished
 (defun compilation-finished (buffer result)
@@ -401,11 +401,10 @@ Symbols matching the text at point are put first in the completion list."
 		      (lambda ()
 			(add-to-list 'gud-jdb-classpath "/home/alex/android-sdk-linux_x86/platforms/android-8/android.jar")))))
 
-;; python ropemacs autocomplete
-(ac-ropemacs-initialize)
-(add-hook 'python-mode-hook
-	  (lambda ()
-	    (add-to-list 'ac-sources 'ac-source-ropemacs)))
+;; enable pymacs / ropemacs support
+(when (locate-library "pymacs")
+  (require 'pymacs)
+  (pymacs-load "ropemacs" "rope-"))
 
 ;; nxhtml
 (load "~/.emacs.d/nxhtml/autostart.el")
@@ -431,31 +430,6 @@ Symbols matching the text at point are put first in the completion list."
     (add-hook (intern (concat (symbol-name mode) "-hook")) 'set-up-slime-ac)
     (add-to-list 'ac-modes mode)))
 
-;; disable easy navigation keys to learn emacs shortcuts properly -
-;; from http://danamlund.dk/emacs/no-easy-keys.html
-(defvar no-easy-keys-minor-mode-map (make-keymap)
-  "no-easy-keys-minor-mode keymap.")
-(let ((f (lambda (m)
-           `(lambda () (interactive)
-              (message (concat "No! use " ,m " instead."))))))
-  (dolist (l '(("<left>" . "C-b") ("<right>" . "C-f") ("<up>" . "C-p")
-               ("<down>" . "C-n")
-               ("<C-left>" . "M-f") ("<C-right>" . "M-b") ("<C-up>" . "M-{")
-               ("<C-down>" . "M-}")
-               ("<M-left>" . "M-f") ("<M-right>" . "M-b") ("<M-up>" . "M-{")
-               ("<M-down>" . "M-}")
-               ("<delete>" . "C-d") ("<C-delete>" . "M-d")
-               ("<M-delete>" . "M-d") ("<next>" . "C-v") ("<C-next>" . "M-x <")
-               ("<prior>" . "M-v") ("<C-prior>" . "M-x >")
-               ("<home>" . "C-a") ("<C-home>" . "M->")
-               ("<C-home>" . "M-<") ("<end>" . "C-e") ("<C-end>" . "M->")))
-    (define-key no-easy-keys-minor-mode-map
-      (read-kbd-macro (car l)) (funcall f (cdr l)))))
-(define-minor-mode no-easy-keys-minor-mode
-  "A minor mode that disables the arrow-keys, pg-up/down, delete
-  and backspace."  t " !E"
-  'no-easy-keys-minor-mode-map :global t)
-(no-easy-keys-minor-mode 1)
 
 (when (locate-library "prolog")
   ;; set our prolog system
@@ -464,16 +438,16 @@ Symbols matching the text at point are put first in the completion list."
   (setq auto-mode-alist (append '(("\\.pl$" . prolog-mode)) auto-mode-alist)))
 
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(user-full-name "Alex Murray")
  '(user-mail-address "murray.alex@gmail.com")
  '(x-select-enable-clipboard t))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  )
