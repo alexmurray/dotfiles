@@ -401,6 +401,12 @@ Symbols matching the text at point are put first in the completion list."
 		      (lambda ()
 			(add-to-list 'gud-jdb-classpath "/home/alex/android-sdk-linux_x86/platforms/android-8/android.jar")))))
 
+;; setup python mode for eldoc and auto-complete with semantic
+(add-hook 'python-mode-hook
+	  (lambda ()
+	    (eldoc-mode)
+	    (setq ac-sources (append '(ac-source-semantic) ac-sources))))
+
 ;; enable pymacs / ropemacs support
 (when (locate-library "pymacs")
   (require 'pymacs)
