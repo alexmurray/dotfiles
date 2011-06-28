@@ -86,6 +86,10 @@
 				  'fullboth)))))
 (global-set-key (kbd "<f11>") 'toggle-fullscreen)
 
+;; use chrome as default broswer
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "google-chrome")
+
 ;; show colours correctly in shell
 (ansi-color-for-comint-mode-on)
 
@@ -293,8 +297,9 @@
 	  (lambda ()
 	    (add-to-list 'ac-sources 'ac-source-ropemacs)))
 
-;; ;; nxhtml
-;; (load "~/.emacs.d/nxhtml/autostart.el")
+;; nxhtml
+(load "~/.emacs.d/nxhtml/autostart.el")
+(setq mumamo-chunk-coloring 2)
 
 ; autoload slime when you open a .lisp file
 (when (locate-library "slime")
