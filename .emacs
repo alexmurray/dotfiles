@@ -112,6 +112,9 @@
 (ido-mode 1)
 (setq ido-enable-flex-matching t)
 
+;; when using ido, the confirmation is rather annoying...
+(setq confirm-nonexistent-file-or-buffer nil)
+
 ;; for org-mode
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "C-c a") 'org-agenda)
@@ -120,6 +123,21 @@
 ;; semantic in emacs 23.2 - useful for auto-complete mode
 (require 'semantic)
 (semantic-mode 1)
+
+;; uniquify: unique buffer names
+(require 'uniquify) ;; make buffer names more unique
+(setq uniquify-buffer-name-style 'post-forward
+      uniquify-separator ":"
+      uniquify-after-kill-buffer-p t
+      uniquify-ignore-buffers-re "^\\*")
+
+;; use super + arrow keys to switch between visible buffers
+(require 'windmove)
+(windmove-default-keybindings 'super) ;; will be overridden
+(global-set-key (kbd "<C-s-left>")  'windmove-left)
+(global-set-key (kbd "<C-s-right>") 'windmove-right)
+(global-set-key (kbd "<C-s-up>")    'windmove-up)
+(global-set-key (kbd "<C-s-down>")  'windmove-down)
 
 ;;;; External packages ;;;;
 
