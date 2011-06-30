@@ -157,6 +157,7 @@
 (require 'zeitgeist)
 
 ;; auto-complete mode
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/auto-complete"))
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 (ac-config-default)
