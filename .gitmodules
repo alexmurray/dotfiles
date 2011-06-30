@@ -1,0 +1,3 @@
+[submodule ".emacs.d/auto-complete"]
+	path = .emacs.d/auto-complete
+	url = git@github.com:alexmurray/auto-complete.git
