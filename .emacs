@@ -426,13 +426,13 @@ Symbols matching the text at point are put first in the completion list."
 	    ;; insert gtk-doc style comment declarations using C-x 4 h
 	    ;; (gtk-doc-insert) or C-x 4 s (gtk-doc-insert-section) to
 	    ;; comment current function or section respectively
-	    ;;(load "gtk-doc")
-	    ;; devhelp
-	    (require 'devhelp)
-	    ;; Bind F6 to enable the automatic assistant.
-	    (global-set-key (kbd "<f6>") 'devhelp-toggle-automatic-assistant)
-	    ;; Bind F7 to search with the assistant window.
-	    (global-set-key (kbd "<f7>") 'devhelp-assistant-word-at-point)))
+	    (load "gtk-doc" t) ; ignore error if can't be found
+	    ;; devhelp - ignore error if couldn't be loaded
+	    (when (require 'devhelp nil t)
+	      ;; Bind F6 to enable the automatic assistant.
+	      (global-set-key (kbd "<f6>") 'devhelp-toggle-automatic-assistant)
+	      ;; Bind F7 to search with the assistant window.
+	      (global-set-key (kbd "<f7>") 'devhelp-assistant-word-at-point))))
 
 ;; ajc-java-complete
 (add-hook 'java-mode-hook
