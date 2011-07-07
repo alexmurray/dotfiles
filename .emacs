@@ -166,6 +166,9 @@
 
 ;; rainbow mode - for colouring strings that represent colors
 (require 'rainbow-mode)
+;; enable rainbow mode automatically for css and html modes
+(dolist (hook '(css-mode-hook html-mode-hook))
+  (add-hook hook 'rainbow-mode))
 
 ;; undo-tree.el - from http://www.dr-qubit.org/undo-tree/undo-tree.el
 (require 'undo-tree)
