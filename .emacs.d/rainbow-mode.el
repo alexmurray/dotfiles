@@ -42,7 +42,13 @@
 
 ;; Hexadecimal colors
 (defvar rainbow-hexadecimal-colors-font-lock-keywords
-  '(("#[0-9a-fA-F]\\{3\\}[0-9a-fA-F]\\{3\\}?"
+  '(("#\\(?:[0-9a-fA-F]\\{3\\}\\)+\\{1,4\\}"
+     (0 (rainbow-colorize-itself)))
+    ("[Rr][Gg][Bb]:[0-9a-fA-F]\\{1,4\\}/[0-9a-fA-F]\\{1,4\\}/[0-9a-fA-F]\\{1,4\\}"
+     (0 (rainbow-colorize-itself)))
+    ("[Rr][Gg][Bb][Ii]:[0-9.]+/[0-9.]+/[0-9.]+"
+     (0 (rainbow-colorize-itself)))
+    ("\\(?:[Cc][Ii][Ee]\\(?:[Xx][Yy][Zz]\\|[Uu][Vv][Yy]\\|[Xx][Yy][Yy]\\|[Ll][Aa][Bb]\\|[Ll][Uu][Vv]\\)\\|[Tt][Ee][Kk][Hh][Vv][Cc]\\):[+-]?[0-9.]+\\(?:[Ee][+-]?[0-9]+\\)?/[+-]?[0-9.]+\\(?:[Ee][+-]?[0-9]+\\)?/[+-]?[0-9.]+\\(?:[Ee][+-]?[0-9]+\\)?"
      (0 (rainbow-colorize-itself))))
   "Font-lock keywords to add for hexadecimal colors.")
 
