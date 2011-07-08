@@ -123,6 +123,7 @@
 ;; semantic in emacs 23.2 - useful for auto-complete mode
 (require 'semantic)
 (semantic-mode 1)
+(global-semantic-idle-summary-mode 1)
 
 ;; uniquify: unique buffer names
 (require 'uniquify) ;; make buffer names more unique
