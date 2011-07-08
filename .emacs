@@ -140,6 +140,9 @@
 (global-set-key (kbd "<C-s-up>")    'windmove-up)
 (global-set-key (kbd "<C-s-down>")  'windmove-down)
 
+;; use visual line mode to do soft word wrapping in all text modes
+(add-hook 'text-mode-hook (lambda () (visual-line-mode 1)))
+
 ;;;; External packages ;;;;
 
 ;; set load-path
@@ -335,8 +338,6 @@ Symbols matching the text at point are put first in the completion list."
 ;; for auctex and reftex integration
 (add-hook 'LaTeX-mode-hook
 	  (lambda ()
-	    ;; use visual line mode to do soft word wrapping
-	    (visual-line-mode 1)
 	    ;; Use PDF by default
 	    (TeX-PDF-mode 1)
 	    (setq TeX-view-program-selection
