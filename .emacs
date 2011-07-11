@@ -55,6 +55,25 @@
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
 
+;; if no mark is active then change copy / cut to do current line
+;; rather than nothing to easily allow copying / cutting of lines
+;; without selecting them - from
+;; http://emacs-fu.blogspot.com/2009/11/copying-lines-without-selecting-them.html
+(defadvice kill-ring-save (before slick-copy activate compile)
+  "When called interactively with no active region, copy a single line instead."
+  (interactive
+   (if mark-active
+       (list (region-beginning) (region-end))
+     (message "Copied line")
+     (list (line-beginning-position) (line-beginning-position 2)))))
+
+(defadvice kill-region (before slick-cut activate compile)
+  "When called interactively with no active region, kill a single line instead."
+  (interactive
+    (if mark-active
+	(list (region-beginning) (region-end))
+      (list (line-beginning-position) (line-beginning-position 2)))))
+
 ;; a couple nice definitions taken from emacs-starter-kit
 (defun sudo-edit (&optional arg)
   (interactive "p")
