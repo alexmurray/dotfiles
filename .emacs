@@ -400,6 +400,28 @@ Symbols matching the text at point are put first in the completion list."
           (c-put-font-lock-face start (point) 'font-lock-comment-face)))))
   nil)
 
+
+(defun common-programming-setup ()
+  ;; turn on spell checking for strings and comments
+  (flyspell-prog-mode)
+  ;; workaround bug in autocomplete and flyspell
+  (ac-flyspell-workaround)
+  ;; highlight TODO and fixme so it looks scary
+  (font-lock-add-keywords nil
+   '(("\\<\\(TODO\\|todo\\|FIXME\\|fixme\\)" 1 font-lock-warning-face t))))
+
+;; common stuff for all programming languages
+(dolist (hook '(c-mode-common-hook
+		lisp-mode-hook
+		emacs-lisp-mode-hook
+		python-mode-hook
+		shell-mode-hook
+		php-mode-hook
+		css-mode-hook
+		nxml-mode-hook
+		javascript-mode-hook))
+  (add-hook hook 'common-programming-setup))
+
 ;; c-mode and other derived modes (c++, java etc) etc
 (add-hook 'c-mode-common-hook
           (lambda ()
@@ -408,10 +430,6 @@ Symbols matching the text at point are put first in the completion list."
 	    ;; set a reasonable fill and comment column
 	    (setq fill-column 80)
 	    (setq comment-column 70)
-	    ;; turn on spell checking for strings and comments
-	    (flyspell-prog-mode)
-	    ;; workaround bug in autocomplete and flyspell
-	    (ac-flyspell-workaround)
 	    ;; make CamelCase words separate subwords (ie. Camel and Case can
 	    ;; be operated on separately as separate words
 	    (subword-mode 1)
@@ -426,10 +444,6 @@ Symbols matching the text at point are put first in the completion list."
 	    ;; provides the most relevant options plus we still retain
 	    ;; yasnippet and gtags sources as well
 	    (setq ac-sources '(ac-source-semantic))
-	    ;; highlight TODO and fixme so it looks scary
-	    (font-lock-add-keywords
-	     nil
-	     '(("\\<\\(TODO\\|todo\\|FIXME\\|fixme\\)" 1 font-lock-warning-face t)))
 	    ;; show #if 0 / #endif etc regions in comment face
 	    (font-lock-add-keywords
 	     nil
