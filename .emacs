@@ -140,7 +140,6 @@
 ;; semantic in emacs 23.2 - useful for auto-complete mode
 (require 'semantic)
 (semantic-mode 1)
-(global-semantic-idle-summary-mode 1)
 
 ;; uniquify: unique buffer names
 (require 'uniquify) ;; make buffer names more unique
@@ -454,6 +453,8 @@ Symbols matching the text at point are put first in the completion list."
 	  (lambda ()
 	    ;; use linux kernel style
 	    (c-set-style "linux")
+	    ;; setup gcc integration with semantic
+	    (semantic-gcc-setup)
 	    ;; options for c-eldoc mode - could also add other libs
 	    ;; too like OpenGL if needed
 	    (setq c-eldoc-includes "`pkg-config gtk+-2.0 --cflags` -I./ -I../ ")
