@@ -453,8 +453,6 @@ Symbols matching the text at point are put first in the completion list."
 	  (lambda ()
 	    ;; use linux kernel style
 	    (c-set-style "linux")
-	    ;; setup gcc integration with semantic
-	    (semantic-gcc-setup)
 	    ;; options for c-eldoc mode - could also add other libs
 	    ;; too like OpenGL if needed
 	    (setq c-eldoc-includes "`pkg-config gtk+-2.0 --cflags` -I./ -I../ ")
