@@ -2,6 +2,8 @@
 
 ;; inhibit startup message and splash screen
 (setq inhibit-startup-message t)
+;; remove message from initial scratch buffer
+(setq initial-scratch-message nil)
 
 ;; disable tool-bar and scroll-bar, show matching parenthesis and time
 (menu-bar-mode 0)
