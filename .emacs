@@ -166,11 +166,8 @@
 ;; set load-path
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
 
-;; color-theme
-(require 'color-theme)
-(color-theme-initialize)
-(color-theme-zen-and-art)
-;;(color-theme-blackboard)
+;; color-theme - needs emacs 24
+(load-theme 'wombat)
 
 ;; smooth scrolling
 (require 'smooth-scrolling)
