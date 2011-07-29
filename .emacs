@@ -19,7 +19,8 @@
   (setq frame-title-format '(buffer-file-name "%f" ("%b")))
   (tooltip-mode -1)
   (mouse-wheel-mode t)
-  (blink-cursor-mode -1))
+  (blink-cursor-mode -1)
+  (set-face-attribute 'default nil :font "Inconsolata Medium 12"))
 
 ;; default to utf-8
 (prefer-coding-system 'utf-8)
