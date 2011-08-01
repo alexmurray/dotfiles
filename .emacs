@@ -1,5 +1,8 @@
 ;;;; Standard Emacs options and inbuilt packages ;;;;
 
+;; set load-path
+(add-to-list 'load-path (expand-file-name "~/.emacs.d"))
+
 ;; inhibit startup message and splash screen
 (setq inhibit-startup-message t)
 ;; remove message from initial scratch buffer
@@ -20,7 +23,13 @@
   (tooltip-mode -1)
   (mouse-wheel-mode t)
   (blink-cursor-mode -1)
-  (set-face-attribute 'default nil :font "Inconsolata Medium 12"))
+  (set-face-attribute 'default nil :font "Inconsolata Medium 12")
+  ;; load color theme in emacs 24
+  (load-theme 'zenburn t)
+  ;; HACK - load theme doesn't seem to work correctly, also need to
+  ;; load the file to ensure all inherited styles get applied
+  ;; correctly
+  (load-file "~/.emacs.d/zenburn-theme.el"))
 
 ;; default to utf-8
 (prefer-coding-system 'utf-8)
@@ -163,12 +172,6 @@
 (add-hook 'text-mode-hook (lambda () (visual-line-mode 1)))
 
 ;;;; External packages ;;;;
-
-;; set load-path
-(add-to-list 'load-path (expand-file-name "~/.emacs.d"))
-
-;; color-theme - needs emacs 24
-(load-theme 'wombat)
 
 ;; smooth scrolling
 (require 'smooth-scrolling)
@@ -536,6 +539,7 @@ Symbols matching the text at point are put first in the completion list."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes (quote ("b539b43c8472e701bba6190132e2ae8b95198c05" default)))
  '(user-full-name "Alex Murray")
  '(user-mail-address "murray.alex@gmail.com")
  '(x-select-enable-clipboard t))
