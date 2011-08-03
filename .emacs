@@ -24,12 +24,13 @@
   (mouse-wheel-mode t)
   (blink-cursor-mode -1)
   (set-face-attribute 'default nil :font "Inconsolata Medium 12")
-  ;; load color theme in emacs 24
-  (load-theme 'zenburn t)
-  ;; HACK - load theme doesn't seem to work correctly, also need to
-  ;; load the file to ensure all inherited styles get applied
-  ;; correctly
-  (load-file "~/.emacs.d/zenburn-theme.el"))
+  (when (>= emacs-major-version 24)
+    ;; load color theme in emacs 24
+    (load-theme 'zenburn t)
+    ;; HACK - load theme doesn't seem to work correctly, also need to
+    ;; load the file to ensure all inherited styles get applied
+    ;; correctly
+    (load-file "~/.emacs.d/zenburn-theme.el")))
 
 ;; default to utf-8
 (prefer-coding-system 'utf-8)
