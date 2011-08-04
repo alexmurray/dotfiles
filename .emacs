@@ -49,6 +49,10 @@
 ;; use CUA mode for rectangle selections etc but not copy/paste etc
 (cua-selection-mode t)
 
+;; enable delete-selection mode to allow replacing selected region
+;; with new text automatically
+(delete-selection-mode 1)
+
 ;; just use y or n not yes or no
 (defalias 'yes-or-no-p 'y-or-n-p)
 
