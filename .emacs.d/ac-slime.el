@@ -7,6 +7,8 @@
 ;;   (require 'ac-slime)
 ;;   (add-hook 'slime-mode-hook 'set-up-slime-ac)
 ;;   (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+;;   (eval-after-load "auto-complete"
+;;     '(add-to-list 'ac-modes 'slime-repl-mode))
 ;;----------------------------------------------------------------------------
 
 (eval-when-compile (require 'cl))
@@ -47,6 +49,7 @@
     (selection-face . ac-slime-selection-face)
     (prefix . slime-symbol-start-pos)
     (symbol . "l")
+    (match . (lambda (prefix candidates) candidates))
     (document . ac-slime-documentation))
   "Source for fuzzy slime completion")
 
