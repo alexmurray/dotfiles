@@ -192,6 +192,9 @@
 ;; zeitgeist integration
 (require 'zeitgeist)
 
+;; ubiquitous ido (from https://github.com/technomancy/ido-ubiquitous)
+(require 'ido-ubiquitous)
+
 ;; auto-complete mode
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/auto-complete"))
 (require 'auto-complete-config)
