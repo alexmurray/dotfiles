@@ -76,6 +76,59 @@
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
 
+;; use dbus to notify and append messages automatically
+(require 'dbus)
+(defun send-desktop-notification (title body &optional icon)
+  "Call the notification daemon over dbus to display a
+  notification with the title body and icon"
+  (if (equal icon nil) (setq icon "emacs-snapshot"))
+  (dbus-call-method
+   :session                        ; use the session (not system) bus
+   "org.freedesktop.Notifications" ; service name
+   "/org/freedesktop/Notifications"   ; path name
+   "org.freedesktop.Notifications" "Notify" ; Method
+   "emacs"
+   0
+   icon
+   title
+   body
+   '(:array)
+   '(:array (:dict-entry "x-canonical-append" (:variant "")))
+   ':int32 2000))
+
+;; notify on compilation finished
+(defun compilation-finished (buffer result)
+  ;; ignore non-compilation buffers (such as grep etc)
+  (when (string-match "compilation" (buffer-name buffer))
+    (let ((title "Emacs compilation finished")
+	  (body "Success")
+	  (icon nil))
+      ;; remove any newlines in result message
+      (while (string-match "\n" result)
+	(setq result (replace-match "" t nil result)))
+      ;; if looks like an error message show it with error icon
+      (unless (string-match "finished" result)
+	(setq body result
+	      icon "gtk-dialog-error"))
+      (send-desktop-notification title body icon))))
+(setq compilation-finish-functions 'compilation-finished)
+
+;; also notify when reverting a buffer if we auto-revert
+(defun notify-buffer-reverted ()
+  (send-desktop-notification "Emacs buffer reverted"
+			     (buffer-name (current-buffer))))
+(add-hook 'after-revert-hook 'notify-buffer-reverted)
+
+;; pretty lambda (see also slime) ->  "λ"
+;;  'greek small letter lambda' / utf8 cebb / unicode 03bb -> \u03BB / mule?!
+;; in greek-iso8859-7 -> 107  >  86 ec
+(defun pretty-lambdas ()
+  (font-lock-add-keywords
+   nil `(("(\\(lambda\\>\\)"
+          (0 (progn (compose-region (match-beginning 1) (match-end 1)
+                                    ,(make-char 'greek-iso8859-7 107))
+                    'font-lock-keyword-face))))))
+
 ;; if no mark is active then change copy / cut to do current line
 ;; rather than nothing to easily allow copying / cutting of lines
 ;; without selecting them - from
@@ -195,18 +248,6 @@
 ;; ubiquitous ido (from https://github.com/technomancy/ido-ubiquitous)
 (require 'ido-ubiquitous)
 
-;; auto-complete mode
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/auto-complete"))
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-(ac-config-default)
-;; make autostart after entering a single character
-(setq ac-auto-start 1)
-;; show menu 100ms after completions are available
-(setq ac-auto-show-menu (+ ac-delay 0.1))
-;; quick help has to be after menu so again set to 100ms more
-(setq ac-quick-help-delay (+ ac-auto-show-menu 0.1))
-
 ;; rainbow mode - for colouring strings that represent colors
 (require 'rainbow-mode)
 ;; enable rainbow mode automatically for css and html modes
@@ -219,16 +260,6 @@
 
 ;; scratch.el - from http://github.com/ieure/scratch-el
 (autoload 'scratch "scratch" nil t)
-
-;; pretty lambda (see also slime) ->  "λ"
-;;  'greek small letter lambda' / utf8 cebb / unicode 03bb -> \u03BB / mule?!
-;; in greek-iso8859-7 -> 107  >  86 ec
-(defun pretty-lambdas ()
-  (font-lock-add-keywords
-   nil `(("(\\(lambda\\>\\)"
-          (0 (progn (compose-region (match-beginning 1) (match-end 1)
-                                    ,(make-char 'greek-iso8859-7 107))
-                    'font-lock-keyword-face))))))
 
 ;; use autopair by default but not if using paredit
 (require 'autopair)
@@ -268,48 +299,17 @@
              (,mode-name 1)))))))
 (suspend-mode-during-cua-rect-selection 'paredit-mode)
 
-;; use dbus to notify and append messages automatically
-(require 'dbus)
-(defun send-desktop-notification (title body &optional icon)
-  "Call the notification daemon over dbus to display a
-  notification with the title body and icon"
-  (if (equal icon nil) (setq icon "emacs-snapshot"))
-  (dbus-call-method
-   :session                        ; use the session (not system) bus
-   "org.freedesktop.Notifications" ; service name
-   "/org/freedesktop/Notifications"   ; path name
-   "org.freedesktop.Notifications" "Notify" ; Method
-   "emacs"
-   0
-   icon
-   title
-   body
-   '(:array)
-   '(:array (:dict-entry "x-canonical-append" (:variant "")))
-   ':int32 2000))
-
-;; notify on compilation finished
-(defun compilation-finished (buffer result)
-  ;; ignore non-compilation buffers (such as grep etc)
-  (when (string-match "compilation" (buffer-name buffer))
-    (let ((title "Emacs compilation finished")
-	  (body "Success")
-	  (icon nil))
-      ;; remove any newlines in result message
-      (while (string-match "\n" result)
-	(setq result (replace-match "" t nil result)))
-      ;; if looks like an error message show it with error icon
-      (unless (string-match "finished" result)
-	(setq body result
-	      icon "gtk-dialog-error"))
-      (send-desktop-notification title body icon))))
-(setq compilation-finish-functions 'compilation-finished)
-
-;; also notify when reverting a buffer if we auto-revert
-(defun notify-buffer-reverted ()
-  (send-desktop-notification "Emacs buffer reverted"
-			     (buffer-name (current-buffer))))
-(add-hook 'after-revert-hook 'notify-buffer-reverted)
+;; auto-complete mode
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/auto-complete"))
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+(ac-config-default)
+;; make autostart after entering a single character
+(setq ac-auto-start 1)
+;; show menu 100ms after completions are available
+(setq ac-auto-show-menu (+ ac-delay 0.1))
+;; quick help has to be after menu so again set to 100ms more
+(setq ac-quick-help-delay (+ ac-auto-show-menu 0.1))
 
 ;; magit - installed as a system package
 (when (locate-library "magit")
