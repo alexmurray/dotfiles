@@ -264,6 +264,8 @@
 ;; use autopair by default but not if using paredit
 (require 'autopair)
 (autopair-global-mode) ;; enable autopair in all buffers
+;; make sure autopair doesn't screw up some slime stuff
+(set-default 'autopair-dont-activate #'(lambda () (eq major-mode 'sldb-mode)))
 
 (autoload 'paredit-mode "paredit"
   "Minor mode for pseudo-structurally editing Lisp code." t)
