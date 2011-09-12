@@ -24,17 +24,7 @@
   (mouse-wheel-mode t)
   (blink-cursor-mode -1)
   (set-face-attribute 'default nil :font "Inconsolata Medium 12")
-  (if (>= emacs-major-version 24)
-      (progn
-	;; load color theme in emacs 24
-	(load-theme 'zenburn t)
-	;; HACK - load theme doesn't seem to work correctly, also need to
-	;; load the file to ensure all inherited styles get applied
-	;; correctly
-	(load-file "~/.emacs.d/zenburn-theme.el"))
-    ;; use emacs23 version of zenburn
-    (require 'color-theme-zenburn)
-    (color-theme-zenburn)))
+  (load-theme 'zenburn t))
 
 ;; default to utf-8
 (prefer-coding-system 'utf-8)
@@ -53,11 +43,16 @@
 ;; with new text automatically
 (delete-selection-mode 1)
 
-;; just use y or n not yes or no
-(defalias 'yes-or-no-p 'y-or-n-p)
+;; electric pair, indent and layout modes to make more IDE like
+(electric-pair-mode t)
+(electric-indent-mode t)
+(electric-layout-mode t)
 
 ;; show empty lines in left fringe
 (setq default-indicate-empty-lines t)
+
+;; just use y or n not yes or no
+(defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; some nice keybindings
 (global-set-key (kbd "C-x C-h") 'hexl-mode)
@@ -75,49 +70,6 @@
 (global-set-key (kbd "\C-r") 'isearch-backward-regexp)
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
-
-;; use dbus to notify and append messages automatically
-(require 'dbus)
-(defun send-desktop-notification (title body &optional icon)
-  "Call the notification daemon over dbus to display a
-  notification with the title body and icon"
-  (if (equal icon nil) (setq icon "emacs-snapshot"))
-  (dbus-call-method
-   :session                        ; use the session (not system) bus
-   "org.freedesktop.Notifications" ; service name
-   "/org/freedesktop/Notifications"   ; path name
-   "org.freedesktop.Notifications" "Notify" ; Method
-   "emacs"
-   0
-   icon
-   title
-   body
-   '(:array)
-   '(:array (:dict-entry "x-canonical-append" (:variant "")))
-   ':int32 2000))
-
-;; notify on compilation finished
-(defun compilation-finished (buffer result)
-  ;; ignore non-compilation buffers (such as grep etc)
-  (when (string-match "compilation" (buffer-name buffer))
-    (let ((title "Emacs compilation finished")
-	  (body "Success")
-	  (icon nil))
-      ;; remove any newlines in result message
-      (while (string-match "\n" result)
-	(setq result (replace-match "" t nil result)))
-      ;; if looks like an error message show it with error icon
-      (unless (string-match "finished" result)
-	(setq body result
-	      icon "gtk-dialog-error"))
-      (send-desktop-notification title body icon))))
-(setq compilation-finish-functions 'compilation-finished)
-
-;; also notify when reverting a buffer if we auto-revert
-(defun notify-buffer-reverted ()
-  (send-desktop-notification "Emacs buffer reverted"
-			     (buffer-name (current-buffer))))
-(add-hook 'after-revert-hook 'notify-buffer-reverted)
 
 ;; pretty lambda (see also slime) ->  "λ"
 ;;  'greek small letter lambda' / utf8 cebb / unicode 03bb -> \u03BB / mule?!
@@ -190,9 +142,6 @@
 ;; use proper english
 (setq ispell-dictionary "british")
 
-;; make emacs use the clipboard
-(setq x-select-enable-clipboard t)
-
 ;; default to unified diff
 (setq diff-switches "-u")
 
@@ -237,6 +186,31 @@
 ;; use visual line mode to do soft word wrapping in all text modes
 (add-hook 'text-mode-hook (lambda () (visual-line-mode 1)))
 
+;; some notifications stuff
+(require 'notifications)
+;; notify on compilation finished
+(defun compilation-finished (buffer result)
+  ;; ignore non-compilation buffers (such as grep etc)
+  (when (string-match "compilation" (buffer-name buffer))
+    (let ((title "Emacs compilation finished")
+	  (body "Success")
+	  (icon nil))
+      ;; remove any newlines in result message
+      (while (string-match "\n" result)
+	(setq result (replace-match "" t nil result)))
+      ;; if looks like an error message show it with error icon
+      (unless (string-match "finished" result)
+	(setq body result
+	      icon "gtk-dialog-error"))
+      (notifications-notify :title title :body body :icon icon))))
+(setq compilation-finish-functions 'compilation-finished)
+
+;; also notify when reverting a buffer if we auto-revert
+(defun notify-buffer-reverted ()
+  (notifications-notify :title "Emacs buffer reverted"
+			:body (buffer-name (current-buffer))))
+(add-hook 'after-revert-hook 'notify-buffer-reverted)
+
 ;;;; External packages ;;;;
 
 ;; smooth scrolling
@@ -261,19 +235,10 @@
 ;; scratch.el - from http://github.com/ieure/scratch-el
 (autoload 'scratch "scratch" nil t)
 
-;; use autopair by default but not if using paredit
-(require 'autopair)
-(autopair-global-mode) ;; enable autopair in all buffers
-;; make sure autopair doesn't screw up some slime stuff
-(set-default 'autopair-dont-activate #'(lambda () (eq major-mode 'sldb-mode)))
-
+;; paredit
 (autoload 'paredit-mode "paredit"
   "Minor mode for pseudo-structurally editing Lisp code." t)
 (autoload 'enable-paredit-mode "paredit" "Turn on paredit mode" t)
-
-(defadvice enable-paredit-mode (before disable-autopair activate)
-  (setq autopair-dont-activate t)
-  (autopair-mode -1))
 
 (dolist (hook '(emacs-lisp-mode-hook lisp-mode-hook))
   (add-hook hook 'pretty-lambdas)
