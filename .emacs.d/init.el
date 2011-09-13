@@ -1,7 +1,10 @@
-;;;; Standard Emacs options and inbuilt packages ;;;;
+(setq user-full-name "Alex Murray")
+(setq user-mail-address "murray.alex@gmail.com")
 
 ;; set load-path
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
+
+;;;; Standard Emacs options and inbuilt packages ;;;;
 
 ;; inhibit startup message and splash screen
 (setq inhibit-startup-message t)
@@ -435,6 +438,7 @@
 (load "~/.emacs.d/nxhtml/autostart.el")
 (setq mumamo-chunk-coloring 2)
 
+;; slime
 (when (locate-library "slime")
   (require 'slime)
   ;; autoload slime when you open a .lisp file
@@ -455,25 +459,9 @@
     (add-hook (intern (concat (symbol-name mode) "-hook")) 'set-up-slime-ac)
     (add-to-list 'ac-modes mode)))
 
-
+;; prolog
 (when (locate-library "prolog")
   ;; set our prolog system
   (setq prolog-system 'swi)
   ;; associate .pl files with prolog mode rather than perl mode
   (setq auto-mode-alist (append '(("\\.pl$" . prolog-mode)) auto-mode-alist)))
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("b539b43c8472e701bba6190132e2ae8b95198c05" default)))
- '(user-full-name "Alex Murray")
- '(user-mail-address "murray.alex@gmail.com")
- '(x-select-enable-clipboard t))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
