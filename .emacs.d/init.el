@@ -306,6 +306,27 @@
 	    ;; workaround bug in autocomplete and flyspell
 	    (ac-flyspell-workaround)))
 
+(defun common-programming-setup ()
+  ;; turn on spell checking for strings and comments
+  (flyspell-prog-mode)
+  ;; workaround bug in autocomplete and flyspell
+  (ac-flyspell-workaround)
+  ;; highlight TODO and fixme so it looks scary
+  (font-lock-add-keywords nil
+   '(("\\<\\(TODO\\|todo\\|FIXME\\|fixme\\)" 1 font-lock-warning-face t))))
+
+;; common stuff for all programming languages
+(dolist (hook '(c-mode-common-hook
+		lisp-mode-hook
+		emacs-lisp-mode-hook
+		python-mode-hook
+		shell-mode-hook
+		php-mode-hook
+		css-mode-hook
+		nxml-mode-hook
+		javascript-mode-hook))
+  (add-hook hook 'common-programming-setup))
+
 ;; show #if 0 / #endif etc regions in comment face - taken from
 ;; http://stackoverflow.com/questions/4549015/in-c-c-mode-in-emacs-change-face-of-code-in-if-0-endif-block-to-comment-fa
 (defun c-mode-font-lock-if0 (limit)
@@ -330,28 +351,6 @@
         (when (and start (> depth 0))
           (c-put-font-lock-face start (point) 'font-lock-comment-face)))))
   nil)
-
-
-(defun common-programming-setup ()
-  ;; turn on spell checking for strings and comments
-  (flyspell-prog-mode)
-  ;; workaround bug in autocomplete and flyspell
-  (ac-flyspell-workaround)
-  ;; highlight TODO and fixme so it looks scary
-  (font-lock-add-keywords nil
-   '(("\\<\\(TODO\\|todo\\|FIXME\\|fixme\\)" 1 font-lock-warning-face t))))
-
-;; common stuff for all programming languages
-(dolist (hook '(c-mode-common-hook
-		lisp-mode-hook
-		emacs-lisp-mode-hook
-		python-mode-hook
-		shell-mode-hook
-		php-mode-hook
-		css-mode-hook
-		nxml-mode-hook
-		javascript-mode-hook))
-  (add-hook hook 'common-programming-setup))
 
 ;; c-mode and other derived modes (c++, java etc) etc
 (add-hook 'c-mode-common-hook
