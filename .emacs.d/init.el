@@ -60,7 +60,7 @@
 ;; some nice keybindings
 (global-set-key (kbd "C-x C-h") 'hexl-mode)
 (global-set-key (kbd "C-x C-m") 'compile)
-(global-set-key (kbd "C-x e") 'eshell)
+(global-set-key (kbd "C-x m") 'eshell)
 
 (global-set-key (kbd "C-M-h") 'backward-kill-word) ;; like readline
 (global-set-key (kbd "C-c r") 'revert-buffer)
@@ -70,7 +70,7 @@
 
 ;; Use regex searches by default.
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
-(global-set-key (kbd "\C-r") 'isearch-backward-regexp)
+(global-set-key (kbd "C-r") 'isearch-backward-regexp)
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
 
