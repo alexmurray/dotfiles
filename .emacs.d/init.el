@@ -26,7 +26,7 @@
   (tooltip-mode -1)
   (mouse-wheel-mode t)
   (blink-cursor-mode -1)
-  (set-face-attribute 'default nil :font "UbuntuBeta Mono 12")
+  (set-face-attribute 'default nil :font "Ubuntu Mono 12")
   (load-theme 'zenburn t))
 
 ;; default to utf-8
