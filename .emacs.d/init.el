@@ -219,6 +219,11 @@
 ;; zeitgeist integration
 (require 'zeitgeist)
 
+;; smex (http://www.emacswiki.org/emacs/Smex)
+(require 'smex)
+(smex-initialize)
+(global-set-key (kbd "M-x") 'smex)
+
 ;; ubiquitous ido (from https://github.com/technomancy/ido-ubiquitous)
 (require 'ido-ubiquitous)
 
