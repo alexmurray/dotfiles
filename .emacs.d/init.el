@@ -453,7 +453,8 @@
 		(save-excursion (slime)))))
   ;; autoclose emacs even if lisp processes are running
   (setq slime-kill-without-query-p t)
-
+  ;; bind C-z to slime-selector
+  (global-set-key (kbd "C-z") 'slime-selector)
   ;; enable paredit for slime modes
   (dolist (hook '(slime-mode-hook slime-repl-mode-hook))
     (add-hook hook 'enable-paredit-mode))
