@@ -444,26 +444,31 @@
 (setq mumamo-chunk-coloring 2)
 
 ;; slime
-(when (locate-library "slime")
-  (require 'slime)
-  ;; autoload slime when you open a .lisp file
-  (add-hook 'slime-mode-hook
-	    (lambda ()
-	      (unless (slime-connected-p)
-		(save-excursion (slime)))))
-  ;; autoclose emacs even if lisp processes are running
-  (setq slime-kill-without-query-p t)
-  ;; bind C-z to slime-selector
-  (global-set-key (kbd "C-z") 'slime-selector)
-  ;; enable paredit for slime modes
-  (dolist (hook '(slime-mode-hook slime-repl-mode-hook))
-    (add-hook hook 'enable-paredit-mode))
-  ;; slime autocomplete
-  (require 'ac-slime)
-  ;; set load slime-ac on slime modes and set ac-modes to include slime
-  (dolist (mode '(slime-mode slime-repl-mode))
-    (add-hook (intern (concat (symbol-name mode) "-hook")) 'set-up-slime-ac)
-    (add-to-list 'ac-modes mode)))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/slime-2011-10-09"))
+(setq slime-lisp-implementations '((sbcl ("/usr/bin/sbcl"))))
+(require 'slime)
+
+;; autoload slime when you open a .lisp file
+(add-hook 'slime-mode-hook
+	  (lambda ()
+	    (unless (slime-connected-p)
+	      (save-excursion (slime)))))
+;; autoclose emacs even if lisp processes are running
+(setq slime-kill-without-query-p t)
+;; bind C-z to slime-selector
+(global-set-key (kbd "C-z") 'slime-selector)
+;; enable paredit for slime modes
+(dolist (hook '(slime-mode-hook slime-repl-mode-hook))
+  (add-hook hook 'enable-paredit-mode))
+;; use fancy for REPL etc by default
+(slime-setup '(slime-fancy))
+
+;; slime autocomplete
+(require 'ac-slime)
+;; set load slime-ac on slime modes and set ac-modes to include slime
+(dolist (mode '(slime-mode slime-repl-mode))
+  (add-hook (intern (concat (symbol-name mode) "-hook")) 'set-up-slime-ac)
+  (add-to-list 'ac-modes mode))
 
 ;; prolog
 (when (locate-library "prolog")
