@@ -46,8 +46,8 @@
 ;; with new text automatically
 (delete-selection-mode 1)
 
-;; electric pair, indent and layout modes to make more IDE like
-(electric-pair-mode t)
+;; electric indent and layout modes to make more IDE like (see
+;; autopair below instead of electric-pair-mode)
 (electric-indent-mode t)
 (electric-layout-mode t)
 
@@ -245,10 +245,21 @@
 ;; scratch.el - from http://github.com/ieure/scratch-el
 (autoload 'scratch "scratch" nil t)
 
+;; use autopair by default
+(require 'autopair)
+(autopair-global-mode) ;; enable autopair in all buffers
+;; make sure autopair doesn't screw up some slime stuff
+(set-default 'autopair-dont-activate #'(lambda () (eq major-mode 'sldb-mode)))
+
 ;; paredit
 (autoload 'paredit-mode "paredit"
   "Minor mode for pseudo-structurally editing Lisp code." t)
 (autoload 'enable-paredit-mode "paredit" "Turn on paredit mode" t)
+
+;; disable autopair during paredit
+(defadvice enable-paredit-mode (before disable-autopair activate)
+  (setq autopair-dont-activate t)
+  (autopair-mode -1))
 
 (dolist (hook '(emacs-lisp-mode-hook lisp-mode-hook))
   (add-hook hook 'pretty-lambdas)
