@@ -142,6 +142,10 @@
 ;; delete trailing whitespace on save
 (add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
 
+;; sentences have single spaces, not double spaces in between them -
+;; http://www.slate.com/articles/technology/technology/2011/01/space_invaders.html
+(setq sentence-end-double-space nil)
+
 ;; use proper english
 (setq ispell-dictionary "british")
 
