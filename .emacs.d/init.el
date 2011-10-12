@@ -1,9 +1,6 @@
 (setq user-full-name "Alex Murray")
 (setq user-mail-address "murray.alex@gmail.com")
 
-;; set load-path
-(add-to-list 'load-path (expand-file-name "~/.emacs.d"))
-
 ;;;; Standard Emacs options and inbuilt packages ;;;;
 
 ;; inhibit startup message and splash screen
@@ -216,6 +213,7 @@
 (add-hook 'after-revert-hook 'notify-buffer-reverted)
 
 ;;;; External packages ;;;;
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor"))
 
 ;; smooth scrolling
 (require 'smooth-scrolling)
@@ -224,13 +222,16 @@
 (require 'zeitgeist)
 
 ;; smex (http://www.emacswiki.org/emacs/Smex)
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/smex"))
 (require 'smex)
 (setq smex-save-file (concat user-emacs-directory ".smex-items"))
 (smex-initialize)
 (global-set-key (kbd "M-x") 'smex)
 
-;; ubiquitous ido (from https://github.com/technomancy/ido-ubiquitous)
+;; ubiquitous ido
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/ido-ubiquitous"))
 (require 'ido-ubiquitous)
+(ido-ubiquitous t)
 
 ;; rainbow mode - for colouring strings that represent colors
 (require 'rainbow-mode)
@@ -288,9 +289,9 @@
 (suspend-mode-during-cua-rect-selection 'paredit-mode)
 
 ;; auto-complete mode
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/auto-complete"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/auto-complete"))
 (require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/vendor/auto-complete/dict")
 (ac-config-default)
 ;; make autostart after entering a single character
 (setq ac-auto-start 1)
@@ -428,13 +429,9 @@
 	      ;; Bind F7 to search with the assistant window.
 	      (global-set-key (kbd "<f7>") 'devhelp-assistant-word-at-point))))
 
-;; ajc-java-complete
+;; android mode
 (add-hook 'java-mode-hook
 	  (lambda ()
-	    (add-to-list 'load-path (expand-file-name "~/.emacs.d/ajc-java-complete/"))
-	    (require 'ajc-java-complete-config)
-	    ;; manually call hook since we are already in java hook
-	    (ajc-java-complete-hook)
 	    ;; android-mode
 	    (require 'android-mode)
 	    (setq android-mode-sdk-dir "~/android-sdk-linux_x86/")
@@ -456,11 +453,11 @@
   (pymacs-load "ropemacs" "rope-"))
 
 ;; nxhtml
-(load "~/.emacs.d/nxhtml/autostart.el")
+(load "~/.emacs.d/vendor/nxhtml/autostart.el")
 (setq mumamo-chunk-coloring 2)
 
 ;; slime
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/slime-2011-10-09"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/slime-2011-10-09"))
 (setq slime-lisp-implementations '((sbcl ("/usr/bin/sbcl"))))
 (require 'slime)
 
@@ -480,6 +477,7 @@
 (slime-setup '(slime-fancy))
 
 ;; slime autocomplete
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/ac-slime"))
 (require 'ac-slime)
 ;; set load slime-ac on slime modes and set ac-modes to include slime
 (dolist (mode '(slime-mode slime-repl-mode))
