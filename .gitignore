@@ -1,5 +1,9 @@
 *~
 *.elc
+.emacs.d/.smex-items
+.emacs.d/ac-comphist.dat
+.emacs.d/auto-save-list
+.emacs.d/eshell
 .emacs.d/semanticdb
 .emacs.d/srecode-map.el
-ac-comphist.dat
+.emacs.d/tramp
