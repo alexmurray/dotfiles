@@ -154,7 +154,9 @@
 
 ;; ido mode for opening files and switching buffers
 (ido-mode 1)
-(setq ido-enable-flex-matching t)
+(setq ido-enable-flex-matching t
+      ;; use ido virtual buffers to remember previously opened files
+      ido-use-virtual-buffers t)
 
 ;; when using ido, the confirmation is rather annoying...
 (setq confirm-nonexistent-file-or-buffer nil)
