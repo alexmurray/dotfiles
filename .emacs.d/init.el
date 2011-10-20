@@ -278,6 +278,11 @@
              (,mode-name 1)))))))
 (suspend-mode-during-cua-rect-selection 'paredit-mode)
 
+;; evil
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/evil"))
+(require 'evil)
+(evil-mode 1)
+
 ;; smex (http://www.emacswiki.org/emacs/Smex)
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/smex"))
 (require 'smex)
