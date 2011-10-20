@@ -12,4 +12,4 @@
 	url = git@github.com:alexmurray/smex.git
 [submodule ".emacs.d/vendor/evil"]
 	path = .emacs.d/vendor/evil
-	url = http://git.gitorious.org/evil/evil.git
+	url = git@github.com:alexmurray/evil.git
