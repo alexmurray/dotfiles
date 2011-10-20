@@ -223,18 +223,6 @@
 ;; zeitgeist integration
 (require 'zeitgeist)
 
-;; smex (http://www.emacswiki.org/emacs/Smex)
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/smex"))
-(require 'smex)
-(setq smex-save-file (concat user-emacs-directory ".smex-items"))
-(smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
-
-;; ubiquitous ido
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/ido-ubiquitous"))
-(require 'ido-ubiquitous)
-(ido-ubiquitous t)
-
 ;; rainbow mode - for colouring strings that represent colors
 (require 'rainbow-mode)
 ;; enable rainbow mode automatically for css and html modes
@@ -290,17 +278,59 @@
              (,mode-name 1)))))))
 (suspend-mode-during-cua-rect-selection 'paredit-mode)
 
+;; smex (http://www.emacswiki.org/emacs/Smex)
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/smex"))
+(require 'smex)
+(setq smex-save-file (concat user-emacs-directory ".smex-items"))
+(smex-initialize)
+(global-set-key (kbd "M-x") 'smex)
+
+;; ubiquitous ido
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/ido-ubiquitous"))
+(require 'ido-ubiquitous)
+(ido-ubiquitous t)
+
 ;; auto-complete mode
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/auto-complete"))
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/vendor/auto-complete/dict")
 (ac-config-default)
-;; make autostart after entering a single character
-(setq ac-auto-start 1)
-;; show menu 100ms after completions are available
-(setq ac-auto-show-menu (+ ac-delay 0.1))
+(setq ac-auto-start 1) ; make autostart after entering a single character
+(setq ac-auto-show-menu (+ ac-delay 0.1)) ; show menu after 100ms
 ;; quick help has to be after menu so again set to 100ms more
 (setq ac-quick-help-delay (+ ac-auto-show-menu 0.1))
+
+;; slime
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/slime-2011-10-09"))
+(setq slime-lisp-implementations '((sbcl ("/usr/bin/sbcl"))))
+(require 'slime)
+
+;; autoload slime when you open a .lisp file
+(add-hook 'slime-mode-hook
+	  (lambda ()
+	    (unless (slime-connected-p)
+	      (save-excursion (slime)))))
+;; autoclose emacs even if lisp processes are running
+(setq slime-kill-without-query-p t)
+;; bind C-z to slime-selector
+(global-set-key (kbd "C-z") 'slime-selector)
+;; enable paredit for slime modes
+(dolist (hook '(slime-mode-hook slime-repl-mode-hook))
+  (add-hook hook 'enable-paredit-mode))
+;; use fancy for REPL etc by default
+(slime-setup '(slime-fancy))
+
+;; slime autocomplete
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/ac-slime"))
+(require 'ac-slime)
+;; set load slime-ac on slime modes and set ac-modes to include slime
+(dolist (mode '(slime-mode slime-repl-mode))
+  (add-hook (intern (concat (symbol-name mode) "-hook")) 'set-up-slime-ac)
+  (add-to-list 'ac-modes mode))
+
+;; nxhtml
+(load "~/.emacs.d/vendor/nxhtml/autostart.el")
+(setq mumamo-chunk-coloring 2)
 
 ;; magit - installed as a system package
 (when (locate-library "magit")
@@ -453,38 +483,6 @@
 (when (locate-library "pymacs")
   (require 'pymacs)
   (pymacs-load "ropemacs" "rope-"))
-
-;; nxhtml
-(load "~/.emacs.d/vendor/nxhtml/autostart.el")
-(setq mumamo-chunk-coloring 2)
-
-;; slime
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/slime-2011-10-09"))
-(setq slime-lisp-implementations '((sbcl ("/usr/bin/sbcl"))))
-(require 'slime)
-
-;; autoload slime when you open a .lisp file
-(add-hook 'slime-mode-hook
-	  (lambda ()
-	    (unless (slime-connected-p)
-	      (save-excursion (slime)))))
-;; autoclose emacs even if lisp processes are running
-(setq slime-kill-without-query-p t)
-;; bind C-z to slime-selector
-(global-set-key (kbd "C-z") 'slime-selector)
-;; enable paredit for slime modes
-(dolist (hook '(slime-mode-hook slime-repl-mode-hook))
-  (add-hook hook 'enable-paredit-mode))
-;; use fancy for REPL etc by default
-(slime-setup '(slime-fancy))
-
-;; slime autocomplete
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/ac-slime"))
-(require 'ac-slime)
-;; set load slime-ac on slime modes and set ac-modes to include slime
-(dolist (mode '(slime-mode slime-repl-mode))
-  (add-hook (intern (concat (symbol-name mode) "-hook")) 'set-up-slime-ac)
-  (add-to-list 'ac-modes mode))
 
 ;; prolog
 (when (locate-library "prolog")
