@@ -184,13 +184,10 @@
       uniquify-after-kill-buffer-p t
       uniquify-ignore-buffers-re "^\\*")
 
-;; use super + arrow keys to switch between visible buffers
+;; use shift + arrow keys to switch between visible buffers since
+;; Unity steals super
 (require 'windmove)
-(windmove-default-keybindings 'super) ;; will be overridden
-(global-set-key (kbd "<C-s-left>")  'windmove-left)
-(global-set-key (kbd "<C-s-right>") 'windmove-right)
-(global-set-key (kbd "<C-s-up>")    'windmove-up)
-(global-set-key (kbd "<C-s-down>")  'windmove-down)
+(windmove-default-keybindings 'shift)
 
 ;; some notifications stuff
 (require 'notifications)
@@ -219,6 +216,10 @@
 
 ;;;; External packages ;;;;
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor"))
+
+;; Like "f" in vim - goes to first occurrence of a char
+(require 'iy-go-to-char)
+(global-set-key (kbd "C-c f") 'iy-go-to-char)
 
 ;; smooth scrolling
 (require 'smooth-scrolling)
@@ -280,11 +281,6 @@
            (when ,flagvar
              (,mode-name 1)))))))
 (suspend-mode-during-cua-rect-selection 'paredit-mode)
-
-;; evil
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/evil"))
-(require 'evil)
-(evil-mode 1)
 
 ;; smex (http://www.emacswiki.org/emacs/Smex)
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/smex"))
