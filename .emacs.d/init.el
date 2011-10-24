@@ -59,11 +59,14 @@
 (global-set-key (kbd "C-x C-m") 'compile)
 (global-set-key (kbd "C-x m") 'eshell)
 
-(global-set-key (kbd "C-M-h") 'backward-kill-word) ;; like readline
+;; C-h is more useful as a delete substitute like readline
+(global-set-key (kbd "C-h") 'backward-delete-char)
+(global-set-key (kbd "C-c C-h") help-map)
+(global-set-key (kbd "C-M-h") 'backward-kill-word) ;; also like readline
 (global-set-key (kbd "C-c r") 'revert-buffer)
 
 ;; Help should search more than just commands
-(global-set-key (kbd "C-h a") 'apropos)
+(global-set-key (kbd "C-c C-h a") 'apropos)
 
 ;; Use regex searches by default.
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
