@@ -23,8 +23,7 @@
   (tooltip-mode -1)
   (mouse-wheel-mode t)
   (blink-cursor-mode -1)
-  (set-face-attribute 'default nil :font "Ubuntu Mono 12")
-  (load-theme 'zenburn t))
+  (set-face-attribute 'default nil :font "Ubuntu Mono 12"))
 
 ;; default to utf-8
 (prefer-coding-system 'utf-8)
@@ -281,6 +280,11 @@
            (when ,flagvar
              (,mode-name 1)))))))
 (suspend-mode-during-cua-rect-selection 'paredit-mode)
+
+;; solarized theme
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/emacs-color-theme-solarized"))
+(add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/vendor/emacs-color-theme-solarized"))
+(load-theme 'solarized-light t)
 
 ;; smex (http://www.emacswiki.org/emacs/Smex)
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/smex"))

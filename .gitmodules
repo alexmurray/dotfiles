@@ -10,3 +10,6 @@
 [submodule ".emacs.d/vendor/smex"]
 	path = .emacs.d/vendor/smex
 	url = git@github.com:alexmurray/smex.git
+[submodule ".emacs.d/vendor/emacs-color-theme-solarized"]
+	path = .emacs.d/vendor/emacs-color-theme-solarized
+	url = git@github.com:sellout/emacs-color-theme-solarized.git
