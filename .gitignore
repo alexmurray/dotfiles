@@ -1,9 +1,12 @@
 *~
 *.elc
 .emacs.d/.smex-items
+.emacs.d/abbrev_defs
 .emacs.d/ac-comphist.dat
 .emacs.d/auto-save-list
 .emacs.d/eshell
 .emacs.d/semanticdb
+.emacs.d/session.*
 .emacs.d/srecode-map.el
 .emacs.d/tramp
+.emacs.d/vendor/nxhtml/etc/schema/xhtml-loader.rnc
