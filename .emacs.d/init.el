@@ -435,10 +435,8 @@
 	    (c-toggle-auto-hungry-state t)
 	    ;; set auto newline
 	    (setq c-auto-newline 1)
-	    ;; use semantic as source for auto complete - this
-	    ;; provides the most relevant options plus we still retain
-	    ;; yasnippet and gtags sources as well
-	    (setq ac-sources '(ac-source-semantic))
+	    ;; use semantic as source for auto complete
+	    (setq ac-sources (append '(ac-source-semantic) ac-sources))
 	    ;; show #if 0 / #endif etc regions in comment face
 	    (font-lock-add-keywords
 	     nil
