@@ -213,6 +213,10 @@
 			:body (buffer-name (current-buffer))))
 (add-hook 'after-revert-hook 'notify-buffer-reverted)
 
+;; which-function-mode to display current defun in modeline
+(require 'which-func)
+(which-func-mode t)
+
 ;;;; External packages ;;;;
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor"))
 
