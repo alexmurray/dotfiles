@@ -13,3 +13,6 @@
 [submodule ".emacs.d/vendor/emacs-color-theme-solarized"]
 	path = .emacs.d/vendor/emacs-color-theme-solarized
 	url = git@github.com:sellout/emacs-color-theme-solarized.git
+[submodule ".emacs.d/vendor/yasnippet"]
+	path = .emacs.d/vendor/yasnippet
+	url = git@github.com:alexmurray/yasnippet.git

@@ -31,10 +31,6 @@
 ;; automatically reload buffer when file on disk changes
 (global-auto-revert-mode t)
 
-;; built-in tab completion
-(setq tab-always-indent 'complete)
-(add-to-list 'completion-styles 'initials t)
-
 ;; use CUA mode for rectangle selections etc but not copy/paste etc
 (cua-selection-mode t)
 
@@ -311,6 +307,12 @@
 (setq ac-auto-show-menu (+ ac-delay 0.1)) ; show menu after 100ms
 ;; quick help has to be after menu so again set to 100ms more
 (setq ac-quick-help-delay (+ ac-auto-show-menu 0.1))
+
+;; yasnippet
+(add-to-list 'load-path "~/.emacs.d/vendor/yasnippet")
+(require 'yasnippet)
+(yas/initialize)
+(yas/load-directory "~/.emacs.d/vendor/yasnippet/snippets")
 
 ;; slime
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/slime-2011-10-09"))
