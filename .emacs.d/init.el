@@ -441,8 +441,6 @@
 	    (c-toggle-auto-hungry-state t)
 	    ;; set auto newline
 	    (setq c-auto-newline 1)
-	    ;; use semantic as source for auto complete
-	    (setq ac-sources (append '(ac-source-semantic) ac-sources))
 	    ;; show #if 0 / #endif etc regions in comment face
 	    (font-lock-add-keywords
 	     nil
@@ -451,6 +449,8 @@
 ;; c-only modes
 (add-hook 'c-mode-hook
 	  (lambda ()
+	    ;; use semantic as source for auto complete
+	    (add-to-list 'ac-sources 'ac-source-semantic)
 	    ;; use linux kernel style
 	    (c-set-style "linux")
 	    ;; options for c-eldoc mode - could also add other libs
@@ -489,7 +489,7 @@
 (add-hook 'python-mode-hook
 	  (lambda ()
 	    (eldoc-mode)
-	    (setq ac-sources (append '(ac-source-semantic) ac-sources))))
+	    (add-to-list 'ac-sources 'ac-source-semantic)))
 
 ;; enable pymacs / ropemacs support
 (when (locate-library "pymacs")
