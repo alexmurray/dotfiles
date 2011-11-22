@@ -312,7 +312,8 @@
 (add-to-list 'load-path "~/.emacs.d/vendor/yasnippet")
 (require 'yasnippet)
 (yas/initialize)
-(yas/load-directory "~/.emacs.d/vendor/yasnippet/snippets")
+(setq yas/root-directory "~/.emacs.d/vendor/yasnippet/snippets")
+(yas/load-directory yas/root-directory)
 
 ;; slime
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/slime-2011-10-09"))
