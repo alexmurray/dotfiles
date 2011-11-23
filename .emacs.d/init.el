@@ -464,10 +464,8 @@
 	    (add-to-list 'ac-sources 'ac-source-semantic)
 	    ;; use linux kernel style
 	    (c-set-style "linux")
-	    ;; options for c-eldoc mode - could also add other libs
-	    ;; too like OpenGL if needed
-	    (setq c-eldoc-includes "`pkg-config gtk+-2.0 --cflags` -I./ -I../ ")
-	    (load "c-eldoc")
+	    (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/c-eldoc"))
+	    (require 'c-eldoc)
 	    ;; turn on c-eldoc
 	    (c-turn-on-eldoc-mode)
 	    ;; enable gobject helper
@@ -488,6 +486,7 @@
 (add-hook 'java-mode-hook
 	  (lambda ()
 	    ;; android-mode
+	    (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/android-mode"))
 	    (require 'android-mode)
 	    (setq android-mode-sdk-dir "~/android-sdk-linux_x86/")
 	    ;; change prefix so doesn't conflict with comment-region
