@@ -238,7 +238,8 @@
 (require 'undo-tree)
 (global-undo-tree-mode 1)
 
-;; scratch.el - from http://github.com/ieure/scratch-el
+;; scratch.el
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/scratch-el"))
 (autoload 'scratch "scratch" nil t)
 
 ;; use autopair by default
