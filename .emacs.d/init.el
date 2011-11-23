@@ -216,10 +216,6 @@
 ;;;; External packages ;;;;
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor"))
 
-;; Like "f" in vim - goes to first occurrence of a char
-(require 'iy-go-to-char)
-(global-set-key (kbd "C-c f") 'iy-go-to-char)
-
 ;; smooth scrolling
 (require 'smooth-scrolling)
 
