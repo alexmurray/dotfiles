@@ -234,6 +234,7 @@
   (add-hook hook 'rainbow-mode))
 
 ;; undo-tree.el - from http://www.dr-qubit.org/undo-tree/undo-tree.el
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/undo-tree"))
 (require 'undo-tree)
 (global-undo-tree-mode 1)
 

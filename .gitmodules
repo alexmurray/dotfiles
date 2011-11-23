@@ -34,3 +34,6 @@
 [submodule ".emacs.d/vendor/rainbow-mode"]
 	path = .emacs.d/vendor/rainbow-mode
 	url = git@github.com:alexmurray/rainbow-mode.git
+[submodule ".emacs.d/vendor/undo-tree"]
+	path = .emacs.d/vendor/undo-tree
+	url = git@github.com:alexmurray/undo-tree.git
