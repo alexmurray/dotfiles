@@ -315,6 +315,16 @@
 (setq yas/root-directory "~/.emacs.d/vendor/yasnippet/snippets")
 (yas/load-directory yas/root-directory)
 
+;; mark-multiple.el
+(add-to-list 'load-path "~/.emacs.d/vendor/mark-multiple")
+(require 'inline-string-rectangle)
+(global-set-key (kbd "C-x r t") 'inline-string-rectangle)
+
+(require 'mark-more-like-this)
+(global-set-key (kbd "C-<") 'mark-previous-like-this)
+(global-set-key (kbd "C->") 'mark-next-like-this)
+(global-set-key (kbd "C-M-m") 'mark-more-like-this) ; like the other two, but takes an argument (negative is previous)
+
 ;; slime
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/slime-2011-10-09"))
 (setq slime-lisp-implementations '((sbcl ("/usr/bin/sbcl"))))

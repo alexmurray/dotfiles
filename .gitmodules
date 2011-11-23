@@ -16,3 +16,6 @@
 [submodule ".emacs.d/vendor/yasnippet"]
 	path = .emacs.d/vendor/yasnippet
 	url = git@github.com:alexmurray/yasnippet.git
+[submodule ".emacs.d/vendor/mark-multiple"]
+	path = .emacs.d/vendor/mark-multiple
+	url = git@github.com:alexmurray/mark-multiple.el.git
