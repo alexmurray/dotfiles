@@ -31,3 +31,6 @@
 [submodule ".emacs.d/vendor/autopair"]
 	path = .emacs.d/vendor/autopair
 	url = git@github.com:alexmurray/autopair.git
+[submodule ".emacs.d/vendor/rainbow-mode"]
+	path = .emacs.d/vendor/rainbow-mode
+	url = git@github.com:alexmurray/rainbow-mode.git

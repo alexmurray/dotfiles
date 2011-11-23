@@ -227,6 +227,7 @@
 (require 'zeitgeist)
 
 ;; rainbow mode - for colouring strings that represent colors
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/rainbow-mode"))
 (require 'rainbow-mode)
 ;; enable rainbow mode automatically for css and html modes
 (dolist (hook '(css-mode-hook html-mode-hook))
