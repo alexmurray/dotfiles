@@ -246,6 +246,7 @@
 (set-default 'autopair-dont-activate #'(lambda () (eq major-mode 'sldb-mode)))
 
 ;; paredit
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/paredit"))
 (autoload 'paredit-mode "paredit"
   "Minor mode for pseudo-structurally editing Lisp code." t)
 (autoload 'enable-paredit-mode "paredit" "Turn on paredit mode" t)
