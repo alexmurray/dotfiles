@@ -240,6 +240,7 @@
 (autoload 'scratch "scratch" nil t)
 
 ;; use autopair by default
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/autopair"))
 (require 'autopair)
 (autopair-global-mode) ;; enable autopair in all buffers
 ;; make sure autopair doesn't screw up some slime stuff
