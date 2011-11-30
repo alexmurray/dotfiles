@@ -343,9 +343,9 @@
 (require 'yasnippet)
 ;; use C-tab so easy to trigger with auto-complete
 (setq yas/trigger-key "<C-tab>")
-(yas/initialize)
 (setq yas/root-directory "~/.emacs.d/vendor/yasnippet/snippets")
-(yas/load-directory yas/root-directory)
+;; enable yasnippet globally
+(yas/global-mode 1)
 
 ;; mark-multiple.el
 (add-to-list 'load-path "~/.emacs.d/vendor/mark-multiple")
