@@ -69,6 +69,36 @@
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
 
+;; http://www.emacswiki.org/emacs-en/CopyAboveWhileSame
+(autoload 'copy-from-above-command "misc"
+    "Copy characters from previous nonblank line, starting just above point.
+
+  \(fn &optional arg)"
+    'interactive)
+
+(defun copy-above-while-same ()
+  "Copy from the previous two lines until the first difference."
+  (interactive)
+  (let* ((col (current-column))
+	 (n (compare-buffer-substrings
+	     (current-buffer) ;; This buffer
+	     (save-excursion
+	       (forward-line -2)
+	       (move-to-column col)
+	       (point)) ;; Start 1
+	     (line-end-position -1) ;; End 1
+	     (current-buffer) ;; Still this buffer
+	     (save-excursion
+	       (forward-line -1)
+	       (move-to-column col)
+	       (point)) ;; Start 2
+	     (line-end-position 0)))) ;; End 2
+    (if (and (integerp n)
+	     (> (abs n) 1))
+	(copy-from-above-command (1- (abs n) ))
+      (copy-from-above-command 1))))
+(global-set-key (kbd "S-<right>") 'copy-above-while-same)
+
 ;; pretty lambda (see also slime) ->  "λ"
 ;;  'greek small letter lambda' / utf8 cebb / unicode 03bb -> \u03BB / mule?!
 ;; in greek-iso8859-7 -> 107  >  86 ec
@@ -179,10 +209,9 @@
       uniquify-after-kill-buffer-p t
       uniquify-ignore-buffers-re "^\\*")
 
-;; use shift + arrow keys to switch between visible buffers since
-;; Unity steals super
+;; use super + arrow keys to switch between visible buffers
 (require 'windmove)
-(windmove-default-keybindings 'shift)
+(windmove-default-keybindings 'super)
 
 ;; some notifications stuff
 (require 'notifications)
