@@ -385,10 +385,6 @@
   (add-hook (intern (concat (symbol-name mode) "-hook")) 'set-up-slime-ac)
   (add-to-list 'ac-modes mode))
 
-;; nxhtml
-(load "~/.emacs.d/vendor/nxhtml/autostart.el")
-(setq mumamo-chunk-coloring 2)
-
 ;; magit - installed as a system package
 (when (locate-library "magit")
   (require 'magit)
