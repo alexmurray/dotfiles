@@ -267,6 +267,12 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/scratch-el"))
 (autoload 'scratch "scratch" nil t)
 
+;; goto-last-change
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/goto-last-change"))
+(autoload 'goto-last-change "goto-last-change"
+   "Set point to the position of the last change." t)
+(global-set-key (kbd "C-x C-\\") 'goto-last-change)
+
 ;; use autopair by default
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/autopair"))
 (require 'autopair)

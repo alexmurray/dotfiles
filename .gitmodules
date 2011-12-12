@@ -40,3 +40,6 @@
 [submodule ".emacs.d/vendor/scratch-el"]
 	path = .emacs.d/vendor/scratch-el
 	url = git@github.com:alexmurray/scratch-el.git
+[submodule ".emacs.d/vendor/goto-last-change"]
+	path = .emacs.d/vendor/goto-last-change
+	url = git@github.com:alexmurray/goto-last-change.git
