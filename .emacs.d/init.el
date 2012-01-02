@@ -63,11 +63,13 @@
 ;; Help should search more than just commands
 (global-set-key (kbd "C-c C-h a") 'apropos)
 
-;; Use regex searches by default.
+;; Use regex searches and replace by default.
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
+(global-set-key (kbd "M-%") 'query-replace-regexp)
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
+(global-set-key (kbd "C-M-%") 'query-replace)
 
 ;; http://www.emacswiki.org/emacs-en/CopyAboveWhileSame
 (autoload 'copy-from-above-command "misc"
