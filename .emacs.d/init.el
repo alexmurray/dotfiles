@@ -215,31 +215,31 @@
 (require 'windmove)
 (windmove-default-keybindings 'super)
 
-;; some notifications stuff
-(require 'notifications)
-;; notify on compilation finished
-(defun compilation-finished (buffer result)
-  ;; ignore non-compilation buffers (such as grep etc)
-  (when (string-match "compilation" (buffer-name buffer))
-    (let ((title "Emacs compilation finished")
-	  (body "Success")
-	  (icon nil))
-      ;; remove any newlines in result message
-      (while (string-match "\n" result)
-	(setq result (replace-match "" t nil result)))
-      ;; if looks like an error message show it with error icon
-      (unless (string-match "finished" result)
-	(setq body result
-	      icon "gtk-dialog-error"))
-      (notifications-notify :title title :body body :icon icon :timeout 5))))
-(setq compilation-finish-functions 'compilation-finished)
+;; some notifications stuff - only do if can load with no error so
+;; when via ssh etc and no dbus we are still okay
+(when (require 'notifications "notifications" t)
+  ;; notify on compilation finished
+  (defun compilation-finished (buffer result)
+    ;; ignore non-compilation buffers (such as grep etc)
+    (when (string-match "compilation" (buffer-name buffer))
+      (let ((title "Emacs compilation finished")
+	    (body "Success")
+	    (icon nil))
+	;; remove any newlines in result message
+	(while (string-match "\n" result)
+	  (setq result (replace-match "" t nil result)))
+	;; if looks like an error message show it with error icon
+	(unless (string-match "finished" result)
+	  (setq body result
+		icon "gtk-dialog-error"))
+	(notifications-notify :title title :body body :icon icon))))
+  (setq compilation-finish-functions 'compilation-finished)
 
-;; also notify when reverting a buffer if we auto-revert
-(defun notify-buffer-reverted ()
-  (notifications-notify :title "Emacs buffer reverted"
-			:body (buffer-name (current-buffer))
-			:timeout 5))
-(add-hook 'after-revert-hook 'notify-buffer-reverted)
+  ;; also notify when reverting a buffer if we auto-revert
+  (defun notify-buffer-reverted ()
+    (notifications-notify :title "Emacs buffer reverted"
+			  :body (buffer-name (current-buffer))))
+  (add-hook 'after-revert-hook 'notify-buffer-reverted))
 
 ;; which-function-mode to display current defun in modeline
 (require 'which-func)
