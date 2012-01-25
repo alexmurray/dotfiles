@@ -320,6 +320,10 @@
              (,mode-name 1)))))))
 (suspend-mode-during-cua-rect-selection 'paredit-mode)
 
+;; markdown-mode
+(autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
+(setq auto-mode-alist (append '(("\\.md" . markdown-mode)) auto-mode-alist))
+
 ;; solarized theme
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/emacs-color-theme-solarized"))
 (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/vendor/emacs-color-theme-solarized"))
