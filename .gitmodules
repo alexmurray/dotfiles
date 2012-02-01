@@ -1,45 +1,45 @@
-[submodule ".emacs.d/auto-complete"]
+[submodule ".emacs.d/vendor/auto-complete"]
 	path = .emacs.d/vendor/auto-complete
 	url = git@github.com:alexmurray/auto-complete.git
 [submodule ".emacs.d/vendor/ac-slime"]
 	path = .emacs.d/vendor/ac-slime
-	url = git@github.com:alexmurray/ac-slime.git
+	url = git://github.com/purcell/ac-slime.git
 [submodule ".emacs.d/vendor/ido-ubiquitous"]
 	path = .emacs.d/vendor/ido-ubiquitous
-	url = git@github.com:alexmurray/ido-ubiquitous.git
+	url = git://github.com/DarwinAwardWinner/ido-ubiquitous.git
 [submodule ".emacs.d/vendor/smex"]
 	path = .emacs.d/vendor/smex
-	url = git@github.com:alexmurray/smex.git
+	url = git://github.com/nonsequitur/smex.git
 [submodule ".emacs.d/vendor/emacs-color-theme-solarized"]
 	path = .emacs.d/vendor/emacs-color-theme-solarized
-	url = git@github.com:sellout/emacs-color-theme-solarized.git
+	url = git://github.com/sellout/emacs-color-theme-solarized.git
 [submodule ".emacs.d/vendor/yasnippet"]
 	path = .emacs.d/vendor/yasnippet
-	url = git@github.com:alexmurray/yasnippet.git
+	url = git://github.com/capitaomorte/yasnippet.git
 [submodule ".emacs.d/vendor/mark-multiple"]
 	path = .emacs.d/vendor/mark-multiple
-	url = git@github.com:alexmurray/mark-multiple.el.git
+	url = git://github.com/magnars/mark-multiple.el.git
 [submodule ".emacs.d/vendor/c-eldoc"]
 	path = .emacs.d/vendor/c-eldoc
-	url = git@github.com:alexmurray/c-eldoc.git
+	url = git://github.com/nflath/c-eldoc.git
 [submodule ".emacs.d/vendor/android-mode"]
 	path = .emacs.d/vendor/android-mode
-	url = git@github.com:alexmurray/android-mode.git
+	url = git://github.com/remvee/android-mode.git
 [submodule ".emacs.d/vendor/paredit"]
 	path = .emacs.d/vendor/paredit
-	url = git@github.com:alexmurray/paredit.git
+	url = git://github.com/emacsmirror/paredit.git
 [submodule ".emacs.d/vendor/autopair"]
 	path = .emacs.d/vendor/autopair
-	url = git@github.com:alexmurray/autopair.git
+	url = git://github.com/emacsmirror/autopair.git
 [submodule ".emacs.d/vendor/rainbow-mode"]
 	path = .emacs.d/vendor/rainbow-mode
-	url = git@github.com:alexmurray/rainbow-mode.git
+	url = git://github.com/emacsmirror/rainbow-mode.git
 [submodule ".emacs.d/vendor/undo-tree"]
 	path = .emacs.d/vendor/undo-tree
-	url = git@github.com:alexmurray/undo-tree.git
+	url = git://github.com/emacsmirror/undo-tree.git
 [submodule ".emacs.d/vendor/scratch-el"]
 	path = .emacs.d/vendor/scratch-el
-	url = git@github.com:alexmurray/scratch-el.git
+	url = git://github.com/cbbrowne/scratch-el.git
 [submodule ".emacs.d/vendor/goto-last-change"]
 	path = .emacs.d/vendor/goto-last-change
-	url = git@github.com:alexmurray/goto-last-change.git
+	url = git://github.com/emacsmirror/goto-last-change.git
