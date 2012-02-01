@@ -43,3 +43,6 @@
 [submodule ".emacs.d/vendor/goto-last-change"]
 	path = .emacs.d/vendor/goto-last-change
 	url = git://github.com/emacsmirror/goto-last-change.git
+[submodule ".emacs.d/vendor/markdown-mode"]
+	path = .emacs.d/vendor/markdown-mode
+	url = git://jblevins.org/git/markdown-mode.git
