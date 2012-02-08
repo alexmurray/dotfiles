@@ -399,6 +399,10 @@
   (add-hook (intern (concat (symbol-name mode) "-hook")) 'set-up-slime-ac)
   (add-to-list 'ac-modes mode))
 
+;; php-mode
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/php-mode"))
+(require 'php-mode)
+
 ;; magit - installed as a system package
 (when (locate-library "magit")
   (require 'magit)

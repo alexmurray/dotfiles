@@ -46,3 +46,6 @@
 [submodule ".emacs.d/vendor/markdown-mode"]
 	path = .emacs.d/vendor/markdown-mode
 	url = git://jblevins.org/git/markdown-mode.git
+[submodule ".emacs.d/vendor/php-mode"]
+	path = .emacs.d/vendor/php-mode
+	url = git://github.com/ejmr/php-mode.git
