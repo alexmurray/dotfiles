@@ -483,8 +483,8 @@
 ;; c-mode and other derived modes (c++, java etc) etc
 (add-hook 'c-mode-common-hook
           (lambda ()
-	    ;; use tabs not spaces to indent
-	    (setq indent-tabs-mode t)
+	    ;; use spaces not tabs to indent
+	    (setq indent-tabs-mode nil)
 	    ;; set a reasonable fill and comment column
 	    (setq fill-column 80)
 	    (setq comment-column 70)
