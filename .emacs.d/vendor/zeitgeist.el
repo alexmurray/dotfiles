@@ -1,6 +1,7 @@
 ;;; The Zeitgeist Emacs Script -- integrates Emacs with Zeitgeist.
 ;;; Copyright (C) 2010, Patrick M. Niedzielski <PatrickNiedzielski@gmail.com>
 ;;; Copyright (C) 2011, Tassilo Horn <tassilo@member.fsf.org>
+;;; Copyright (C) 2012, Jo Lund Steffensen <jonlst@gmail.com>
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -20,6 +21,7 @@
 
 ;;* Code
 
+(require 'cl)
 (require 'dbus)
 
 ;;** General Functions
