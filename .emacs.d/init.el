@@ -106,7 +106,7 @@
 ;; in greek-iso8859-7 -> 107  >  86 ec
 (defun pretty-lambdas ()
   (font-lock-add-keywords
-   nil `(("(\\(lambda\\>\\)"
+   nil `(("(\\(\\lambda\\>\\)"
           (0 (progn (compose-region (match-beginning 1) (match-end 1)
                                     ,(make-char 'greek-iso8859-7 107))
                     'font-lock-keyword-face))))))
