@@ -49,3 +49,6 @@
 [submodule ".emacs.d/vendor/php-mode"]
 	path = .emacs.d/vendor/php-mode
 	url = git://github.com/ejmr/php-mode.git
+[submodule ".emacs.d/vendor/expand-region"]
+	path = .emacs.d/vendor/expand-region
+	url = git://github.com/magnars/expand-region.el.git

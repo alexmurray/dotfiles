@@ -254,6 +254,12 @@
 ;; zeitgeist integration
 (require 'zeitgeist)
 
+;; expand region
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/expand-region"))
+(require 'expand-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
+(global-set-key (kbd "C--") 'er/contract-region)
+
 ;; rainbow mode - for colouring strings that represent colors
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/rainbow-mode"))
 (require 'rainbow-mode)
