@@ -24,7 +24,7 @@
 	url = git://github.com/nflath/c-eldoc.git
 [submodule ".emacs.d/vendor/android-mode"]
 	path = .emacs.d/vendor/android-mode
-	url = git://github.com/remvee/android-mode.git
+	url = git://github.com/BobSheep/android-mode.git
 [submodule ".emacs.d/vendor/paredit"]
 	path = .emacs.d/vendor/paredit
 	url = git://github.com/emacsmirror/paredit.git

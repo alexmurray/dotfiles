@@ -551,17 +551,14 @@
 	      (global-set-key (kbd "<f7>") 'devhelp-assistant-word-at-point))))
 
 ;; android mode
-(add-hook 'java-mode-hook
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/android-mode"))
+(require 'android-mode)
+(setq android-mode-sdk-dir "~/android-sdk-linux/")
+;; change prefix so doesn't conflict with comment-region
+(setq android-mode-key-prefix "\C-c \C-m")
+(add-hook 'gud-mode-hook
 	  (lambda ()
-	    ;; android-mode
-	    (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/android-mode"))
-	    (require 'android-mode)
-	    (setq android-mode-sdk-dir "~/android-sdk-linux_x86/")
-	    ;; change prefix so doesn't conflict with comment-region
-	    (setq android-mode-key-prefix "\C-c \C-m")
-	    (add-hook 'gud-mode-hook
-		      (lambda ()
-			(add-to-list 'gud-jdb-classpath "/home/alex/android-sdk-linux_x86/platforms/android-8/android.jar")))))
+	    (add-to-list 'gud-jdb-classpath "/home/alex/android-sdk-linux/platforms/android-10/android.jar")))
 
 ;; setup python mode for eldoc and auto-complete with semantic
 (add-hook 'python-mode-hook
