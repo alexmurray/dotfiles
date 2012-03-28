@@ -348,7 +348,9 @@
 (require 'ido-ubiquitous)
 (ido-ubiquitous t)
 
-;; auto-complete mode
+;; auto-complete mode - requires fuzzy and popup packages
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/fuzzy-el"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/popup-el"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/auto-complete"))
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/vendor/auto-complete/dict")

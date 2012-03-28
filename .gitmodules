@@ -52,3 +52,9 @@
 [submodule ".emacs.d/vendor/expand-region"]
 	path = .emacs.d/vendor/expand-region
 	url = git://github.com/magnars/expand-region.el.git
+[submodule ".emacs.d/vendor/fuzzy-el"]
+	path = .emacs.d/vendor/fuzzy-el
+	url = git://github.com/m2ym/fuzzy-el.git
+[submodule ".emacs.d/vendor/popup-el"]
+	path = .emacs.d/vendor/popup-el
+	url = git://github.com/m2ym/popup-el.git
