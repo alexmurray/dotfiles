@@ -365,7 +365,7 @@
 (require 'yasnippet)
 ;; use C-tab so easy to trigger with auto-complete
 (setq yas/trigger-key "<C-tab>")
-(setq yas/root-directory "~/.emacs.d/vendor/yasnippet/snippets")
+(setq yas/snippet-dirs "~/.emacs.d/vendor/yasnippet/snippets")
 ;; enable yasnippet globally
 (yas/global-mode 1)
 
