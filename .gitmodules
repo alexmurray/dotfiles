@@ -58,3 +58,6 @@
 [submodule ".emacs.d/vendor/popup-el"]
 	path = .emacs.d/vendor/popup-el
 	url = git://github.com/m2ym/popup-el.git
+[submodule ".emacs.d/vendor/js2-mode"]
+	path = .emacs.d/vendor/js2-mode
+	url = git://github.com/mooz/js2-mode.git

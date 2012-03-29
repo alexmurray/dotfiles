@@ -411,6 +411,11 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/php-mode"))
 (require 'php-mode)
 
+;; js2-mode
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/js2-mode"))
+(autoload 'js2-mode "js2-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+
 ;; magit - installed as a system package
 (when (locate-library "magit")
   (require 'magit)
