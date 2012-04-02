@@ -166,8 +166,17 @@
 ;; show colours correctly in shell
 (ansi-color-for-comint-mode-on)
 
-;; delete trailing whitespace on save
-(add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
+;; delete trailing whitespace on save - make sure we can toggle it
+(defun enable-delete-trailing-whitespace ()
+  (interactive)
+  (add-hook 'before-save-hook 'delete-trailing-whitespace))
+
+(defun disable-delete-trailing-whitespace ()
+  (interactive)
+  (remove-hook 'before-save-hook 'delete-trailing-whitespace))
+
+;; by default delete-trailing whitespace in all buffers
+(enable-delete-trailing-whitespace)
 
 ;; sentences have single spaces, not double spaces in between them -
 ;; http://www.slate.com/articles/technology/technology/2011/01/space_invaders.html
