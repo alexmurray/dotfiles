@@ -263,6 +263,11 @@
 ;; zeitgeist integration
 (require 'zeitgeist)
 
+;; ace-jump-mode
+(add-to-list 'load-path "~/.emacs.d/vendor/ace-jump-mode")
+(require 'ace-jump-mode)
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+
 ;; expand region
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/expand-region"))
 (require 'expand-region)
