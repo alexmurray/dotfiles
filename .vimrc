@@ -8,6 +8,42 @@ filetype on		" Enable filetype detection
 filetype indent on	" Enable filetype-specific indenting
 filetype plugin on	" Enable filetype-specific plugins
 
+" define DiffOrig command from example vimrc in help to diff buffer with file
+" on disk
+command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
+
+" Visually select the text that was last edited/pasted (cf. gv)
+nmap gV `[v`]
+
+" Toggle spell checking with ,s
+nmap <silent> <leader>s :set spell!<CR>
+
+" set region to Australian English
+set spelllang=en_au
+
+" Influence how Vim formats text. Options described in :help fo-table
+set formatoptions=croq
+
+" Make tab smarter
+set smarttab
+set backspace=eol,start,indent
+
+" case insensitive search
+set ignorecase
+set smartcase
+
+" Wrap lines at 79 chars
+set textwidth=79
+
+" use custom indent etc for Makefiles
+autocmd BufEnter ?Makefile* setlocal noet ts=8 sw=8 lcs=tab:>-,trail:x nocindent
+
+" set terminal title based on filename etc
+set title
+
+" set username for changelog mode
+let g:changelog_username='Alex Murray <murray.alex@gmail.com>'
+
 syntax enable		" syntax highlight
 set background=dark	" light version of solarized
 set t_Co=16
