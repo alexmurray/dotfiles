@@ -35,14 +35,21 @@ set smartcase
 " Wrap lines at 79 chars
 set textwidth=79
 
-" use custom indent etc for Makefiles
-autocmd BufEnter ?Makefile* setlocal noet ts=8 sw=8 lcs=tab:>-,trail:x nocindent
-
 " set terminal title based on filename etc
 set title
 
+" C coding
+let c_space_errors=1
+
 " set username for changelog mode
 let g:changelog_username='Alex Murray <murray.alex@gmail.com>'
+
+if has("autocmd")
+	" use custom indent etc for Makefiles
+	autocmd BufEnter ?Makefile* setlocal noet ts=8 sw=8 lcs=tab:>-,trail:x nocindent
+	" set javacomplete as omnicomplete for Java files
+	autocmd Filetype java setlocal omnifunc=javacomplete#Complete
+endif
 
 syntax enable		" syntax highlight
 set background=dark	" light version of solarized
