@@ -16,6 +16,7 @@ set showcmd		" show typed command in status bar
 set title		" set terminal title based on filename etc
 set wildmenu		" completion with menu
 set wildignore=*.o,*.obj,*.bak,*.exe,*.py[co],*.swp,*~,*.pyc,.svn
+set laststatus=2   " Always show the statusline
 
 " editor settings
 set ignorecase		" case insensitive searching
@@ -72,7 +73,7 @@ let g:changelog_username='Alex Murray <murray.alex@gmail.com>'
 " color settings (if terminal/gui supports it)
 if &t_Co > 2 || has("gui_running")
 	set background=dark	" light version of solarized
-	set t_Co=16
+	set t_Co=256
 	colorscheme solarized
 	set hlsearch		" search highlighting
 	set incsearch		" highlight search while typing
