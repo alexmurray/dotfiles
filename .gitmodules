@@ -88,9 +88,6 @@
 [submodule ".vim/bundle/xmledit"]
 	path = .vim/bundle/xmledit
 	url = git://github.com/sukima/xmledit.git
-[submodule ".vim/bundle/YankRing.vim"]
-	path = .vim/bundle/YankRing.vim
-	url = git://github.com/vim-scripts/YankRing.vim.git
 [submodule ".vim/bundle/vim-easymotion"]
 	path = .vim/bundle/vim-easymotion
 	url = git://github.com/Lokaltog/vim-easymotion.git
