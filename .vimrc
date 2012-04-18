@@ -43,6 +43,8 @@ set autoread                    " automatically reload file when chaged
 
 set hidden                      " remember undo after quitting
 
+set spell                       " enable spell checking by default
+
 " Influence how Vim formats text. Options described in :help fo-table
 set formatoptions=croq
 
@@ -87,6 +89,7 @@ endif
 
 " gui specific settings
 if has("gui_running")
+    set guifont="Ubuntu Mono 12"
     set background=light    " need to use light for gui??
     set guioptions=aA       " put selections into X clipboard
     set guioptions=f        " don't fork from shell
