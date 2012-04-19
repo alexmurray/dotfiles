@@ -138,3 +138,7 @@
     path = .vim/bundle/vim-smartinput
     url = git://github.com/kana/vim-smartinput.git
     ignore = dirty
+[submodule ".vim/bundle/vim-css-color"]
+    path = .vim/bundle/vim-css-color
+    url = git://github.com/skammer/vim-css-color.git
+    ignore = dirty
