@@ -146,3 +146,7 @@
     path = .vim/bundle/Vim-JDE
     url = git://github.com/vim-scripts/Vim-JDE.git
     ignore = dirty
+[submodule ".vim/bundle/AutoComplPop"]
+    path = .vim/bundle/AutoComplPop
+    url = git://github.com/vim-scripts/AutoComplPop.git
+    ignore = dirty
