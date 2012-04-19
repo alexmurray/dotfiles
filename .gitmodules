@@ -154,3 +154,11 @@
     path = .vim/bundle/ctrlp.vim
     url = git://github.com/kien/ctrlp.vim.git
     ignore = dirty
+[submodule ".vim/bundle/gundo.vim"]
+    path = .vim/bundle/gundo.vim
+    url = git://github.com/sjl/gundo.vim.git
+    ignore = dirty
+[submodule ".vim/bundle/matchit.zip"]
+    path = .vim/bundle/matchit.zip
+    url = git://github.com/vim-scripts/matchit.zip.git
+    ignore = dirty
