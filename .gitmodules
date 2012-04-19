@@ -102,10 +102,6 @@
     path = .vim/bundle/nerdcommenter
     url = git://github.com/scrooloose/nerdcommenter.git
     ignore = dirty
-[submodule ".vim/bundle/javacomplete"]
-    path = .vim/bundle/javacomplete
-    url = git://github.com/vim-scripts/javacomplete.git
-    ignore = dirty
 [submodule ".vim/bundle/vim-surround"]
     path = .vim/bundle/vim-surround
     url = git://github.com/tpope/vim-surround.git
