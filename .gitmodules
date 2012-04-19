@@ -1,143 +1,144 @@
 [submodule ".emacs.d/vendor/auto-complete"]
-	path = .emacs.d/vendor/auto-complete
-	url = git://github.com/m2ym/auto-complete.git
-	ignore = dirty
+    path = .emacs.d/vendor/auto-complete
+    url = git://github.com/m2ym/auto-complete.git
+    ignore = dirty
 [submodule ".emacs.d/vendor/ac-slime"]
-	path = .emacs.d/vendor/ac-slime
-	url = git://github.com/purcell/ac-slime.git
-	ignore = dirty
+    path = .emacs.d/vendor/ac-slime
+    url = git://github.com/purcell/ac-slime.git
+    ignore = dirty
 [submodule ".emacs.d/vendor/ido-ubiquitous"]
-	path = .emacs.d/vendor/ido-ubiquitous
-	url = git://github.com/DarwinAwardWinner/ido-ubiquitous.git
-	ignore = dirty
+    path = .emacs.d/vendor/ido-ubiquitous
+    url = git://github.com/DarwinAwardWinner/ido-ubiquitous.git
+    ignore = dirty
 [submodule ".emacs.d/vendor/smex"]
-	path = .emacs.d/vendor/smex
-	url = git://github.com/nonsequitur/smex.git
-	ignore = dirty
+    path = .emacs.d/vendor/smex
+    url = git://github.com/nonsequitur/smex.git
+    ignore = dirty
 [submodule ".emacs.d/vendor/emacs-color-theme-solarized"]
-	path = .emacs.d/vendor/emacs-color-theme-solarized
-	url = git://github.com/sellout/emacs-color-theme-solarized.git
-	ignore = dirty
+    path = .emacs.d/vendor/emacs-color-theme-solarized
+    url = git://github.com/sellout/emacs-color-theme-solarized.git
+    ignore = dirty
 [submodule ".emacs.d/vendor/yasnippet"]
-	path = .emacs.d/vendor/yasnippet
-	url = git://github.com/capitaomorte/yasnippet.git
-	ignore = dirty
+    path = .emacs.d/vendor/yasnippet
+    url = git://github.com/capitaomorte/yasnippet.git
+    ignore = dirty
 [submodule ".emacs.d/vendor/mark-multiple"]
-	path = .emacs.d/vendor/mark-multiple
-	url = git://github.com/magnars/mark-multiple.el.git
-	ignore = dirty
+    path = .emacs.d/vendor/mark-multiple
+    url = git://github.com/magnars/mark-multiple.el.git
+    ignore = dirty
 [submodule ".emacs.d/vendor/c-eldoc"]
-	path = .emacs.d/vendor/c-eldoc
-	url = git://github.com/nflath/c-eldoc.git
-	ignore = dirty
+    path = .emacs.d/vendor/c-eldoc
+    url = git://github.com/nflath/c-eldoc.git
+    ignore = dirty
 [submodule ".emacs.d/vendor/android-mode"]
-	path = .emacs.d/vendor/android-mode
-	url = git://github.com/BobSheep/android-mode.git
-	ignore = dirty
+    path = .emacs.d/vendor/android-mode
+    url = git://github.com/BobSheep/android-mode.git
+    ignore = dirty
 [submodule ".emacs.d/vendor/paredit"]
-	path = .emacs.d/vendor/paredit
-	url = git://github.com/emacsmirror/paredit.git
-	ignore = dirty
+    path = .emacs.d/vendor/paredit
+    url = git://github.com/emacsmirror/paredit.git
+    ignore = dirty
 [submodule ".emacs.d/vendor/autopair"]
-	path = .emacs.d/vendor/autopair
-	url = git://github.com/emacsmirror/autopair.git
-	ignore = dirty
+    path = .emacs.d/vendor/autopair
+    url = git://github.com/emacsmirror/autopair.git
+    ignore = dirty
 [submodule ".emacs.d/vendor/rainbow-mode"]
-	path = .emacs.d/vendor/rainbow-mode
-	url = git://github.com/emacsmirror/rainbow-mode.git
-	ignore = dirty
+    path = .emacs.d/vendor/rainbow-mode
+    url = git://github.com/emacsmirror/rainbow-mode.git
+    ignore = dirty
 [submodule ".emacs.d/vendor/undo-tree"]
-	path = .emacs.d/vendor/undo-tree
-	url = git://github.com/emacsmirror/undo-tree.git
-	ignore = dirty
+    path = .emacs.d/vendor/undo-tree
+    url = git://github.com/emacsmirror/undo-tree.git
+    ignore = dirty
 [submodule ".emacs.d/vendor/scratch-el"]
-	path = .emacs.d/vendor/scratch-el
-	url = git://github.com/cbbrowne/scratch-el.git
-	ignore = dirty
+    path = .emacs.d/vendor/scratch-el
+    url = git://github.com/cbbrowne/scratch-el.git
+    ignore = dirty
 [submodule ".emacs.d/vendor/goto-last-change"]
-	path = .emacs.d/vendor/goto-last-change
-	url = git://github.com/emacsmirror/goto-last-change.git
-	ignore = dirty
+    path = .emacs.d/vendor/goto-last-change
+    url = git://github.com/emacsmirror/goto-last-change.git
+    ignore = dirty
 [submodule ".emacs.d/vendor/markdown-mode"]
-	path = .emacs.d/vendor/markdown-mode
-	url = git://jblevins.org/git/markdown-mode.git
-	ignore = dirty
+    path = .emacs.d/vendor/markdown-mode
+    url = git://jblevins.org/git/markdown-mode.git
+    ignore = dirty
 [submodule ".emacs.d/vendor/php-mode"]
-	path = .emacs.d/vendor/php-mode
-	url = git://github.com/ejmr/php-mode.git
-	ignore = dirty
+    path = .emacs.d/vendor/php-mode
+    url = git://github.com/ejmr/php-mode.git
+    ignore = dirty
 [submodule ".emacs.d/vendor/expand-region"]
-	path = .emacs.d/vendor/expand-region
-	url = git://github.com/magnars/expand-region.el.git
-	ignore = dirty
+    path = .emacs.d/vendor/expand-region
+    url = git://github.com/magnars/expand-region.el.git
+    ignore = dirty
 [submodule ".emacs.d/vendor/fuzzy-el"]
-	path = .emacs.d/vendor/fuzzy-el
-	url = git://github.com/m2ym/fuzzy-el.git
-	ignore = dirty
+    path = .emacs.d/vendor/fuzzy-el
+    url = git://github.com/m2ym/fuzzy-el.git
+    ignore = dirty
 [submodule ".emacs.d/vendor/popup-el"]
-	path = .emacs.d/vendor/popup-el
-	url = git://github.com/m2ym/popup-el.git
-	ignore = dirty
+    path = .emacs.d/vendor/popup-el
+    url = git://github.com/m2ym/popup-el.git
+    ignore = dirty
 [submodule ".emacs.d/vendor/js2-mode"]
-	path = .emacs.d/vendor/js2-mode
-	url = git://github.com/mooz/js2-mode.git
-	ignore = dirty
+    path = .emacs.d/vendor/js2-mode
+    url = git://github.com/mooz/js2-mode.git
+    ignore = dirty
 [submodule ".emacs.d/vendor/ace-jump-mode"]
-	path = .emacs.d/vendor/ace-jump-mode
-	url = git://github.com/winterTTr/ace-jump-mode.git
-	ignore = dirty
+    path = .emacs.d/vendor/ace-jump-mode
+    url = git://github.com/winterTTr/ace-jump-mode.git
+    ignore = dirty
 [submodule ".vim/bundle/vim-fugitive"]
-	path = .vim/bundle/vim-fugitive
-	url = git://github.com/tpope/vim-fugitive.git
-	ignore = dirty
+    path = .vim/bundle/vim-fugitive
+    url = git://github.com/tpope/vim-fugitive.git
+    ignore = dirty
 [submodule ".vim/bundle/vim-javascript"]
-	path = .vim/bundle/vim-javascript
-	url = git://github.com/pangloss/vim-javascript.git
-	ignore = dirty
+    path = .vim/bundle/vim-javascript
+    url = git://github.com/pangloss/vim-javascript.git
+    ignore = dirty
 [submodule ".vim/bundle/snipmate.vim"]
-	path = .vim/bundle/snipmate.vim
-	url = git://github.com/msanders/snipmate.vim.git
-	ignore = dirty
+    path = .vim/bundle/snipmate.vim
+    url = git://github.com/msanders/snipmate.vim.git
+    ignore = dirty
 [submodule ".vim/bundle/nerdcommenter"]
-	path = .vim/bundle/nerdcommenter
-	url = git://github.com/scrooloose/nerdcommenter.git
-	ignore = dirty
+    path = .vim/bundle/nerdcommenter
+    url = git://github.com/scrooloose/nerdcommenter.git
+    ignore = dirty
 [submodule ".vim/bundle/javacomplete"]
-	path = .vim/bundle/javacomplete
-	url = git://github.com/vim-scripts/javacomplete.git
-	ignore = dirty
+    path = .vim/bundle/javacomplete
+    url = git://github.com/vim-scripts/javacomplete.git
+    ignore = dirty
 [submodule ".vim/bundle/vim-surround"]
-	path = .vim/bundle/vim-surround
-	url = git://github.com/tpope/vim-surround.git
-	ignore = dirty
+    path = .vim/bundle/vim-surround
+    url = git://github.com/tpope/vim-surround.git
+    ignore = dirty
 [submodule ".vim/bundle/xmledit"]
-	path = .vim/bundle/xmledit
-	url = git://github.com/sukima/xmledit.git
-	ignore = dirty
+    path = .vim/bundle/xmledit
+    url = git://github.com/sukima/xmledit.git
+    ignore = dirty
 [submodule ".vim/bundle/vim-easymotion"]
-	path = .vim/bundle/vim-easymotion
-	url = git://github.com/Lokaltog/vim-easymotion.git
-	ignore = dirty
+    path = .vim/bundle/vim-easymotion
+    url = git://github.com/Lokaltog/vim-easymotion.git
+    ignore = dirty
 [submodule ".vim/bundle/OmniCppComplete"]
-	path = .vim/bundle/OmniCppComplete
-	url = git://github.com/vim-scripts/OmniCppComplete.git
-	ignore = dirty
+    path = .vim/bundle/OmniCppComplete
+    url = git://github.com/vim-scripts/OmniCppComplete.git
+    ignore = dirty
 [submodule ".vim/bundle/tagbar"]
-	path = .vim/bundle/tagbar
-	url = git://github.com/majutsushi/tagbar.git
-	ignore = dirty
+    path = .vim/bundle/tagbar
+    url = git://github.com/majutsushi/tagbar.git
+    ignore = dirty
 [submodule ".vim/bundle/vim-colors-solarized"]
-	path = .vim/bundle/vim-colors-solarized
-	url = git://github.com/altercation/vim-colors-solarized.git
-	ignore = dirty
+    path = .vim/bundle/vim-colors-solarized
+    url = git://github.com/altercation/vim-colors-solarized.git
+    ignore = dirty
 [submodule ".vim/bundle/vim-powerline"]
-	path = .vim/bundle/vim-powerline
-	url = git://github.com/Lokaltog/vim-powerline.git
-	ignore = dirty
+    path = .vim/bundle/vim-powerline
+    url = git://github.com/Lokaltog/vim-powerline.git
+    ignore = dirty
 [submodule ".vim/bundle/LaTeX-Box"]
-	path = .vim/bundle/LaTeX-Box
-	url = git://github.com/LaTeX-Box-Team/LaTeX-Box
+    path = .vim/bundle/LaTeX-Box
+    url = git://github.com/LaTeX-Box-Team/LaTeX-Box
     ignore = dirty
 [submodule ".vim/bundle/vim-smartinput"]
-	path = .vim/bundle/vim-smartinput
-	url = git://github.com/kana/vim-smartinput.git
+    path = .vim/bundle/vim-smartinput
+    url = git://github.com/kana/vim-smartinput.git
+    ignore = dirty
