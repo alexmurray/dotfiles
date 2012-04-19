@@ -51,14 +51,27 @@ set formatoptions=croq
 " filetype specific customisations
 if has("autocmd")
     " use custom indent etc for Makefiles
-    autocmd BufEnter ?Makefile* setlocal noet ts=8 sw=8 lcs=tab:>-,trail:x nocindent
-    " set javacomplete as omnicomplete for Java files
-    autocmd Filetype java setlocal omnifunc=javacomplete#Complete
+    autocmd BufEnter ?Makefile* setlocal noet ts=7 sw=8 lcs=tab:>-,trail:x nocindent
+    " Treat .json files as .js
+    autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
 endif
 
 " define DiffOrig command from example vimrc in help to diff buffer with file
 " on disk
 command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
+
+" Strip trailing whitespace (,ss)
+function! StripWhitespace()
+	let save_cursor = getpos(".")
+	let old_query = getreg('/')
+	:%s/\s\+$//e
+	call setpos('.', save_cursor)
+	call setreg('/', old_query)
+endfunction
+noremap <leader>ss :call StripWhitespace()<CR>
+
+" Save a file as root (,W)
+noremap <leader>W :w !sudo tee % > /dev/null<CR>
 
 " Visually select the text that was last edited/pasted (cf. gv)
 nmap gV `[v`]
