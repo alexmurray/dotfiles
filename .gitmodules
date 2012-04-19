@@ -142,3 +142,7 @@
     path = .vim/bundle/vim-css-color
     url = git://github.com/skammer/vim-css-color.git
     ignore = dirty
+[submodule ".vim/bundle/Vim-JDE"]
+    path = .vim/bundle/Vim-JDE
+    url = git://github.com/vim-scripts/Vim-JDE.git
+    ignore = dirty
