@@ -24,7 +24,7 @@ set wildmenu                    " completion with menu
 set wildignore=*.o,*.obj,*.bak,*.exe,*.py[co],*.swp,*~,*.pyc,.svn
 set laststatus=2                " Always show the statusline
 set ruler                       " always show current position
-set nolazyredraw                " don't redraw while executing macros
+set lazyredraw                  " don't redraw while executing macros
 
 " editor settings
 set ignorecase                  " case insensitive searching
