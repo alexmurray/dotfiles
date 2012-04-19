@@ -150,3 +150,7 @@
     path = .vim/bundle/AutoComplPop
     url = git://github.com/vim-scripts/AutoComplPop.git
     ignore = dirty
+[submodule ".vim/bundle/ctrlp.vim"]
+    path = .vim/bundle/ctrlp.vim
+    url = git://github.com/kien/ctrlp.vim.git
+    ignore = dirty
