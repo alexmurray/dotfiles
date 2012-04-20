@@ -2,6 +2,10 @@ if &compatible
     set nocompatible
 endif
 
+" load plugins which ship with vim
+runtime ftplugin/man.vim
+runtime macros/matchit.vim
+
 " use pathogen for managing plugins
 call pathogen#infect()
 call pathogen#helptags()
