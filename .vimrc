@@ -58,6 +58,11 @@ if has("autocmd")
     autocmd BufEnter ?Makefile* setlocal noet ts=7 sw=8 lcs=tab:>-,trail:x nocindent
     " Treat .json files as .js
     autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
+    " Decode java build errors properly
+    autocmd BufRead *.java set errorformat=%A\ %#[javac]\ %f:%l:\ %m,%-Z\ %#[javac]\ %p^,%-C%.%#
+    " use ant for building java and find build.xml and build debug install
+    " target
+    autocmd BufRead *.java set makeprg=ant\ -find\ build.xml\ debug\ install
 endif
 
 " define DiffOrig command from example vimrc in help to diff buffer with file
