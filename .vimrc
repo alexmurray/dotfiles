@@ -2,6 +2,10 @@ if &compatible
     set nocompatible
 endif
 
+" remap leader to , as is easier to reach than \
+let mapleader = ","
+let g:mapleader = ","
+
 " load plugins which ship with vim
 runtime ftplugin/man.vim
 runtime macros/matchit.vim
@@ -9,10 +13,6 @@ runtime macros/matchit.vim
 " use pathogen for managing plugins
 call pathogen#infect()
 call pathogen#helptags()
-
-" remap leader to , as is easier to reach than \
-let mapleader = ","
-let g:mapleader = ","
 
 filetype plugin indent on       " Enable filetype detection and load plugins and indenting
 
