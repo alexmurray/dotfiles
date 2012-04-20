@@ -79,11 +79,11 @@ nmap gV `[v`]
 " Toggle spell checking with ,s
 nmap <silent> <leader>s :set spell!<CR>
 
-" run ctags with required options for C/C++
-nmap <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-
 " show tagbar with F8
 nmap <F8> :TagbarToggle<CR>
+
+" make ctrlp ignore .git
+let g:ctrlp_custom_ignore = '\.git$'
 
 " show trailing whitespace etc for c
 let c_space_errors=1

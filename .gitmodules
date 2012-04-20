@@ -182,3 +182,7 @@
     path = .vim/bundle/syntastic
     url = git://github.com/scrooloose/syntastic.git
     ignore = dirty
+[submodule ".vim/bundle/supertab"]
+    path = .vim/bundle/supertab
+    url = git://github.com/ervandew/supertab.git
+    ignore = dirty
