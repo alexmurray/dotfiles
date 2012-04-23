@@ -186,3 +186,7 @@
     path = .vim/bundle/vim-repeat
     url = git://github.com/tpope/vim-repeat.git
     ignore = dirty
+[submodule ".vim/bundle/vim-yankstack"]
+    path = .vim/bundle/vim-yankstack
+    url = git://github.com/maxbrunsfeld/vim-yankstack.git
+    ignore = dirty
