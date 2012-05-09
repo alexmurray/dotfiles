@@ -190,3 +190,7 @@
     path = .vim/bundle/vim-yankstack
     url = git://github.com/maxbrunsfeld/vim-yankstack.git
     ignore = dirty
+[submodule ".vim/bundle/slimv.vim"]
+    path = .vim/bundle/slimv.vim
+    url = git://github.com/vim-scripts/slimv.vim.git
+    ignore = dirty
