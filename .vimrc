@@ -31,6 +31,7 @@ set ruler                       " always show current position
 set lazyredraw                  " don't redraw while executing macros
 
 " editor settings
+set gdefault                    " make substitutions on a line global by default
 set ignorecase                  " case insensitive searching
 set smartcase                   " but become sensitive if using uppercase characters
 set autoindent                  " smart auto indenting
@@ -41,6 +42,8 @@ set backspace=indent,eol,start  " Allow backspacing over everything in insert mo
 set tabstop=4                   " number of spaces a tab counts for
 set shiftwidth=4                " spaces for autoindents
 set expandtab                   " turn a tabs into spaces
+set list                        " show tabs and eol
+set listchars=tab:▸\ ,eol:¬
 set textwidth=79                " wrap lines at 79 chars
 set spelllang=en_au             " set region to Australian English
 set autoread                    " automatically reload file when chaged
@@ -71,16 +74,16 @@ command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | di
 
 " Strip trailing whitespace (,ss)
 function! StripWhitespace()
-	let save_cursor = getpos(".")
-	let old_query = getreg('/')
-	:%s/\s\+$//e
-	call setpos('.', save_cursor)
-	call setreg('/', old_query)
+    let save_cursor = getpos(".")
+    let old_query = getreg('/')
+    :%s/\s\+$//e
+    call setpos('.', save_cursor)
+    call setreg('/', old_query)
 endfunction
 noremap <leader>ss :call StripWhitespace()<CR>
 
 " Save a file as root (,W)
-noremap <leader>W :w !sudo tee % > /dev/null<CR>
+nnoremap <leader>W :w !sudo tee % > /dev/null<CR>
 
 " Visually select the text that was last edited/pasted (cf. gv)
 nmap gV `[v`]
@@ -100,6 +103,20 @@ let c_space_errors=1
 " set username for changelog mode
 let g:changelog_username='Alex Murray <murray.alex@gmail.com>'
 
+" enforce use of hjkl instead of arrow keys
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+
+" make movement work on screen lines, not actual file lines
+nnoremap j gj
+nnoremap k gk
+
 " color settings (if terminal/gui supports it)
 if &t_Co > 2 || has("gui_running")
     set background=dark         " light version of solarized
@@ -107,6 +124,8 @@ if &t_Co > 2 || has("gui_running")
     colorscheme solarized
     set hlsearch                " search highlighting
     set incsearch               " highlight search while typing
+    " clear search highlighting with ,<space>
+    nnoremap <leader><space> :nohlsearch<cr>
 endif
 
 " gui specific settings
