@@ -42,8 +42,8 @@ set backspace=indent,eol,start  " Allow backspacing over everything in insert mo
 set tabstop=4                   " number of spaces a tab counts for
 set shiftwidth=4                " spaces for autoindents
 set expandtab                   " turn a tabs into spaces
-set list                        " show tabs and eol
-set listchars=tab:▸\ ,eol:¬
+set list                        " show tabs and trailing spaces at eol
+set listchars=tab:▸\ ,trail:·
 set textwidth=79                " wrap lines at 79 chars
 set spelllang=en_au             " set region to Australian English
 set autoread                    " automatically reload file when chaged
