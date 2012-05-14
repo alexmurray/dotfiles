@@ -394,7 +394,7 @@
 (global-set-key (kbd "C-M-m") 'mark-more-like-this) ; like the other two, but takes an argument (negative is previous)
 
 ;; slime
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/slime-2011-10-09"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/slime-2012-05-09"))
 (setq slime-lisp-implementations '((sbcl ("/usr/bin/sbcl"))))
 (require 'slime)
 
