@@ -70,6 +70,14 @@ if has("autocmd")
     " use ant for building java and find build.xml and build debug install
     " target
     autocmd FileType java setlocal makeprg=ant\ -find\ build.xml\ debug\ install
+    " use devhelp with c coding
+    autocmd FileType c nmap <F7> :call DevhelpUpdate('s')<CR>
+    autocmd FileType c imap <F7> <ESC>:call DevhelpUpdateI('s')<CR>
+    " enable the search assistant in c and h files
+    autocmd! CursorHold *.c,*.h call DevhelpUpdate('a')
+    autocmd! CursorHoldI *.c,*.h call DevhelpUpdate('a')
+    " search every 500ms with devhelp assistant
+    autocmd FileType c setlocal updatetime=500
 endif
 
 " define DiffOrig command from example vimrc in help to diff buffer with file
