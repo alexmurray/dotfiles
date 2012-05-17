@@ -39,8 +39,8 @@ set smartindent
 set smarttab                    " smart tab handling for indenting
 set magic                       " change the way backslashes are used in search patterns
 set backspace=indent,eol,start  " Allow backspacing over everything in insert mode
-set tabstop=4                   " number of spaces a tab counts for
 set shiftwidth=4                " spaces for autoindents
+set softtabstop=4               " number of spaces a tab counts for
 set expandtab                   " turn a tabs into spaces
 set list                        " show tabs and trailing spaces at eol
 set listchars=tab:▸\ ,trail:·
@@ -57,15 +57,19 @@ set formatoptions=croq
 
 " filetype specific customisations
 if has("autocmd")
-    " use custom indent etc for Makefiles
-    autocmd BufEnter ?Makefile* setlocal noet ts=7 sw=8 lcs=tab:>-,trail:x nocindent
     " Treat .json files as .js
     autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
+    " use custom indent etc for Makefiles
+    autocmd FileType make setlocal noet ts=7 sw=8 lcs=tab:>-,trail:x nocindent
+    " indent c etc correctly
+    autocmd FileType c,cpp,java,javascript setlocal sw=2 sts=2 cin cino+=l1,(0,w1
+    autocmd FileType java setlocal sw=4 sts=4 cino+=j1
+    autocmd FileType javascript setlocal cino+=J1
     " Decode java build errors properly
-    autocmd BufRead *.java set errorformat=%A\ %#[javac]\ %f:%l:\ %m,%-Z\ %#[javac]\ %p^,%-C%.%#
+    autocmd FileType java setlocal errorformat=%A\ %#[javac]\ %f:%l:\ %m,%-Z\ %#[javac]\ %p^,%-C%.%#
     " use ant for building java and find build.xml and build debug install
     " target
-    autocmd BufRead *.java set makeprg=ant\ -find\ build.xml\ debug\ install
+    autocmd FileType java setlocal makeprg=ant\ -find\ build.xml\ debug\ install
 endif
 
 " define DiffOrig command from example vimrc in help to diff buffer with file
