@@ -78,6 +78,25 @@ if has("autocmd")
     autocmd! CursorHoldI *.c,*.h call DevhelpUpdate('a')
     " search every 500ms with devhelp assistant
     autocmd FileType c setlocal updatetime=500
+    " add gtk syntax highlighting
+    autocmd FileType c let gdk_deprecated_errors = 1
+    autocmd FileType c let gio_deprecated_errors = 1
+    autocmd FileType c let glib_deprecated_errors = 1
+    autocmd FileType c let gobject_deprecated_errors = 1
+    autocmd FileType c let gtk_deprecated_errors = 1
+    autocmd FileType c let jsonglib_deprecated_errors = 1
+    autocmd FileType c let pango_deprecated_errors = 1
+    autocmd FileType c runtime! syntax/cairo.vim
+    autocmd FileType c runtime! syntax/gdk.vim
+    autocmd FileType c runtime! syntax/gio.vim
+    autocmd FileType c runtime! syntax/glib.vim
+    autocmd FileType c runtime! syntax/gobject.vim
+    autocmd FileType c runtime! syntax/gobjectintrospection.vim
+    autocmd FileType c runtime! syntax/gtk.vim
+    autocmd FileType c runtime! syntax/gtkglext.vim
+    autocmd FileType c runtime! syntax/jsonglib.vim
+    autocmd filetype c runtime! syntax/libnotify.vim
+    autocmd filetype c runtime! syntax/pango.vim
 endif
 
 " define DiffOrig command from example vimrc in help to diff buffer with file

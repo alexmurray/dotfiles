@@ -194,3 +194,7 @@
     path = .vim/bundle/slimv.vim
     url = git://github.com/vim-scripts/slimv.vim.git
     ignore = dirty
+[submodule ".vim/bundle/gtk-vim-syntax"]
+    path = .vim/bundle/gtk-vim-syntax
+    url = git://github.com/vim-scripts/gtk-vim-syntax.git
+    ignore = dirty
