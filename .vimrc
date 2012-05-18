@@ -70,33 +70,33 @@ if has("autocmd")
     " use ant for building java and find build.xml and build debug install
     " target
     autocmd FileType java setlocal makeprg=ant\ -find\ build.xml\ debug\ install
-    " use devhelp with c coding
-    autocmd FileType c nmap <F7> :call DevhelpUpdate('s')<CR>
-    autocmd FileType c imap <F7> <ESC>:call DevhelpUpdateI('s')<CR>
+    " use devhelp with c coding (cpp is used for header files)
+    autocmd FileType c,cpp nmap <F7> :call DevhelpUpdate('s')<CR>
+    autocmd FileType c,cpp imap <F7> <ESC>:call DevhelpUpdateI('s')<CR>
     " enable the search assistant in c and h files
     autocmd! CursorHold *.c,*.h call DevhelpUpdate('a')
     autocmd! CursorHoldI *.c,*.h call DevhelpUpdate('a')
     " search every 500ms with devhelp assistant
-    autocmd FileType c setlocal updatetime=500
+    autocmd FileType c,cpp setlocal updatetime=500
     " add gtk syntax highlighting
-    autocmd FileType c let gdk_deprecated_errors = 1
-    autocmd FileType c let gio_deprecated_errors = 1
-    autocmd FileType c let glib_deprecated_errors = 1
-    autocmd FileType c let gobject_deprecated_errors = 1
-    autocmd FileType c let gtk_deprecated_errors = 1
-    autocmd FileType c let jsonglib_deprecated_errors = 1
-    autocmd FileType c let pango_deprecated_errors = 1
-    autocmd FileType c runtime! syntax/cairo.vim
-    autocmd FileType c runtime! syntax/gdk.vim
-    autocmd FileType c runtime! syntax/gio.vim
-    autocmd FileType c runtime! syntax/glib.vim
-    autocmd FileType c runtime! syntax/gobject.vim
-    autocmd FileType c runtime! syntax/gobjectintrospection.vim
-    autocmd FileType c runtime! syntax/gtk.vim
-    autocmd FileType c runtime! syntax/gtkglext.vim
-    autocmd FileType c runtime! syntax/jsonglib.vim
-    autocmd filetype c runtime! syntax/libnotify.vim
-    autocmd filetype c runtime! syntax/pango.vim
+    autocmd FileType c,cpp let gdk_deprecated_errors = 1
+    autocmd FileType c,cpp let gio_deprecated_errors = 1
+    autocmd FileType c,cpp let glib_deprecated_errors = 1
+    autocmd FileType c,cpp let gobject_deprecated_errors = 1
+    autocmd FileType c,cpp let gtk_deprecated_errors = 1
+    autocmd FileType c,cpp let jsonglib_deprecated_errors = 1
+    autocmd FileType c,cpp let pango_deprecated_errors = 1
+    autocmd FileType c,cpp runtime! syntax/cairo.vim
+    autocmd FileType c,cpp runtime! syntax/gdk.vim
+    autocmd FileType c,cpp runtime! syntax/gio.vim
+    autocmd FileType c,cpp runtime! syntax/glib.vim
+    autocmd FileType c,cpp runtime! syntax/gobject.vim
+    autocmd FileType c,cpp runtime! syntax/gobjectintrospection.vim
+    autocmd FileType c,cpp runtime! syntax/gtk.vim
+    autocmd FileType c,cpp runtime! syntax/gtkglext.vim
+    autocmd FileType c,cpp runtime! syntax/jsonglib.vim
+    autocmd filetype c,cpp runtime! syntax/libnotify.vim
+    autocmd filetype c,cpp runtime! syntax/pango.vim
 endif
 
 " define DiffOrig command from example vimrc in help to diff buffer with file
