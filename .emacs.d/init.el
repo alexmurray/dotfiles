@@ -252,7 +252,7 @@
 
 ;; which-function-mode to display current defun in modeline
 (require 'which-func)
-(which-func-mode t)
+(which-function-mode t)
 
 ;;;; External packages ;;;;
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor"))
@@ -348,7 +348,7 @@
 ;; ubiquitous ido
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/ido-ubiquitous"))
 (require 'ido-ubiquitous)
-(ido-ubiquitous t)
+(ido-ubiquitous-mode t)
 
 ;; auto-complete mode - requires fuzzy and popup packages
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/fuzzy-el"))
