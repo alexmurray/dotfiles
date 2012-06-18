@@ -38,10 +38,6 @@
     path = .emacs.d/vendor/paredit
     url = git://github.com/emacsmirror/paredit.git
     ignore = dirty
-[submodule ".emacs.d/vendor/autopair"]
-    path = .emacs.d/vendor/autopair
-    url = git://github.com/emacsmirror/autopair.git
-    ignore = dirty
 [submodule ".emacs.d/vendor/rainbow-mode"]
     path = .emacs.d/vendor/rainbow-mode
     url = git://github.com/emacsmirror/rainbow-mode.git

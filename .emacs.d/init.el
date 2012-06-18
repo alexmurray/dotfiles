@@ -38,10 +38,10 @@
 ;; with new text automatically
 (delete-selection-mode 1)
 
-;; electric indent and layout modes to make more IDE like (see
-;; autopair below instead of electric-pair-mode)
+;; electric indent and layout modes to make more IDE like
 (electric-indent-mode t)
 (electric-layout-mode t)
+(electric-pair-mode t)
 
 ;; show empty lines in left fringe
 (setq default-indicate-empty-lines t)
@@ -296,23 +296,11 @@
    "Set point to the position of the last change." t)
 (global-set-key (kbd "C-x C-\\") 'goto-last-change)
 
-;; use autopair by default
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/autopair"))
-(require 'autopair)
-(autopair-global-mode) ;; enable autopair in all buffers
-;; make sure autopair doesn't screw up some slime stuff
-(set-default 'autopair-dont-activate #'(lambda () (eq major-mode 'sldb-mode)))
-
 ;; paredit
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/paredit"))
 (autoload 'paredit-mode "paredit"
   "Minor mode for pseudo-structurally editing Lisp code." t)
 (autoload 'enable-paredit-mode "paredit" "Turn on paredit mode" t)
-
-;; disable autopair during paredit
-(defadvice enable-paredit-mode (before disable-autopair activate)
-  (setq autopair-dont-activate t)
-  (autopair-mode -1))
 
 (dolist (hook '(emacs-lisp-mode-hook lisp-mode-hook))
   (add-hook hook 'pretty-lambdas)
