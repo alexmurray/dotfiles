@@ -209,9 +209,14 @@
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c b") 'org-iswitchb)
 
-;; semantic in emacs 23.2 - useful for auto-complete mode
+;; semantic and semanticdb - stores semantic information in a db so is
+;; faster to compute next time a file is loaded
 (require 'semantic)
+(require 'semantic/db)
 (semantic-mode 1)
+(global-semanticdb-minor-mode 1)
+;; show summary of tag at point when idle
+(global-semantic-idle-summary-mode 1)
 
 ;; uniquify: unique buffer names
 (require 'uniquify) ;; make buffer names more unique
@@ -361,6 +366,8 @@
 (setq ac-auto-show-menu (+ ac-delay 0.1)) ; show menu after 100ms
 ;; quick help has to be after menu so again set to 100ms more
 (setq ac-quick-help-delay (+ ac-auto-show-menu 0.1))
+;; don't bother with popup doing extra calc
+(setq popup-use-optimized-column-computation nil)
 
 ;; yasnippet
 (add-to-list 'load-path "~/.emacs.d/vendor/yasnippet")
