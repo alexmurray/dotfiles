@@ -44,7 +44,7 @@
 (electric-pair-mode t)
 
 ;; show empty lines in left fringe
-(setq default-indicate-empty-lines t)
+(setq indicate-empty-lines t)
 
 ;; just use y or n not yes or no
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -149,13 +149,14 @@
           "culpa qui officia deserunt mollit anim id est laborum."))
 
 ;; make f11 full-screen - from http://www.emacswiki.org/emacs/FullScreen
+(defvar *old-fullscreen* nil)
 (defun toggle-fullscreen (&optional f)
   (interactive)
   (let ((current-value (frame-parameter nil 'fullscreen)))
     (set-frame-parameter nil 'fullscreen
 			 (if (equal 'fullboth current-value)
-			     (if (boundp 'old-fullscreen) old-fullscreen nil)
-			   (progn (setq old-fullscreen current-value)
+			     *old-fullscreen*
+			   (progn (setq *old-fullscreen* current-value)
 				  'fullboth)))))
 (global-set-key (kbd "<f11>") 'toggle-fullscreen)
 
@@ -391,10 +392,10 @@
 (require 'slime)
 
 ;; autoload slime when you open a .lisp file
-(add-hook 'slime-mode-hook
-	  (lambda ()
-	    (unless (slime-connected-p)
-	      (save-excursion (slime)))))
+(defun slime-mode-setup ()
+  (unless (slime-connected-p)
+    (save-excursion (slime))))
+(add-hook 'slime-mode-hook 'slime-mode-setup)
 ;; autoclose emacs even if lisp processes are running
 (setq slime-kill-without-query-p t)
 ;; bind C-z to slime-selector
@@ -429,30 +430,7 @@
 
 ;;;; Support for specific languages ;;;;
 
-;; use eldoc-mode for emacs-lisp
-(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-
-;; for auctex and reftex integration
-(add-hook 'LaTeX-mode-hook
-	  (lambda ()
-	    ;; use visual line mode to do soft word wrapping
-	    (visual-line-mode 1)
-	    ;; Use PDF by default
-	    (TeX-PDF-mode 1)
-	    (setq TeX-view-program-selection
-		  '((output-pdf "Evince")
-		    (output-dvi "Evince")))
-	    ;; Enable source-specials for Control-click forward/reverse search.
-	    (TeX-source-specials-mode 1)
-	    (setq TeX-source-specials-view-start-server t)
-	    ;; Enable reftex
-	    (turn-on-reftex)
-	    (setq reftex-plug-into-AUCTeX t)
-	    ;; Enable flyspell
-	    (flyspell-mode 1)
-	    ;; workaround bug in autocomplete and flyspell
-	    (ac-flyspell-workaround)))
-
+;; common stuff for all programming languages
 (defun common-programming-setup ()
   ;; turn on spell checking for strings and comments
   (flyspell-prog-mode)
@@ -462,7 +440,6 @@
   (font-lock-add-keywords nil
    '(("\\<\\(TODO\\|todo\\|FIXME\\|fixme\\)" 1 font-lock-warning-face t))))
 
-;; common stuff for all programming languages
 (dolist (hook '(c-mode-common-hook
 		lisp-mode-hook
 		emacs-lisp-mode-hook
@@ -473,6 +450,31 @@
 		nxml-mode-hook
 		javascript-mode-hook))
   (add-hook hook 'common-programming-setup))
+
+;; use eldoc-mode for emacs-lisp
+(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+
+(defun latex-mode-setup ()
+  ;; use visual line mode to do soft word wrapping
+  (visual-line-mode 1)
+  ;; Enable flyspell
+  (flyspell-mode 1)
+  ;; for auctex and reftex integration
+  (when (locate-library "auctex")
+    (require 'auctex)
+    ;; standard auctex setup
+    (setq TeX-auto-save t)
+    (setq TeX-parse-self t)
+    (setq-default TeX-master nil)
+    ;; enable math mode in latex
+    (LaTeX-math-mode 1)
+    ;; Enable reftex
+    (turn-on-reftex)
+    (setq reftex-plug-into-AUCTeX t)
+    ;; Enable source-specials for Control-click forward/reverse search.
+    (TeX-source-specials-mode 1)
+    (setq TeX-source-specials-view-start-server t)))
+(add-hook 'LaTeX-mode-hook 'latex-mode-setup)
 
 ;; show #if 0 / #endif etc regions in comment face - taken from
 ;; http://stackoverflow.com/questions/4549015/in-c-c-mode-in-emacs-change-face-of-code-in-if-0-endif-block-to-comment-fa
@@ -500,52 +502,53 @@
   nil)
 
 ;; c-mode and other derived modes (c++, java etc) etc
-(add-hook 'c-mode-common-hook
-          (lambda ()
-	    ;; use spaces not tabs to indent
-	    (setq indent-tabs-mode nil)
-	    ;; set a reasonable fill and comment column
-	    (setq fill-column 80)
-	    (setq comment-column 70)
-	    ;; make CamelCase words separate subwords (ie. Camel and Case can
-	    ;; be operated on separately as separate words
-	    (subword-mode 1)
-	    (auto-fill-mode 1)
-	    ;; show trailing whitespace
-	    (setq show-trailing-whitespace t)
-	    ;; turn on auto-newline and hungry-delete
-	    (c-toggle-auto-hungry-state t)
-	    ;; set auto newline
-	    (setq c-auto-newline 1)
-	    ;; show #if 0 / #endif etc regions in comment face
-	    (font-lock-add-keywords
-	     nil
-	     '((c-mode-font-lock-if0 (0 font-lock-comment-face prepend))) 'add-to-end)))
+(defun c-mode-common-setup ()
+  ;; use spaces not tabs to indent
+  (setq indent-tabs-mode nil)
+  ;; set a reasonable fill and comment column
+  (setq fill-column 80)
+  (setq comment-column 70)
+  ;; make CamelCase words separate subwords (ie. Camel and Case can
+  ;; be operated on separately as separate words
+  (subword-mode 1)
+  (auto-fill-mode 1)
+  ;; show trailing whitespace
+  (setq show-trailing-whitespace t)
+  ;; turn on auto-newline and hungry-delete
+  (c-toggle-auto-hungry-state t)
+  ;; set auto newline
+  (setq c-auto-newline 1)
+  ;; show #if 0 / #endif etc regions in comment face
+  (font-lock-add-keywords
+   nil
+   '((c-mode-font-lock-if0 (0 font-lock-comment-face prepend))) 'add-to-end))
+
+(add-hook 'c-mode-common-hook 'c-mode-common-setup)
 
 ;; c-only modes
-(add-hook 'c-mode-hook
-	  (lambda ()
-	    ;; use semantic as source for auto complete
-	    (add-to-list 'ac-sources 'ac-source-semantic)
-	    ;; use linux kernel style
-	    (c-set-style "linux")
-	    (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/c-eldoc"))
-	    (require 'c-eldoc)
-	    ;; turn on c-eldoc
-	    (c-turn-on-eldoc-mode)
-	    ;; enable gobject helper
-	    (require 'gobject-class)
-	    ;; enable gtk-doc helpers from gtk-doc-tools to easily
-	    ;; insert gtk-doc style comment declarations using C-x 4 h
-	    ;; (gtk-doc-insert) or C-x 4 s (gtk-doc-insert-section) to
-	    ;; comment current function or section respectively
-	    (load "gtk-doc" t) ; ignore error if can't be found
-	    ;; devhelp - ignore error if couldn't be loaded
-	    (when (require 'devhelp nil t)
-	      ;; Bind F6 to enable the automatic assistant.
-	      (global-set-key (kbd "<f6>") 'devhelp-toggle-automatic-assistant)
-	      ;; Bind F7 to search with the assistant window.
-	      (global-set-key (kbd "<f7>") 'devhelp-assistant-word-at-point))))
+(defun c-mode-setup ()
+  ;; use semantic as source for auto complete
+  (add-to-list 'ac-sources 'ac-source-semantic)
+  ;; use linux kernel and hence GNOME coding style for C
+  (c-set-style "linux")
+  (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/c-eldoc"))
+  (require 'c-eldoc)
+  ;; turn on c-eldoc
+  (c-turn-on-eldoc-mode)
+  ;; enable gobject helper
+  (require 'gobject-class)
+  ;; enable gtk-doc helpers from gtk-doc-tools to easily
+  ;; insert gtk-doc style comment declarations using C-x 4 h
+  ;; (gtk-doc-insert) or C-x 4 s (gtk-doc-insert-section) to
+  ;; comment current function or section respectively
+  (load "gtk-doc" t) ; ignore error if can't be found
+  ;; devhelp - ignore error if couldn't be loaded
+  (when (require 'devhelp nil t)
+    ;; Bind F6 to enable the automatic assistant.
+    (global-set-key (kbd "<f6>") 'devhelp-toggle-automatic-assistant)
+    ;; Bind F7 to search with the assistant window.
+    (global-set-key (kbd "<f7>") 'devhelp-assistant-word-at-point)))
+(add-hook 'c-mode-hook 'c-mode-setup)
 
 ;; android mode
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/android-mode"))
@@ -553,15 +556,15 @@
 (setq android-mode-sdk-dir "~/android-sdk-linux/")
 ;; change prefix so doesn't conflict with comment-region
 (setq android-mode-key-prefix "\C-c \C-m")
-(add-hook 'gud-mode-hook
-	  (lambda ()
-	    (add-to-list 'gud-jdb-classpath "/home/alex/android-sdk-linux/platforms/android-10/android.jar")))
+(defun gud-mode-setup ()
+  (add-to-list 'gud-jdb-classpath "/home/alex/android-sdk-linux/platforms/android-10/android.jar"))
+(add-hook 'gud-mode-hook 'gud-mode-setup)
 
 ;; setup python mode for eldoc and auto-complete with semantic
-(add-hook 'python-mode-hook
-	  (lambda ()
-	    (eldoc-mode)
-	    (add-to-list 'ac-sources 'ac-source-semantic)))
+(defun python-mode-setup ()
+  (eldoc-mode)
+  (add-to-list 'ac-sources 'ac-source-semantic))
+(add-hook 'python-mode-hook 'python-mode-setup)
 
 ;; enable pymacs / ropemacs support
 (when (locate-library "pymacs")
@@ -570,6 +573,7 @@
 
 ;; prolog
 (when (locate-library "prolog")
+  (require 'prolog)
   ;; set our prolog system
   (setq prolog-system 'swi)
   ;; associate .pl files with prolog mode rather than perl mode
