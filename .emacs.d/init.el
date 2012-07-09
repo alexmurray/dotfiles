@@ -247,15 +247,19 @@
 	(unless (string-match "finished" result)
 	  (setq body result
 		icon "gtk-dialog-error"))
-	(notifications-notify :title title :body body :icon icon
-			      :timeout 5000 :transient t))))
+	;; close notification automatically after 5 seconds
+	(let ((n (notifications-notify :title title :body body :icon icon
+				       :timeout 5000 :transient t)))
+	  (run-with-timer 5 nil #'notifications-close-notification n)))))
   (setq compilation-finish-functions 'notify-compilation-finished)
 
   ;; also notify when reverting a buffer if we auto-revert
   (defun notify-buffer-reverted ()
-    (notifications-notify :title "Emacs buffer reverted"
-			  :body (buffer-name (current-buffer))
-			  :timeout 5000 :transient t))
+    ;; close notification automatically after 5 seconds
+    (let ((n (notifications-notify :title "Emacs buffer reverted"
+				   :body (buffer-name (current-buffer))
+				   :timeout 5000 :transient t)))
+      (run-with-timer 5 nil #'notifications-close-notification n)))
   (add-hook 'after-revert-hook 'notify-buffer-reverted))
 
 ;; which-function-mode to display current defun in modeline
